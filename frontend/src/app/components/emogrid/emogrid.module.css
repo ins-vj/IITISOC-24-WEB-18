@@ -1,0 +1,76 @@
+.grid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 20rem;
+    height: 20rem;
+    z-index: 1;
+    /* background-color: ; */
+    gap: 0.3vw;
+    overflow: hidden;
+  
+  }
+  
+  .gridblock {
+    
+    transition: 1s ease;
+    /* border-radius: 100px; */
+    background-color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: 900;
+    padding: 0;
+    margin: 0;
+    color: #115398;
+    line-height: 1rem;
+
+  
+  }
+  
+  .gridblock div{
+    opacity: 0;
+    transition: 3s ease;
+  }
+  
+  .gridblock:hover {
+    /* background-color: rgba(163,40,24); */
+    transition: none;
+    color: white;
+    font-size: 5rem;
+    background-color: transparent;
+  }
+  .gridblock:hover div{
+    opacity: 1;
+    transition: 0s;
+  }
+  
+  .bganim {
+    position: absolute;
+    width: 100%;
+    height: 60vh;
+    background: linear-gradient(to right, #115398, #0488D3);
+    z-index: -1;
+    filter: blur(10vh);
+  
+  
+  
+    animation-name: bganim;
+    animation-duration: 10s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+  
+  }
+  
+  @keyframes bganim {
+    0% {
+      top: -110vh;
+    }
+  
+    100% {
+      top: 110vh;
+    }
+  }
