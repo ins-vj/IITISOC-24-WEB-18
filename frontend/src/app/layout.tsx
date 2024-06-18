@@ -17,12 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className=" ">
-        <Navbar />
-        <div className=" min-h-[100vh]">
-        {children}
-        </div>
-        </body>
+      <body>
+        {/* <header>
+          <Navbar />
+        </header> */}
+
+        <div className=" min-h-[100vh]">{children}</div>
+      </body>
     </html>
   );
 }
