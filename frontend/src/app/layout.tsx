@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./navbar/navbar";
+import Navbar from "@/components/navbar/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,9 @@ export default function RootLayout({
           <Navbar />
         </header> */}
 
-        <div className=" min-h-[100vh]">{children}</div>
+        <div className="max-h-[100vh] max-w-[100vw] overflow-hidden">
+          {children}
+        </div>
       </body>
     </html>
   );

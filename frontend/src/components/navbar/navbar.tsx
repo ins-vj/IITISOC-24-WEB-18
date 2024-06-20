@@ -1,4 +1,4 @@
-import Chipcustom from "../components/chip/chip";
+import Chipcustom from "../../components/chip/chip";
 import { Chip, Image } from "@nextui-org/react";
 import Link from "next/link";
 
