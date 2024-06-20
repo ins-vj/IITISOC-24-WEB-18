@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className="App">
        <Navbar />
-       <Logo width={500}/>
+     
       <h1>Hello</h1>
     </div>
   );
