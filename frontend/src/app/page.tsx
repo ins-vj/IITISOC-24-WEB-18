@@ -26,13 +26,10 @@ export default function Home() {
     <div className="App">
        <Navbar />
      
-      <h1>Hello</h1>
+       <Hero ></Hero>
     </div>
 
-    <>
-   home
-   <Hero ></Hero>
-    </>
+  
     
    
    
