@@ -2,12 +2,12 @@
 import Image from "next/image";
 import Emogrid from "@/components/emogrid/emogrid";
 
-import Loader from "../components/loader/loading";
+import Loader from "../../components/loader/loading";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar/navbar";
-import Logo from "../components/logo/logo";
+import Logo from "../../components/logo/logo";
 
-import Hero from "../components/hero/hero";
+import Hero from "../../components/hero/hero";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
