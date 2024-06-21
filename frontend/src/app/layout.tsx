@@ -17,13 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {/* <header>
-          <Navbar />
-        </header> */}
-
-        <div className="max-h-[100vh] max-w-[100vw] overflow-hidden">
-          {children}
+      <body className=" ">
+       
+        <div className=" min-h-[100vh]">
+        {children}
         </div>
       </body>
     </html>
