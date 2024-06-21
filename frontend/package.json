@@ -9,11 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.0.2",
+    "@coreui/react": "^5.1.0",
     "@nextui-org/react": "^2.4.2",
+    "agora-react-uikit": "^1.2.0",
+    "agora-rtc-react": "^2.2.0",
+    "agora-rtc-sdk-ng": "^4.21.0",
     "framer-motion": "^11.2.10",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-bootstrap": "^2.10.3",
+    "react-dom": "^18",
+    "react-responsive-carousel": "^3.2.23"
   },
   "devDependencies": {
     "@types/node": "^20",
