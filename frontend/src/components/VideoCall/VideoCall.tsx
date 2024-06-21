@@ -13,10 +13,14 @@ import AgoraRTC, {
   useRemoteUsers,
 } from "agora-rtc-react";
 import { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-react";
-import { ReactHTML, useEffect, useState } from "react";
+import { ReactElement, ReactHTML, useEffect, useState } from "react";
 import "./VideoCall.css";
 import ControlBar from "./ControlBar";
 import VideoShow from "./VideoShow";
+import FocusVideo from "./FocusVideo";
+import { divider } from "@nextui-org/react";
+import { CircularProgress } from "@nextui-org/react";
+import { VideoPlayerConfig } from "agora-rtc-sdk-ng";
 
 function Videos(props: { channelName: string; AppID: string }) {
   const toggleFocus = (e: HTMLElement) => {
@@ -45,6 +49,17 @@ function Videos(props: { channelName: string; AppID: string }) {
       document.getElementById("focus-div")?.append(e);
     }
   };
+
+  const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
+
+  const makeFullscreen = (e: ReactElement) => {
+    if (videoInFocus) {
+      setVideoInFocus(null);
+    } else {
+      setVideoInFocus(e);
+    }
+  };
+  const exitFullscreen = () => setVideoInFocus(null);
 
   const { AppID, channelName } = props;
   const { isLoading: isLoadingMic, localMicrophoneTrack } =
@@ -78,50 +93,36 @@ function Videos(props: { channelName: string; AppID: string }) {
 
   audioTracks.map((track) => track.play());
 
+  const vConfig: VideoPlayerConfig = {
+    fit: "contain",
+  };
+
   const deviceLoading = isLoadingMic || isLoadingCam;
   if (deviceLoading)
     return (
-      <div className="flex flex-col items-center pt-40">Loading devices...</div>
+      <div className="flex flex-col items-center pt-40">
+        <CircularProgress color="warning" label="Loading..." />
+      </div>
     );
 
   return (
     <div id="videoBody" className="absolute h-screen w-screen">
-      <div
-        id="focus-div"
-        className="absolute top-8 flex justify-center w-screen z-30 invisible"
-      ></div>
-      {remoteUsers.length > 0 ? (
-        <div
-          className="aspect-square fixed h-40 right-8 bottom-8 rounded-lg overflow-hidden bg-gray-400 z-40"
-          id="selfVideo"
-          onClick={(e) => {
-            toggleFocus(e.currentTarget);
-          }}
-        >
+      {!(remoteUsers.length > 0) && (
+        <FocusVideo onClick={exitFullscreen}>
           <LocalVideoTrack track={localCameraTrack} play={true} />
-        </div>
-      ) : (
-        <div
-          id="selfVideo"
-          className="absolute top-8 flex justify-center w-screen"
-        >
-          <div className={`inFocus bg-black`}>
-            <LocalVideoTrack track={localCameraTrack} play={true} />
-          </div>
-        </div>
+        </FocusVideo>
       )}
-      <div className="absolute top-8 h-screen w-screen flex flex-row flex-wrap justify-center gap-4 md:p-8">
+      {videoInFocus && (
+        <FocusVideo onClick={exitFullscreen}>{videoInFocus}</FocusVideo>
+      )}
+      <div className="h-screen w-screen">
         {remoteUsers.length === 1 && (
-          <div className="absolute flex justify-center w-screen">
-            {remoteUsers.map((user, index) => (
-              <div key={index} className={`inFocus bg-black`}>
-                <RemoteUser user={user} />
-              </div>
-            ))}
-          </div>
-        )}{" "}
+          <FocusVideo onClick={exitFullscreen}>
+            <RemoteUser user={remoteUsers[0]} videoPlayerConfig={vConfig} />
+          </FocusVideo>
+        )}
         {remoteUsers.length > 1 && (
-          <VideoShow toggleFocus={toggleFocus} users={remoteUsers} />
+          <VideoShow users={remoteUsers} makeFullscreen={makeFullscreen} />
         )}
       </div>
       <ControlBar
@@ -133,6 +134,10 @@ function Videos(props: { channelName: string; AppID: string }) {
         toggleVideo={() => {
           setVideo(!video);
         }}
+        toggleFocus={toggleFocus}
+        localCameraTrack={localCameraTrack}
+        otherUsers={remoteUsers.length > 0}
+        makeFullscreen={makeFullscreen}
       />
     </div>
   );
