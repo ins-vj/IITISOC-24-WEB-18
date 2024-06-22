@@ -1,0 +1,21 @@
+.trapeziumContainer {
+    position: relative;
+    width: 0px;
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(0, 0, 255, 0.2), transparent);
+    margin: 50px auto;
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+    border-top: 5px solid #0ff; /* Neon blue border */
+    box-shadow: 0 0 10px #0ff; /* Neon blue glow effect */
+
+    animation: width 1s ease forwards;
+  }
+
+  @keyframes width{
+    0%{
+      width: 0;
+    }
+    100%{
+      width: 700px;
+    }
+  }
