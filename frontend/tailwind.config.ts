@@ -27,9 +27,10 @@ const config: Config = {
         },
       },
       animation: {
-        backgroundPositionSpin:
-          "background-position-spin 3000ms infinite alternate",
+        backgroundPositionSpin: "background-position-spin 3000ms infinite alternate",
           ripple: "ripple 3400ms ease infinite",
+          gradient: "gradient 8s linear infinite",
+          shimmer: "shimmer 8s infinite",
       },
       keyframes: {
         "background-position-spin": {
@@ -42,6 +43,19 @@ const config: Config = {
           },
           "50%": {
             transform: "translate(-50%, -50%) scale(0.9)",
+          },
+        },
+        gradient: {
+          to: {
+            backgroundPosition: "var(--bg-size) 0",
+          },
+        },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
           },
         },
       },
