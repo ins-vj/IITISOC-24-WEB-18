@@ -2,6 +2,6 @@ migrations
 __pycache__
 backend/db.sqlite3
 node_modules
-expresso/.env
+frontend/.env
 .env
 .next
