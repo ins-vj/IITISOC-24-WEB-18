@@ -3,10 +3,9 @@
 
 
 import { useEffect, useState } from 'react';
-
-import Logo from '../logo/logo';
 import styles from './loading.module.css'
 import Image from 'next/image'
+import {NeonGradientCard} from '../neoncard/card'
 
 export default function Loader() {
 
@@ -20,7 +19,7 @@ export default function Loader() {
     }, [])
     const [loading3, setLoading3] = useState(true)
     useEffect(() => {
-        setTimeout(() => setLoading3(false), 3000)
+        setTimeout(() => setLoading3(false), 5000)
     }, [])
    
 
@@ -29,6 +28,7 @@ export default function Loader() {
             <div className=' flex justify-center items-center w-[100vw] h-[100vh] p-0 m-0 bg-black  '>
 
                 <div className={' gradient text-[5rem] '}>Connect</div>
+
 
             </div>
         )
@@ -48,9 +48,15 @@ export default function Loader() {
 
             if (loading3) {
                 return (
-                    <div className=' flex justify-center items-center w-[100vw] h-[100vh] p-0 m-0 bg-black  '>
+                    <div className=' flex justify-center items-center w-[100vw] h-[100vh] p-0 m-0 bg-black gap-[70px]  '>
 
-                        <div className={' gradient text-[5rem] '}>Grab A Cup</div>
+                        {/* <div className={' gradient text-[5rem] '}>Experience </div> */}
+
+                        <NeonGradientCard className="max-w-smn h-min w-[100px] items-center justify-center text-center">
+      <span className="pointer-events-none z-10 h-auto whitespace-pre-wrap bg-gradient-to-br from-[#ff2975] from-35% to-[#00FFF1] bg-clip-text text-center text-6xl font-bold leading-none tracking-tighter text-transparent dark:drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+        AI
+      </span>
+    </NeonGradientCard>
 
                     </div>
                 )
