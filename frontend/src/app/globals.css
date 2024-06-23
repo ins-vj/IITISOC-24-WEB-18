@@ -13,6 +13,7 @@ body {
   background: black;
   padding: 0;
   margin: 0;
+  overflow-x: hidden;
 }
 
 @layer utilities {
@@ -22,7 +23,7 @@ body {
 }
 
 .gradient {
-  background: linear-gradient(to right, #f79500, #f86400);
+  background: linear-gradient(to right, rgb(247, 149, 0), rgb(248, 100, 0));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;

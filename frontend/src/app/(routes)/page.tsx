@@ -60,10 +60,10 @@ export default function Home() {
   }else{
   return (
     <>
-    <Particle></Particle>
-    <Globe2 className="z-0"></Globe2>
-   <div className="h-[100vh] w-[100vw]">
-
+   <Particle></Particle>
+    
+   <div className="h-[100vh] w-[100vw] ">
+   <Globe2 className="z-0"></Globe2>
      <div className=" flex justify-between w-[100%] px-5 py-2">
           <div className=" z-10">
             <Image src="/data/logos/logo.png" alt="logo" width={150} height={100} />
@@ -89,7 +89,7 @@ export default function Home() {
 
    </div>
 
-      <div className={` bg-white flex flex-col h-[100vh]  w-[100vw] `}>
+      <div className={` bg-white flex flex-col h-[100vh] overflow-x-hidden  w-[100%] `}>
 
         <div className="absolute h-[100vh] w-[100vw]  overflow-hidden bg-white  p-20 ">
           <Ripple />
@@ -102,7 +102,9 @@ export default function Home() {
         </div>
 
        
-
+        <div className="z-10 text-[13rem] w-[100%] flex justify-center uppercase font-bold text-gray-500">
+          Friends
+        </div>
 
 
 
@@ -114,7 +116,7 @@ export default function Home() {
         <TextReveal text="Expresso changes the way you connect" />
         <div className=" absolute z-20 top-0">
 
-          <div className=" text-white text-[5rem] flex justify-center uppercase font-bold rotate-90 translate-y-44 -translate-x-24">
+          <div className=" text-white text-[10vw] flex justify-center uppercase font-bold -rotate-90 translate-y-96 -translate-x-80">
             Features
           </div>
 
