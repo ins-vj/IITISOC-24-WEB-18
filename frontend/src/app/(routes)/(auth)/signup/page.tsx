@@ -11,8 +11,8 @@ export default function SignUp() {
   return (
     <>
     
-  
-
+  signup
+    <Link href="/login">Already signed up? Login now</Link>
 
     </>
   );

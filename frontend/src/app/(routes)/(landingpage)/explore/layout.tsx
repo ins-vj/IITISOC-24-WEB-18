@@ -1,3 +1,4 @@
+
 export default function landingPageLayout({
     children,
   }: Readonly<{
@@ -6,7 +7,11 @@ export default function landingPageLayout({
     
     return (
         <>
-        <div className=" min-h-[100vh] ">{children}</div>
+       
+        <div className=" min-h-[100vh] ">
+  
+          {children}
+          </div>
         </>
     );
   }

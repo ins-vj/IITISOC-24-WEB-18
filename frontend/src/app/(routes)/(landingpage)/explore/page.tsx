@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-
+import Navbar from './components/navbar'
 import Loader from "./components/loading";
 import Link from "next/link";
+import Particle from '@/app/particlejs/particle'
 export default function Home() {
 
  
@@ -18,9 +19,13 @@ export default function Home() {
   }else{
   return (
     <>
+    <Particle/>
+    <div className="relative z-10">
+    <Navbar />
+    
+    
 
-    
-    
+    </div>
 
 
     </>
