@@ -106,16 +106,23 @@ function Videos(props: { channelName: string; AppID: string }) {
     );
 
   return (
-    <div id="videoBody" className="absolute h-screen w-screen">
+    <div
+      id="videoBody"
+      className="absolute h-screen w-screen flex flex-col md:flex-row md:justify-center items-center md:items-start"
+    >
       {!(remoteUsers.length > 0) && (
         <FocusVideo onClick={exitFullscreen}>
-          <LocalVideoTrack track={localCameraTrack} play={true} />
+          <LocalVideoTrack
+            track={localCameraTrack}
+            play={true}
+            videoPlayerConfig={vConfig}
+          />
         </FocusVideo>
       )}
       {videoInFocus && (
         <FocusVideo onClick={exitFullscreen}>{videoInFocus}</FocusVideo>
       )}
-      <div className="h-screen w-screen">
+      <div className="w-max">
         {remoteUsers.length === 1 && (
           <FocusVideo onClick={exitFullscreen}>
             <RemoteUser user={remoteUsers[0]} videoPlayerConfig={vConfig} />

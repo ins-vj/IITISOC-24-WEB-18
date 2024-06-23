@@ -8,8 +8,6 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-
-
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -18,8 +16,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 @layer utilities {
@@ -28,17 +26,11 @@ body {
   }
 }
 
-
-.gradient{
-
-  background: linear-gradient(to right , #F79500, #F86400);
+.gradient {
+  background: linear-gradient(to right, #f79500, #f86400);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
   font-weight: 700;
-
-
-
 }
-
