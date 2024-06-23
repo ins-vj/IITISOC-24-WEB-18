@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { RemoteUser } from "agora-rtc-react";
 import { VideoPlayerConfig } from "agora-rtc-sdk-ng";
+import { EmblaOptionsType } from "embla-carousel";
 
 const VideoShow = ({
   users,
@@ -16,12 +17,12 @@ const VideoShow = ({
     <div className="flex flex-row flex-wrap justify-center pt-8 gap-4 md:p-8">
       <div
         id="usersDiv"
-        className="flex flex-wrap flex-grow justify-center gap-4 h-max"
+        className="flex flex-wrap flex-1 justify-center gap-4 h-max"
       >
         {users.map((user, index) => (
           <div
             key={index}
-            className={`md:h-72 md:w-72 w-[45vw] aspect-square bg-black`}
+            className={`md:w-72 w-[45vw] aspect-[4/3] rounded-lg overflow-hidden bg-black`}
           >
             <RemoteUser
               user={user}

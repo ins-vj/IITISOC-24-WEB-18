@@ -11,10 +11,12 @@ const FocusVideo = ({
   return (
     <div
       id="focus-div"
-      className="absolute top-8 flex justify-center w-screen z-30"
+      className="mt-8 md:ml-6 rounded-lg overflow-hidden flex w-max z-30"
       onClick={onClick}
     >
-      <div className={`inFocus bg-black`}>{children}</div>
+      <div className={`md:h-[80vh] w-[95vw] aspect-[4/3] md:left-8 bg-black`}>
+        {children}
+      </div>
     </div>
   );
 };
