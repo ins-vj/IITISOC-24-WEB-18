@@ -13,11 +13,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body className="">
-        <Particle></Particle>
-        <Globe className="z-0"></Globe>
+        
         <div className="z-20 min-h-[100vh] w-[100vw] ">{children}</div>
       </body>
     </html>

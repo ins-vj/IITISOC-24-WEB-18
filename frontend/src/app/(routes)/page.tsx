@@ -11,6 +11,8 @@ import AnimatedGradientText from "@/components/gradienttext/gradienttext";
 import { ChevronRight } from "lucide-react";
 import TextReveal from "@/components/magicui/text-reveal";
 import IconCloud from "@/components/magicui/icon-cloud";
+import Globe2 from "@/components/purpleglobe/globe";
+import Particle from "@/components/particlejs/particle";
 
 export default function Home() {
 
@@ -55,13 +57,15 @@ export default function Home() {
     return <>
       <Loader />
     </>;
-  }
+  }else{
   return (
     <>
+    <Particle></Particle>
+    <Globe2 className="z-0"></Globe2>
    <div className="h-[100vh] w-[100vw]">
 
      <div className=" flex justify-between w-[100%] px-5 py-2">
-          <div className="">
+          <div className=" z-10">
             <Image src="/data/logos/logo.png" alt="logo" width={150} height={100} />
           </div>
           <div className="z-10 flex  items-center justify-center">
@@ -125,4 +129,5 @@ export default function Home() {
 
     </>
   );
+}
 }

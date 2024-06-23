@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.4.0",
     "agora-rtc-react": "^2.2.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.11",
