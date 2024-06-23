@@ -1,14 +1,12 @@
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-
-
+import Globe from "@/components/purpleglobe/globe";
+import Particle from "@/components/particlejs/particle";
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Expresso",
-  description: "Connect with friends and Family on Expresso",
-};
+
 
 export default function RootLayout({
   children,
@@ -17,8 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className=" ">
-        <div className=" min-h-[100vh] w-[100vw] ">{children}</div>
+      <body className="">
+        <Particle></Particle>
+        <Globe className="z-0"></Globe>
+        <div className="z-20 min-h-[100vh] w-[100vw] ">{children}</div>
       </body>
     </html>
   );
