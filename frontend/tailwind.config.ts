@@ -31,6 +31,7 @@ const config: Config = {
           ripple: "ripple 3400ms ease infinite",
           gradient: "gradient 8s linear infinite",
           shimmer: "shimmer 8s infinite",
+          "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
       },
       keyframes: {
         "background-position-spin": {
@@ -56,6 +57,11 @@ const config: Config = {
           },
           "30%, 60%": {
             "background-position": "calc(100% + var(--shimmer-width)) 0",
+          },
+        },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
           },
         },
       },
