@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.4.2",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.4.0",
     "agora-rtc-react": "^2.2.0",

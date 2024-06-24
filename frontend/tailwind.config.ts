@@ -1,11 +1,12 @@
 import type { Config } from "tailwindcss";
 const { colors: defaultColors } = require('tailwindcss/defaultTheme')
-
+const {nextui} = require("@nextui-org/react");
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -19,6 +20,7 @@ const config: Config = {
             "700": "#F86400",
             "600": "#F79500",
             "500": "#EBB652",
+            "400":  "#83570B",
         },
         "customblue": {
             "600": "#033B55",
@@ -68,6 +70,6 @@ const config: Config = {
 
     },
   },
-  plugins: [],
+  plugins: [nextui()],
 };
 export default config;
