@@ -11,10 +11,12 @@ export default function Loader() {
 
    
         return (
-            <div className='w-[100%] h-[100vh] flex justify-center items-center'>
-
-            <div className=' animate-spin'>
+            <div className='w-[100%] h-[100%] flex justify-center items-center '>
+<div className=''>
+  
+            <div className=' animate-spin '>
             <Logo width={80}/>
+            </div>
             </div>
 
             </div>
