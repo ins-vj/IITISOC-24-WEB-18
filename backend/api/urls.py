@@ -6,9 +6,9 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="VideoVive Backend",
+        title="Expresso Backend",
         default_version="v1",
-        description="Backend for VideoVive"
+        description="Backend for Expresso"
     ),
     public=True,
     permission_classes = (permissions.AllowAny, ),
