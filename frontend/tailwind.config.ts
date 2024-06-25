@@ -27,6 +27,17 @@ const config: Config = {
             "500": "#0E65A3",
             
         },
+        "customoffwhite": {
+            "500": "#FBFBFD",
+    
+            
+        },
+        "customtextblack": {
+            "500": "#101010",
+    
+            
+        },
+
       },
       animation: {
         backgroundPositionSpin: "background-position-spin 3000ms infinite alternate",
