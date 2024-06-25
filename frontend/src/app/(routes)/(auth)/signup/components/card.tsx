@@ -1,11 +1,13 @@
-
 import React from "react";
 import Logo from "./logo";
 import { Input, Button, Divider } from "@nextui-org/react";
 import Link from "next/link";
-import Image from 'next/image'
+import Image from "next/image";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
+import { register } from "@/helpers/auth";
+import toast from "react-hot-toast";
+
 export default function Card() {
   const [isVisible, setIsVisible] = React.useState(false);
   const [username, setUsername] = React.useState("");
@@ -13,8 +15,25 @@ export default function Card() {
   const [password, setPassword] = React.useState("");
   const [confirmpassword, setConfirmPassword] = React.useState("");
 
+  const onSubmit = () => {
+    const res1 = async () => {
+      const res = await register({
+        username: username,
+        email: email,
+        password1: password,
+        password2: confirmpassword,
+      });
+      if (res) {
+        toast.success("Account Created Successfully");
+      } else {
+        toast.error("Something went wrong");
+      }
+    };
+    res1();
+  };
 
-  const validateEmail = (email: any) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+  const validateEmail = (email: any) =>
+    email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
   const isInvalid = React.useMemo(() => {
     if (email === "") return false;
@@ -30,7 +49,7 @@ export default function Card() {
     return validateusername(username) ? false : true;
   }, [username]);
 
-  const validatepass = (password: any) => password.match( /^.{8,}$/);
+  const validatepass = (password: any) => password.match(/^.{8,}$/);
 
   const isPassInvalid = React.useMemo(() => {
     if (password === "") return false;
@@ -38,7 +57,8 @@ export default function Card() {
     return validatepass(password) ? false : true;
   }, [password]);
 
-  const validateconfirmpass = (confirmpassword: any) => confirmpassword.match(password);
+  const validateconfirmpass = (confirmpassword: any) =>
+    confirmpassword.match(password);
 
   const isConfirmPassInvalid = React.useMemo(() => {
     if (confirmpassword === "") return false;
@@ -51,7 +71,10 @@ export default function Card() {
     <div className="flex flex-col gap-[2.5rem] justify-around items-center relative z-10   backdrop-blur-md  rounded-[20px] border-[2px] border-customorange-400 p-14">
       <div className="flex gap-[20px]">
         <Logo width={60} />
-        <Divider className="h-[60px] bg-customorange-400" orientation="vertical" />
+        <Divider
+          className="h-[60px] bg-customorange-400"
+          orientation="vertical"
+        />
         <Link href="/googleauth">
           <Image src="/data/logos/google.png" alt="G" width={60} height={60} />
         </Link>
@@ -62,8 +85,7 @@ export default function Card() {
           isClearable
           isRequired
           type="text"
-        autoFocus
-        
+          autoFocus
           label="Username"
           isInvalid={isUsernameInvalid}
           color={isUsernameInvalid ? "danger" : "warning"}
@@ -75,23 +97,22 @@ export default function Card() {
           onValueChange={setUsername}
         />
         <Input
-        isDisabled={username === "" ? true : false}
+          isDisabled={username === "" ? true : false}
           isClearable
           isRequired
           type="email"
-
           label="Email"
           isInvalid={isInvalid}
           color={isInvalid ? "danger" : "warning"}
           errorMessage="Please enter a valid email"
-          // variant="underlined" 
+          // variant="underlined"
           size="sm"
           className="max-w-[25rem] dark"
           value={email}
           onValueChange={setEmail}
         />
         <Input
-          isDisabled={ isInvalid ? true : (email === "" ? true : false)}
+          isDisabled={isInvalid ? true : email === "" ? true : false}
           isClearable
           type="password"
           label="Password"
@@ -107,8 +128,7 @@ export default function Card() {
         <Input
           value={confirmpassword}
           onValueChange={setConfirmPassword}
-          isDisabled={isPassInvalid ? true : (password === "" ? true :false)}
-         
+          isDisabled={isPassInvalid ? true : password === "" ? true : false}
           isRequired
           label="Confirm Password"
           isInvalid={isConfirmPassInvalid}
@@ -117,7 +137,11 @@ export default function Card() {
           size="sm"
           // variant="underlined"
           endContent={
-            <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
+            <button
+              className="focus:outline-none"
+              type="button"
+              onClick={toggleVisibility}
+            >
               {isVisible ? (
                 <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
               ) : (
@@ -130,26 +154,24 @@ export default function Card() {
         />
 
         <div className=" text-customorange-600 flex justify-start w-[95%]">
-          <Link href="/login"><span>Already Signed Up?</span> </Link>
+          <Link href="/login">
+            <span>Already Signed Up?</span>{" "}
+          </Link>
           {/* <span>Forgot?</span>  */}
         </div>
       </div>
 
-
-      <Link  href="/login" className={isConfirmPassInvalid ? 'pointer-events-none w-[100%]' : (confirmpassword === "" ? 'pointer-events-none w-[100%]': 'w-[100%]')}  >
-      <Button isDisabled={isConfirmPassInvalid ? true : (confirmpassword === "" ? true : false)}  color="warning" variant="ghost" fullWidth={true}>
-       Sign In
+      <Button
+        isDisabled={
+          isConfirmPassInvalid ? true : confirmpassword === "" ? true : false
+        }
+        color="warning"
+        variant="ghost"
+        fullWidth={true}
+        onClick={onSubmit}
+      >
+        Sign In
       </Button>
-      </Link>
-
-
-
-
-
-
-
-
     </div>
-
   );
 }
