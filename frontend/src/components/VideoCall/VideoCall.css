@@ -2,3 +2,14 @@
   width: 90vw !important;
   height: 80vh !important;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.unscroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.unscroll1 {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
