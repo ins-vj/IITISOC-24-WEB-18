@@ -11,6 +11,7 @@ import { animate, motion, useDragControls } from "framer-motion";
 import { useRef } from "react";
 import { useContext } from "react";
 import arrowImg from "@/../public/icons/arrow.svg";
+import PersonIcon from "@mui/icons-material/Person";
 import { ReactElement } from "react";
 
 const ControlBar = ({
@@ -58,16 +59,15 @@ const ControlBar = ({
             dragElastic={0.9}
           >
             <div
-              className="aspect-square relative left-8 h-40 mb-2 rounded-lg overflow-hidden bg-gray-400"
+              className="relative left-8 h-40 mb-2 rounded-lg overflow-hidden bg-black md:aspect-[4/3] aspect-[3/4] border-2 border-solid border-[#1E2640]"
               id="selfVideo"
             >
-              <LocalVideoTrack
-                track={localCameraTrack}
-                play={true}
-                onClick={(e) => {
-                  makeFullscreen(<div>makeFullscreen</div>);
-                }}
-              />
+              {/* <div className="absolute w-full h-full flex justify-center items-center z-10">
+                <PersonIcon sx={{ color: "white", fontSize: 150 }} />
+              </div> */}
+              <div className="z-50 w-full h-full">
+                <LocalVideoTrack track={localCameraTrack} play={true} />
+              </div>
             </div>
           </motion.div>
         </div>
@@ -86,7 +86,7 @@ const ControlBar = ({
         className="relative pt-[10px]"
       >
         <div
-          className="h-6 w-8 bg-orange-900 bg-opacity-30"
+          className="h-6 w-8 bg-[#DC9750] bg-opacity-30"
           onClick={() => {
             setIsOpen(!isOpen);
           }}
@@ -99,11 +99,11 @@ const ControlBar = ({
           />
         </div>
         <div
-          className="flex justify-center gap-8 pt-4 pb-4 bg-orange-950 bg-opacity-20"
+          className="flex justify-center gap-8 pt-4 pb-4 bg-[#DC9750] bg-opacity-20"
           ref={controler}
         >
           <a
-            className=" bg-red-400 rounded-full hover:bg-red-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-[75px]"
+            className=" bg-red-400 rounded-full hover:bg-red-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-[75px] outline-4 outline outline-white"
             href="/"
           >
             <Image

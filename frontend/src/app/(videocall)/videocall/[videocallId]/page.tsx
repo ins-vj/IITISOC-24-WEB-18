@@ -12,9 +12,9 @@ const VideoCall = ({ params }: { params: { videocallId: string } }) => {
   const APP_ID = process.env.AGORA_APP_ID || "";
   return (
     <div className="w-screen h-screen relative">
-      <div className="absolute left-8 top-8 text-xl font-semibold">
+      {/* <div className="absolute left-8 top-8 text-xl font-semibold">
         {params.videocallId}
-      </div>
+      </div> */}
       <VideoCallComponent channelName={params.videocallId} appId={APP_ID} />
     </div>
   );

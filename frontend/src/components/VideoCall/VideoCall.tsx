@@ -18,9 +18,8 @@ import "./VideoCall.css";
 import ControlBar from "./ControlBar";
 import VideoShow from "./VideoShow";
 import FocusVideo from "./FocusVideo";
-import { divider } from "@nextui-org/react";
-import { CircularProgress } from "@nextui-org/react";
-import { VideoPlayerConfig } from "agora-rtc-sdk-ng";
+import { CircularProgress } from "@mui/material";
+import { VideoPlayerConfig } from "agora-rtc-react";
 
 function Videos(props: { channelName: string; AppID: string }) {
   const toggleFocus = (e: HTMLElement) => {
@@ -101,14 +100,15 @@ function Videos(props: { channelName: string; AppID: string }) {
   if (deviceLoading)
     return (
       <div className="flex flex-col items-center pt-40">
-        <CircularProgress color="warning" label="Loading..." />
+        <CircularProgress color="warning" />
+        Loading...
       </div>
     );
 
   return (
     <div
       id="videoBody"
-      className="absolute h-screen w-screen flex flex-col md:flex-row md:justify-center items-center md:items-start"
+      className="absolute h-screen w-screen flex flex-col md:flex-row md:justify-center items-center md:items-start bg-[#0d111c]"
     >
       {!(remoteUsers.length > 0) && (
         <FocusVideo onClick={exitFullscreen}>
@@ -122,7 +122,7 @@ function Videos(props: { channelName: string; AppID: string }) {
       {videoInFocus && (
         <FocusVideo onClick={exitFullscreen}>{videoInFocus}</FocusVideo>
       )}
-      <div className="w-max">
+      <div className="">
         {remoteUsers.length === 1 && (
           <FocusVideo onClick={exitFullscreen}>
             <RemoteUser user={remoteUsers[0]} videoPlayerConfig={vConfig} />
