@@ -1,11 +1,12 @@
 import type { Config } from "tailwindcss";
 const { colors: defaultColors } = require('tailwindcss/defaultTheme')
-
+const {nextui} = require("@nextui-org/react");
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -19,6 +20,7 @@ const config: Config = {
             "700": "#F86400",
             "600": "#F79500",
             "500": "#EBB652",
+            "400":  "#83570B",
         },
         "customblue": {
             "600": "#033B55",
@@ -31,6 +33,7 @@ const config: Config = {
           ripple: "ripple 3400ms ease infinite",
           gradient: "gradient 8s linear infinite",
           shimmer: "shimmer 8s infinite",
+          "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
       },
       keyframes: {
         "background-position-spin": {
@@ -58,10 +61,15 @@ const config: Config = {
             "background-position": "calc(100% + var(--shimmer-width)) 0",
           },
         },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
       },
 
     },
   },
-  plugins: [],
+  plugins: [nextui()],
 };
 export default config;

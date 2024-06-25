@@ -16,9 +16,9 @@ const GLOBE_CONFIG: COBEOptions = {
   diffuse: 0.4,
   mapSamples: 16000,
   mapBrightness: 1.2,
-  baseColor: [1, 1, 1],
-  markerColor: [251 / 255, 100 / 255, 21 / 255],
-  glowColor: [0.7, 0.7, 0.7],
+  baseColor: [0.2, 0.2, 0.3], // Soothing dark blue color
+  markerColor: [0.5, 0.5, 0.7], // Orange marker color
+  glowColor: [0.5, 0.5, 0.7],
   markers: [
     { location: [14.5995, 120.9842], size: 0.03 },
     { location: [19.076, 76.8777], size: 0.1 },
@@ -43,7 +43,7 @@ export default function Globe({
   let phi = 0;
   let width = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerInteracting = useRef(null);
+  const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
   const [{ r }, api] = useSpring(() => ({
     r: 0,
@@ -55,12 +55,14 @@ export default function Globe({
     },
   }));
 
-  const updatePointerInteraction = (value: any) => {
+  const updatePointerInteraction = (value: number | null) => {
     pointerInteracting.current = value;
-    canvasRef.current!.style.cursor = value ? "grabbing" : "grab";
+    if (canvasRef.current) {
+      canvasRef.current.style.cursor = value ? "grabbing" : "grab";
+    }
   };
 
-  const updateMovement = (clientX: any) => {
+  const updateMovement = (clientX: number) => {
     if (pointerInteracting.current !== null) {
       const delta = clientX - pointerInteracting.current;
       pointerInteractionMovement.current = delta;
@@ -75,7 +77,7 @@ export default function Globe({
       state.width = width * 2;
       state.height = width * 2;
     },
-    [pointerInteracting, phi, r],
+    [pointerInteracting, phi, r]
   );
 
   const onResize = () => {
@@ -95,25 +97,29 @@ export default function Globe({
       onRender,
     });
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"));
+    setTimeout(() => {
+      if (canvasRef.current) {
+        canvasRef.current.style.opacity = "1";
+      }
+    }, 0);
     return () => globe.destroy();
-  }, []);
+  }, [config, onRender]);
 
   return (
     <div
       className={cn(
-        "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[750px] brightness-[0.85]",
-        className,
+        "fixed bottom-[0%] left-[50%] transform -translate-x-1/2 translate-y-1/2 z-[10] aspect-[1/1] w-[70vw] ",
+        className
       )}
     >
       <canvas
         className={cn(
-          "h-full w-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]",
+          "h-full w-full opacity-0 brightness-[0.85] saturate-[0.8] transition-opacity duration-500 [contain:layout_paint_size]"
         )}
         ref={canvasRef}
         onPointerDown={(e) =>
           updatePointerInteraction(
-            e.clientX - pointerInteractionMovement.current,
+            e.clientX - pointerInteractionMovement.current
           )
         }
         onPointerUp={() => updatePointerInteraction(null)}

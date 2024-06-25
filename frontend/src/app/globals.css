@@ -3,34 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  --background-color: #ffffff; 
+  --text-color: #333333;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  padding: 0;
-  margin: 0;
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: rgb(16, 16,16); 
+    --text-color: #ffffff; 
   }
 }
 
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
 .gradient {
-  background: linear-gradient(to right, #f79500, #f86400);
+  background: linear-gradient(to right, rgb(247, 149, 0), rgb(248, 100, 0));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
   font-weight: 700;
 }
+
+
