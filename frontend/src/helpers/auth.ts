@@ -19,16 +19,48 @@ function getCookie(name: string) {
 
 export interface LoginPostData {
   username: string;
-  email: string;
   password: string;
 }
 
 export interface RegisterPostData {
   username: string;
+  email: string;
   password1: string;
   password2: string;
 }
 
-export interface LoginApiResponse {
-  key: string;
+export async function login(data: LoginPostData) {
+  const csrftoken = getCookie("csrftoken")!;
+  const response = await fetch(`${BASE_URL}/auth/login/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
+    },
+    body: JSON.stringify(data),
+  });
+  return response.ok;
+}
+
+export async function logOut() {
+  const csrftoken = getCookie("csrftoken")!;
+  const data = await fetch(`${BASE_URL}/auth/logout/`, {
+    method: "POST",
+    cache: "no-store",
+    credentials: "include",
+    headers: { "X-CSRFToken": csrftoken },
+  });
+  const logoutData = await data.json();
+  return logoutData;
+}
+
+export async function register(data: RegisterPostData) {
+  const response = await fetch(`${BASE_URL}/auth/registration/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.ok;
 }
