@@ -1,7 +1,9 @@
 const API_BACKEND = process.env.NEXT_PUBLIC_API_URL;
 const BASE_URL = `${API_BACKEND}/api/v1`;
 
-function getCookie(name: string) {
+import { getCookie } from "cookies-next";
+
+function getCSRFCookie(name: string) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -26,12 +28,18 @@ export interface UserDetailsFC {
 }
 
 export async function getUserDetails() {
-  const csrftoken = getCookie("csrftoken")!;
+  const csrftoken = getCSRFCookie("csrftoken")!;
+  const accessToken = getCookie("accessToken");
+  console.log(accessToken);
   const data = await fetch(`${BASE_URL}/auth/user/`, {
     cache: "no-store",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
-  const userData: UserDetailsFC = await data.json();
+  console.log(data);
+  const userData = await data.json();
   return userData;
 }

@@ -1,7 +1,9 @@
 const API_BACKEND = process.env.NEXT_PUBLIC_API_URL;
 const BASE_URL = `${API_BACKEND}/api/v1`;
 
-function getCookie(name: string) {
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
+
+function getCSRFCookie(name: string) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -30,8 +32,8 @@ export interface RegisterPostData {
 }
 
 export async function login(data: LoginPostData) {
-  const csrftoken = getCookie("csrftoken")!;
-  const response = await fetch(`${BASE_URL}/auth/login/`, {
+  const csrftoken = getCSRFCookie("csrftoken")!;
+  const response = await fetch(`${BASE_URL}/token/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -39,11 +41,16 @@ export async function login(data: LoginPostData) {
     },
     body: JSON.stringify(data),
   });
+  const res = await response.json();
+  console.log(res);
+  if (response.ok) {
+    setCookie("accessToken", res.access);
+  }
   return response.ok;
 }
 
 export async function logOut() {
-  const csrftoken = getCookie("csrftoken")!;
+  const csrftoken = getCSRFCookie("csrftoken")!;
   const data = await fetch(`${BASE_URL}/auth/logout/`, {
     method: "POST",
     cache: "no-store",
@@ -51,6 +58,9 @@ export async function logOut() {
     headers: { "X-CSRFToken": csrftoken },
   });
   const logoutData = await data.json();
+  // if (data.ok) {
+  //   deleteCookie("accessToken");
+  // }
   return logoutData;
 }
 

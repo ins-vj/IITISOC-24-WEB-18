@@ -21,7 +21,7 @@ export default function Card() {
       const res = await login({ username: username, password: password });
       if (res) {
         toast.success("Logged in SuccessFully");
-        router.push("/dashboard");
+        // router.push("/dashboard");
       } else {
         toast.error("Email or password wrong");
       }
