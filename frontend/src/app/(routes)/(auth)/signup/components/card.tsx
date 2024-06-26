@@ -7,6 +7,7 @@ import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { register } from "@/helpers/auth";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Card() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -14,6 +15,7 @@ export default function Card() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmpassword, setConfirmPassword] = React.useState("");
+  const router = useRouter();
 
   const onSubmit = () => {
     const res1 = async () => {
@@ -25,6 +27,7 @@ export default function Card() {
       });
       if (res) {
         toast.success("Account Created Successfully");
+        router.push("/login");
       } else {
         toast.error("Something went wrong");
       }
