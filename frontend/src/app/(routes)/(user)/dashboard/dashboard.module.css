@@ -1,0 +1,12 @@
+.scroll::-webkit-scrollbar {
+    display: none;
+    scroll-behavior: smooth;
+  }
+  
+
+  .scroll {
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    scroll-behavior: smooth;
+  }
+
