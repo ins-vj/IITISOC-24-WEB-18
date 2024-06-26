@@ -49,7 +49,7 @@ export default function joinroom() {
         color="default"
         value={link}
         onValueChange={setLink}
-        label="Link" />
+        label="Code" />
         
 
       <div className=" flex flex-row gap-[10px] justify-between">

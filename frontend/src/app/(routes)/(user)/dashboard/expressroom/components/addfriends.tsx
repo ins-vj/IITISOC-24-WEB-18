@@ -13,7 +13,7 @@ export default function App() {
       placeholder="Select a user"
       // labelPlacement="outside"
       classNames={{
-        base: "w-min min-w-[400px]",
+        base: " w-[100%]",
         trigger: "min-h-12 py-2",
       }}
       renderValue={(items) => {
