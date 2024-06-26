@@ -1,0 +1,92 @@
+.wrapper {
+    position: relative;
+    height: 400vh;
+
+}
+
+.features {
+    height: 100vh;
+    display: flex;
+    position: sticky;
+    top: 0;
+}
+
+.left {
+    writing-mode: vertical-rl; /* Rotates the text vertically from right to left */
+    text-orientation: upright; /* Keeps each character upright */
+    font-size: 6rem;
+    font-weight: 600;
+    letter-spacing: -1rem;
+    color: #f86400;
+}
+
+.right {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.top {
+    display: flex;
+
+    height: 81vh;
+}
+.topLeftWrapper {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 70%;
+    /* align-items: center; */
+    /* justify-content: center; */
+    overflow: hidden;
+    border-radius: 48px;
+    border: 1px solid black;
+    background-color: black;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+.topRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 1rem;
+    width: 90%;
+
+}
+.card
+{
+    background-color: black;
+    height: 26vh;
+    padding: 1rem;
+    border-radius: 48px;
+    width: 90%;
+    /* background-color: aqua; */
+}
+.card h2{
+    font-size: 1.8rem;
+    font-weight: 700;
+
+}
+.bottom {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end; /* Align the text reveal at the bottom */
+    padding-bottom: 2rem; /* Add padding if necessary */
+}
+
+.textContainer {
+    
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    
+    
+}
+.letter{
+    margin-right: 0.5rem; /* Add space after each word */
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #f86400;
+}

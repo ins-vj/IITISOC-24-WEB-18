@@ -4,6 +4,8 @@ import Navbar from './components/navbar'
 import Loader from "./components/loading";
 import Link from "next/link";
 
+import Page1 from "./Pages/page1";
+import Features from "./Pages/Features/Features";
 export default function Home() {
 
  
@@ -22,7 +24,8 @@ export default function Home() {
     
     <div className="relative z-10">
     <Navbar />
-    
+    <Page1></Page1>
+    <Features></Features>
     
 
     </div>

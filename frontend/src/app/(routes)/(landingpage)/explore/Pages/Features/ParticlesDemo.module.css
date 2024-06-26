@@ -1,0 +1,59 @@
+.topLeftWrapper {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 70%;
+    /* align-items: center; */
+    /* justify-content: center; */
+    overflow: hidden;
+    border-radius: 48px;
+    border: 1px solid black;
+    background-color: black;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .topLeft {
+    padding: 1rem;
+    pointer-events: none;
+    position: relative;
+    z-index: 10;
+    white-space: pre-wrap;
+    background: linear-gradient(to bottom, black, rgba(128, 128, 128, 0.8));
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* text-align: center; */
+    font-weight: 600;
+    line-height: 1;
+    color: white;
+  }
+
+.topLeft ul{
+    margin-top: 2rem;
+display: flex;
+flex-direction: column;
+    row-gap: 1rem;
+}
+.topLeft li::before{
+    content: "• ";
+    
+}
+.topLeft h1{
+font-size: 2rem;
+font-weight: 700;
+}
+  
+  @media (min-width: 768px) {
+    .title {
+      font-size: 1rem;
+    }
+  }
+  
+  .particles {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
