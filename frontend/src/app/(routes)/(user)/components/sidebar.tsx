@@ -3,7 +3,9 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import PeopleIcon from '@mui/icons-material/People';
 import FlareIcon from '@mui/icons-material/Flare';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import InsightsIcon from '@mui/icons-material/Insights';
 export default function sidebar(){
 
 
@@ -14,6 +16,10 @@ export default function sidebar(){
 <Logo width={50}></Logo>
 <div className=' flex flex-col gap-[15px]'>
 <div  className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
+<CameraIndoorIcon fontSize='small' color='action' />
+</div>
+
+<div  className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
 <PeopleIcon fontSize='small' color='action' />
 </div>
 
@@ -22,7 +28,10 @@ export default function sidebar(){
 </div>
 
 <div  className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-<FlareIcon fontSize='small' color='action' />
+<AutoAwesomeIcon fontSize='small' color='action' />
+</div>
+<div  className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
+<InsightsIcon fontSize='small' color='action' />
 </div>
 </div>
 

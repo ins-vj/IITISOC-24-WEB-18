@@ -3,7 +3,7 @@ import Dot from '../components/dot'
 import Sidebar from '../components/sidebar'
 import Topbar from '../components/topbar'
 import Ripple from '../components/ripple'
-
+import styles from './dashboard.module.css'
 
 
 
@@ -13,6 +13,8 @@ export default function userLayout({
   }: Readonly<{
     children: React.ReactNode;
   }>) {
+
+    
     
     return (
         <>
@@ -21,7 +23,9 @@ export default function userLayout({
     <Sidebar />
     <div className=' flex flex-col w-[100%] h-[100%]'>
     <Topbar />
+    <div className={`w-[100%] h-[100%] p-[15px] overflow-y-auto flex flex-col ${styles.scroll} `}>
       {children}
+      </div>
       </div>
  
 
