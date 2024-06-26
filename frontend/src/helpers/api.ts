@@ -39,7 +39,6 @@ export async function getUserDetails() {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  console.log(data);
   const userData = await data.json();
   return userData;
 }

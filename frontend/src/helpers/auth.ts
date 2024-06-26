@@ -42,7 +42,6 @@ export async function login(data: LoginPostData) {
     body: JSON.stringify(data),
   });
   const res = await response.json();
-  console.log(res);
   if (response.ok) {
     setCookie("accessToken", res.access);
   }
@@ -58,9 +57,9 @@ export async function logOut() {
     headers: { "X-CSRFToken": csrftoken },
   });
   const logoutData = await data.json();
-  // if (data.ok) {
-  //   deleteCookie("accessToken");
-  // }
+  if (data.ok) {
+    deleteCookie("accessToken");
+  }
   return logoutData;
 }
 
