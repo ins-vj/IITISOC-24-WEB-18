@@ -1,6 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
+const APP_ID = process.env.AGORA_APP_ID || "";
 const VideoCallComponent = dynamic(
   () => import("@/components/VideoCall/VideoCall"),
   {
@@ -9,7 +10,6 @@ const VideoCallComponent = dynamic(
 );
 
 const VideoCall = ({ params }: { params: { videocallId: string } }) => {
-  const APP_ID = process.env.AGORA_APP_ID || "";
   return (
     <div className="w-screen h-screen relative">
       {/* <div className="absolute left-8 top-8 text-xl font-semibold">

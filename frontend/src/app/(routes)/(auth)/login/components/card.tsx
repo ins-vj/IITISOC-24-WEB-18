@@ -7,18 +7,21 @@ import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { login } from "@/helpers/auth";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Card() {
   const [isVisible, setIsVisible] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [username, setusername] = React.useState("");
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const router = useRouter();
 
   const onSubmit = () => {
     const s1 = async () => {
       const res = await login({ username: username, password: password });
       if (res) {
         toast.success("Logged in SuccessFully");
+        router.push("/dashboard");
       } else {
         toast.error("Email or password wrong");
       }
