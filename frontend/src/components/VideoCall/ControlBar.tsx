@@ -12,10 +12,14 @@ import { useRef } from "react";
 import arrowImg from "@/../public/icons/arrow.svg";
 import PersonIcon from "@mui/icons-material/Person";
 import { ReactElement } from "react";
+import ScreenShareIcon from "@mui/icons-material/ScreenShare";
+import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
 
 const ControlBar = ({
   video,
   audio,
+  screenShare,
+  toggleScreenShare,
   toggleVideo,
   toggleAudio,
   localCameraTrack,
@@ -25,6 +29,8 @@ const ControlBar = ({
 }: {
   video: boolean;
   audio: boolean;
+  screenShare: boolean;
+  toggleScreenShare: () => void;
   toggleVideo: () => void;
   toggleAudio: () => void;
   localCameraTrack: ILocalVideoTrack | null;
@@ -68,7 +74,11 @@ const ControlBar = ({
                 {emotion}
               </div>
               <div className="z-50 w-full h-full">
-                <LocalVideoTrack track={localCameraTrack} play={true} />
+                <LocalVideoTrack
+                  className="aspect-[3/4] md:aspect-[4/3]"
+                  track={localCameraTrack}
+                  play={true}
+                />
               </div>
             </div>
           </motion.div>
@@ -161,6 +171,20 @@ const ControlBar = ({
                 width={55}
                 style={{ margin: "10px" }}
                 alt="icon"
+              />
+            )}
+          </div>
+          <div
+            className={`relative rounded-full aspect-square w-[75px] outline-4 outline outline-white ${
+              !screenShare ? "bg-red-400" : "bg-transparent"
+            }`}
+            onClick={toggleScreenShare}
+          >
+            {!screenShare ? (
+              <ScreenShareIcon style={{ width: 55, height: 55, margin: 10 }} />
+            ) : (
+              <StopScreenShareIcon
+                style={{ width: 55, height: 55, margin: 10 }}
               />
             )}
           </div>
