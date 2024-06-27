@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import Particle from "./components/particle";
+import Particle from "@/components/login/particle";
 import Image from "next/image";
-import Card from "./components/card";
+import Card from "@/components/login/card";
 import { getUserDetails } from "@/helpers/api";
 import { useEffect, useState } from "react";
 import { UserDetailsFC } from "@/helpers/api";

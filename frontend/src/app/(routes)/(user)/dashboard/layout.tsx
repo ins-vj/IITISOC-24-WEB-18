@@ -1,8 +1,8 @@
 
-import Dot from '../components/dot'
-import Sidebar from '../components/sidebar'
-import Topbar from '../components/topbar'
-import Ripple from '../components/ripple'
+import Dot from '../../../../components/dashboard/dot'
+import Sidebar from '../../../../components/dashboard/sidebar'
+import Topbar from '../../../../components/dashboard/topbar'
+import Ripple from '../../../../components/dashboard/ripple'
 import styles from './dashboard.module.css'
 
 
