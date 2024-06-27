@@ -1,5 +1,5 @@
 "use client";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input,Tooltip } from "@nextui-org/react";
 
 import { useState } from 'react';
 import UpcomingIcon from '@mui/icons-material/Upcoming';
@@ -13,9 +13,11 @@ import Shine from './shine'
 import {DatePicker} from "@nextui-org/react";
 import {now, getLocalTimeZone} from "@internationalized/date";
 import FriendPicker from "./addfriends";
-
+import PublicIcon from '@mui/icons-material/Public';
+import SecurityIcon from '@mui/icons-material/Security';
+import HelpIcon from '@mui/icons-material/Help';
 export default function joinroom() {
-
+    const [isPrivate , setIsPrivate] = useState(true);
     const [value, setValue] = React.useState(parseZonedDateTime(`${now(getLocalTimeZone())}`));
    
     const [date, setDate] = React.useState(`${now(getLocalTimeZone()).toString().substring(0,10)}`);
@@ -43,7 +45,7 @@ export default function joinroom() {
 
             <div className=" flex flex-row gap-[10px] justify-between">
 
-                <Button color="danger" size="lg" startContent={<SettingsSuggestIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
+                <Button color="secondary" size="lg" startContent={<SettingsSuggestIcon fontSize='small' />} radius="full" variant="solid" className="  text-white" >
                     Create Custom Room
                 </Button>
 
@@ -66,9 +68,53 @@ export default function joinroom() {
         onChange={valueHandler}
       />
 
-      <div>Invite Friends</div>
 
-        <FriendPicker />
+
+<div className="flex items-center justify-between ">
+
+     
+
+<div className=" relative min-w-[215px] max-w-[215px] h-[2.75rem] flex justify-between items-center  rounded-xl border-[2px] border-default-200 p-[3px]">
+
+<div className=" absolute -z-10 flex items-center justify-center h-[calc(100%-6px)] bg-purple-800 rounded-lg w-[calc(50%-5px)] transition-left duration-200" style={{left : isPrivate ? "3px" : "107.5px"}}>
+      
+    </div>
+
+<div onClick={()=>setIsPrivate(true)} className="flex items-center justify-center h-[100%]   rounded-lg w-[calc(50%-1.5px)] text-white " style={{opacity : isPrivate ? "1" : "0.6"}}>
+      <SecurityIcon/>
+      <span>Private</span>
+    </div>
+    <div onClick={()=>setIsPrivate(false)} className="flex items-center justify-center h-[100%]  rounded-lg w-[calc(50%-1.5px)] text-white" style={{opacity : !isPrivate ? "1" : "0.6"}}>
+      <PublicIcon/>
+      <span>Public</span>
+    </div>
+
+</div>
+
+<Tooltip offset={30} content="In Public rooms, users cannot freely share any video or audio" placement="bottom-end" className="text-white w-[400px]" color="secondary">
+<HelpIcon fontSize='small' color='secondary' />
+</Tooltip>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div className=" text-default-500">Invite Friends</div>
+
+        <FriendPicker color="secondary" />
 
 
 
@@ -76,7 +122,7 @@ export default function joinroom() {
 
       
       <div className="w-[400px] flex gap-[18px] items-center ">
-        <UpcomingIcon fontSize='small' color='error' />
+        <UpcomingIcon fontSize='small' color='secondary' />
         <div className="text-default-500 text-sm text-justify">
         Friends will be notified about the upcoming meeting scheduled on {date} at {time} {zone}
         </div>
