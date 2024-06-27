@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: rgb(16, 16,16); 
+    --background-color: rgb(10, 10, 10); 
     --text-color: #ffffff; 
   }
 }
@@ -25,6 +25,22 @@ body {
   color: var(--text-color);
   font-family: Arial, sans-serif;
   overflow-x: hidden;
+
+  
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(90, 90, 90);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
 }
 
 .gradient {
@@ -49,3 +65,19 @@ body {
 .list svg{
   filter: invert(1);
 }
+
+.button3d{
+  background: linear-gradient(to left, rgb(247, 149, 0), rgb(248, 100, 0));
+  box-shadow: inset 0px 0px 20px 3px  black;
+}
+
+.button3dwrap{
+  background: linear-gradient(to top, rgb(247, 149, 0), rgb(248, 100, 0));
+  
+}
+
+.button3dwrap:hover{
+  background: linear-gradient(to bottom, rgb(247, 149, 0), rgb(248, 100, 0));
+  
+}
+

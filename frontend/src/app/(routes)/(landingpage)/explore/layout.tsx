@@ -9,9 +9,13 @@ export default function landingPageLayout({
         <>
        
         <div className=" min-h-[100vh] ">
-  
+
+         
           {children}
+
           </div>
+  
+         
         </>
     );
   }

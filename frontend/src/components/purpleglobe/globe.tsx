@@ -108,7 +108,7 @@ export default function Globe({
   return (
     <div
       className={cn(
-        "fixed bottom-[0%] left-[50%] transform -translate-x-1/2 translate-y-1/2 z-[10] aspect-[1/1] w-[70vw] ",
+        "absolute bottom-[50%] left-[90vw] transform -translate-x-1/2 translate-y-1/2 z-[10] aspect-[1/1] w-[70vw] ",
         className
       )}
     >
