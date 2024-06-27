@@ -6,8 +6,6 @@ import cameraOn from "@/../public/icons/camera_on.svg";
 import micOff from "@/../public/icons/mic_off.svg";
 import cameraOff from "@/../public/icons/camera_off.svg";
 import Image from "next/image";
-// import { Camera } from "react-camera-pro";
-// import { TextDecoder } from "web-encoding";
 
 const Detector = () => {
   const webcamRef = useRef<Webcam>(null);
