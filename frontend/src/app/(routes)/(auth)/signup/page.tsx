@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
-import Particle from "./components/particle";
+import Particle from "@/components/signup/particle";
 import Image from "next/image";
-import Card from "./components/card";
+import Card from "@/components/signup/card";
 
 export default function SignUp() {
   return (

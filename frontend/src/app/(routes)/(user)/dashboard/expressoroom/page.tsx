@@ -1,20 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import Loader from "../../components/loader";
-import Link from "next/link";
-import Image from "next/image";
-import Sidebar from "../../components/sidebar";
-import Topbar from "../../components/topbar";
-import Calender from "../../components/calender";
-import { Button, Input } from "@nextui-org/react";
-import Quickroom from "./components/quickroom";
-import Joinroom from "./components/joinroom";
-import Customroom from "./components/customroom";
-import Upcoming from "./components/upcoming";
-import Tasks from "./components/tasks";
-import WordRotate from "../../components/word-rotate";
-import TypingAnimation from "../../components/typinganimation";
+import Loader from "@/components/dashboard/loader";
+import Quickroom from "@/components/dashboard/room/quickroom";
+import Joinroom from "@/components/dashboard/room/joinroom";
+import Customroom from "@/components/dashboard/room/customroom";
+import Upcoming from "@/components/dashboard/room/upcoming";
+import Tasks from "@/components/dashboard/room/tasks";
+import WordRotate from "@/components/dashboard/word-rotate";
+import TypingAnimation from "@/components/dashboard/typinganimation";
 
 
 export default function Dashboard() {

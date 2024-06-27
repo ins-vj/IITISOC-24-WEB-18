@@ -17,11 +17,9 @@ export default function Navbar() {
 
       <div className=" flex">
         <div>
-          <Link href="/login">
-            <div className="z-10 flex items-center justify-center px-[2rem]">
-              
+          <Link href="/login" className=" w-[200px] h-[100px] relative z-50">
+            <div className="z-10 flex items-center justify-center px-[2rem] text-[1.3rem]">
                   Log In
-                
             </div>
           </Link>
         </div>

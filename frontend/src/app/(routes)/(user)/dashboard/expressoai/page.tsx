@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import Loader from "../../components/loading";
-import WordRotate from "../../components/word-rotate";
-import TypingAnimation from "../../components/typinganimation";
+import Loader from "../../../../../components/dashboard/loading";
+import WordRotate from "../../../../../components/dashboard/word-rotate";
+import TypingAnimation from "../../../../../components/dashboard/typinganimation";
 
 
 

@@ -1,16 +1,12 @@
 "use client";
 import React from "react";
 import { useEffect, useState, useRef } from "react";
-import Navbar from './components/navbar'
-import Loader from "./components/loading";
+import Navbar from '@/components/landingpage/navbar'
+import Loader from "@/components/landingpage/loading";
 import Link from "next/link";
-import Text from "./components/text";
-import Page1 from "./Pages/page1";
+import Text from "@/components/landingpage/text";
 import Features from "./Pages/Features/Features";
-import { VelocityScroll } from "./components/scroll-based-velocity";
-import Light from "@/components/Trapezium/Trapezium"
 import Emogrid from "@/components/emogrid/emogrid";
-import Emogrid2 from "@/components/emogrid2/emogrid";
 import Globe from "@/components/purpleglobe/globe";
 
 export default function Home() {
@@ -73,7 +69,7 @@ export default function Home() {
 
             <Link href="/signup" className="relative w-[100%] " >
 
-              <div className=" flex justify-center items-center w-[100%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold "> Sign Up</div>
+              <div className="z-100 flex justify-center items-center w-[100%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold "> Sign Up</div>
             </Link>
 
 
