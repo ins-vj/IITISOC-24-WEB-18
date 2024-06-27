@@ -49,7 +49,7 @@ const VideoShow = ({
               </div>
             )}
 
-            <RemoteUser user={user} videoPlayerConfig={vConfig} />
+            <RemoteUser user={user} />
           </div>
         ))}
       </div>
