@@ -10,7 +10,7 @@ export default function Hero() {
 
     return (
         <div id={styles.hero} >
-            <div className="heroContainer">
+            <div className="heroContainer ">
                 <div className={styles.hero1}></div>
                 <div className={styles.hero2}></div>
                 <div className={styles.hero3}></div>

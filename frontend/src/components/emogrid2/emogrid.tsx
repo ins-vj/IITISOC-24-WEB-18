@@ -40,11 +40,11 @@ return(
                             <div className={styles.gridblock}><div><Image src={data[getRandomInteger()]} width={30} height={30} alt=""></Image></div></div>
                             <div className={styles.gridblock}><div></div></div>
 
-                            <div className={styles.gridblock}><div></div></div>
+                            <div ></div>
                             <div className={styles.gridblock}><div></div></div>
                             <div className={styles.gridblock}><div><Image src={data[getRandomInteger()]} width={30} height={30} alt=""></Image></div></div>
                             <div className={styles.gridblock}><div></div></div>
-                            <div ></div>
+                            <div className={styles.gridblock}><div></div></div>
                             
                             {/* <div className={styles.gridblock}><div></div></div>
                             <div className={styles.gridblock}><div></div></div>
@@ -58,11 +58,11 @@ return(
                             <div ></div>
                             <div ></div>
 
-                            <div className={styles.gridblock}><div></div></div>
+                            <div ></div>
                             <div className={styles.gridblock}><div><Image src={data[getRandomInteger()]} width={30} height={30} alt=""></Image></div></div>
                             <div></div>
                             <div className={styles.gridblock}><div></div></div>
-                            <div ></div>
+                            <div className={styles.gridblock}><div></div></div>
                             
                             
                             </div>
