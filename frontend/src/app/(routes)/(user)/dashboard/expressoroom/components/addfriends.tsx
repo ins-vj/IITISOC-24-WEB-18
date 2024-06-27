@@ -1,11 +1,12 @@
 import React from "react";
 import {Select, SelectItem, Avatar, Chip} from "@nextui-org/react";
 import {users} from "./data";
+import { cloudProps } from "@/components/magicui/icon-cloud";
 
-export default function App() {
+export default function App(props: any) {
   return (
     <Select
-    
+      color={props.color}
       items={users}
       variant="bordered"
       isMultiline={true}

@@ -91,7 +91,7 @@ export default function joinroom() {
 
 </div>
 
-<Tooltip offset={30} content="In Public rooms, users cannot freely share any video or audio" placement="bottom-end" className="text-white w-[300px]" color="secondary">
+<Tooltip offset={30} content="In Public rooms, users cannot freely share any video or audio" placement="bottom-end" className="text-white w-[400px]" color="secondary">
 <HelpIcon fontSize='small' color='secondary' />
 </Tooltip>
 
@@ -114,7 +114,7 @@ export default function joinroom() {
 
       <div className=" text-default-500">Invite Friends</div>
 
-        <FriendPicker />
+        <FriendPicker color="secondary" />
 
 
 

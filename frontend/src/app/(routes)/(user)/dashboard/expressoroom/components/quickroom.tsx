@@ -102,7 +102,7 @@ export default function quickroom() {
 
       <div className=" text-default-500">Invite Friends</div>
 
-      <FriendPicker />
+      <FriendPicker color="warning" />
 
       <div className="w-[100%] flex gap-[18px] items-center ">
         <UpcomingIcon fontSize='small' color='error' />
