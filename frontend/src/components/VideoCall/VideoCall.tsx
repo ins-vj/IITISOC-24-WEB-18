@@ -2,6 +2,8 @@
 
 import AgoraRTC, {
   AgoraRTCProvider,
+  ILocalAudioTrack,
+  ILocalVideoTrack,
   LocalVideoTrack,
   RemoteUser,
   useJoin,
@@ -11,45 +13,30 @@ import AgoraRTC, {
   useRTCClient,
   useRemoteAudioTracks,
   useRemoteUsers,
+  IAgoraRTCClient,
+  useRTCScreenShareClient,
+  AgoraRTCScreenShareProvider,
 } from "agora-rtc-react";
 import { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-react";
-import { ReactElement, ReactHTML, useEffect, useState } from "react";
+import { ReactElement, ReactHTML, useEffect, useRef, useState } from "react";
 import "./VideoCall.css";
 import ControlBar from "./ControlBar";
 import VideoShow from "./VideoShow";
 import FocusVideo from "./FocusVideo";
 import { CircularProgress } from "@mui/material";
 import { VideoPlayerConfig } from "agora-rtc-react";
+import * as faceapi from "@vladmandic/face-api";
+import { useLocalScreenTrack } from "agora-rtc-react";
+import { ILocalTrack } from "agora-rtc-react";
 
-function Videos(props: { channelName: string; AppID: string }) {
-  const toggleFocus = (e: HTMLElement) => {
-    if (e.classList.contains("inFocus")) {
-      e.classList.remove("inFocus");
-      document.getElementById("focus-div")?.classList.add("invisible");
-      document.getElementById("focus-div")?.classList.remove("visible");
-      if (e.id === "selfVideo") {
-        e.className =
-          "aspect-square fixed h-40 right-8 bottom-8 rounded-lg overflow-hidden bg-gray-400 z-40";
-        document.getElementById("videoBody")?.append(e);
-        return;
-      }
-      if (remoteUsers.length > 1) {
-        e.className = "md:h-72 md:w-72 w-[45vw] aspect-square bg-black";
-      } else {
-        e.className = "absolute flex justify-center w-screen";
-      }
-      document.getElementById("usersDiv")?.append(e);
-    } else {
-      e.classList.forEach((c) => e.classList.remove(c));
-      e.classList.add("inFocus");
-      e.classList.add("bg-black");
-      document.getElementById("focus-div")?.classList.add("visible");
-      document.getElementById("focus-div")?.classList.remove("invisible");
-      document.getElementById("focus-div")?.append(e);
-    }
-  };
-
+function Videos(props: {
+  channelName: string;
+  AppID: string;
+  client: IAgoraRTCClient;
+}) {
   const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
+  const [cam, setCam] = useState<ICameraVideoTrack | null>();
+  const [emotion, setEmotion] = useState<any>();
 
   const makeFullscreen = (e: ReactElement) => {
     if (videoInFocus) {
@@ -64,11 +51,38 @@ function Videos(props: { channelName: string; AppID: string }) {
   const { isLoading: isLoadingMic, localMicrophoneTrack } =
     useLocalMicrophoneTrack();
   const { isLoading: isLoadingCam, localCameraTrack } = useLocalCameraTrack();
+
+  useEffect(() => {
+    const c1 = localCameraTrack?.clone();
+    console.log(c1);
+    console.log("check");
+    if (c1) {
+      setCam(c1);
+      console.log("applied");
+    }
+  }, [isLoadingCam]);
+
   const remoteUsers = useRemoteUsers();
   const { audioTracks } = useRemoteAudioTracks(remoteUsers);
 
   const [video, setVideo] = useState(true);
   const [audio, setAudio] = useState(true);
+  const [screenShare, setScreenShare] = useState(false);
+  const screenShareClient = useRTCScreenShareClient(props.client);
+  var [tracks, setTracks] = useState<any>([
+    localMicrophoneTrack as ILocalAudioTrack,
+    localCameraTrack as ILocalVideoTrack,
+  ]);
+  // var tracks = [
+  //   localMicrophoneTrack as ILocalAudioTrack,
+  //   localCameraTrack as ILocalVideoTrack,
+  // ];
+
+  const {
+    screenTrack: screenTrack,
+    isLoading: isScreenLoading,
+    error,
+  } = useLocalScreenTrack(screenShare, {}, "disable")!;
 
   const updateLocalTracks = async () => {
     if (localCameraTrack) {
@@ -83,7 +97,17 @@ function Videos(props: { channelName: string; AppID: string }) {
     updateLocalTracks();
   }, [video, audio]);
 
-  usePublish([localMicrophoneTrack, localCameraTrack]);
+  if (screenShare && !isScreenLoading && screenTrack) {
+    console.log(screenTrack);
+    const screenShareOn = async () => {
+      await screenShareClient?.publish(screenTrack);
+    };
+    screenShareOn();
+  } else {
+  }
+
+  usePublish(tracks);
+
   useJoin({
     appid: AppID,
     channel: channelName,
@@ -96,6 +120,53 @@ function Videos(props: { channelName: string; AppID: string }) {
     fit: "contain",
   };
 
+  const loadModels = async () => {
+    const MODEL_URL = `/models`;
+    await Promise.all([
+      faceapi.nets.tinyFaceDetector.load(MODEL_URL),
+      faceapi.nets.faceExpressionNet.load(MODEL_URL),
+    ]);
+  };
+
+  const predictEmotion = async () => {
+    if (cam) {
+      const video = document.getElementById(
+        `video_${cam.getTrackId()}`
+      ) as HTMLVideoElement;
+
+      if (video) {
+        const detectionsWithExpression = await faceapi
+          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceExpressions();
+        console.log(
+          detectionsWithExpression?.expressions.asSortedArray()[0].expression
+        );
+        setEmotion(
+          detectionsWithExpression?.expressions.asSortedArray()[0].expression
+        );
+      }
+      console.log(cam.getTrackId());
+      console.log(video);
+    } else {
+      console.log("ggh");
+    }
+    console.log("triggered");
+  };
+
+  useEffect(() => {
+    const load = async () => {
+      await loadModels();
+    };
+    load();
+  });
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      await predictEmotion();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [emotion, cam]);
+
   const deviceLoading = isLoadingMic || isLoadingCam;
   if (deviceLoading)
     return (
@@ -106,47 +177,55 @@ function Videos(props: { channelName: string; AppID: string }) {
     );
 
   return (
-    <div
-      id="videoBody"
-      className="absolute h-screen w-screen flex flex-col md:flex-row md:justify-center items-center md:items-start bg-[#0d111c]"
-    >
-      {!(remoteUsers.length > 0) && (
-        <FocusVideo onClick={exitFullscreen}>
-          <LocalVideoTrack
-            track={localCameraTrack}
-            play={true}
-            videoPlayerConfig={vConfig}
-          />
-        </FocusVideo>
-      )}
-      {videoInFocus && (
-        <FocusVideo onClick={exitFullscreen}>{videoInFocus}</FocusVideo>
-      )}
-      <div className="">
-        {remoteUsers.length === 1 && (
-          <FocusVideo onClick={exitFullscreen}>
-            <RemoteUser user={remoteUsers[0]} videoPlayerConfig={vConfig} />
-          </FocusVideo>
+    <AgoraRTCScreenShareProvider client={screenShareClient!}>
+      <div
+        id="videoBody"
+        className="absolute h-screen w-screen flex flex-col md:flex-row md:justify-center items-center md:items-start bg-[#0d111c]"
+      >
+        <div className="-z-50 w-[50vw] h-[50vh] absolute top-0 left-0">
+          <LocalVideoTrack track={cam} play={true} />
+        </div>
+        {!(remoteUsers.length > 0) && (
+          <div className="relative">
+            <FocusVideo onClick={exitFullscreen} emotion={emotion}>
+              <LocalVideoTrack track={localCameraTrack} play={true} />
+            </FocusVideo>
+            <canvas className="absolute h-full w-full top-0 left-0"></canvas>
+          </div>
         )}
-        {remoteUsers.length > 1 && (
-          <VideoShow users={remoteUsers} makeFullscreen={makeFullscreen} />
+        {videoInFocus && (
+          <FocusVideo onClick={exitFullscreen}>{videoInFocus}</FocusVideo>
         )}
+        <div className="">
+          {remoteUsers.length === 1 && (
+            <FocusVideo onClick={exitFullscreen}>
+              <RemoteUser user={remoteUsers[0]} />
+            </FocusVideo>
+          )}
+          {remoteUsers.length > 1 && (
+            <VideoShow users={remoteUsers} makeFullscreen={makeFullscreen} />
+          )}
+        </div>
+        <ControlBar
+          video={video}
+          audio={audio}
+          screenShare={screenShare}
+          toggleAudio={() => {
+            setAudio(!audio);
+          }}
+          toggleVideo={() => {
+            setVideo(!video);
+          }}
+          toggleScreenShare={() => {
+            setScreenShare(!screenShare);
+          }}
+          localCameraTrack={localCameraTrack}
+          otherUsers={remoteUsers.length > 0}
+          makeFullscreen={makeFullscreen}
+          emotion={emotion}
+        />
       </div>
-      <ControlBar
-        video={video}
-        audio={audio}
-        toggleAudio={() => {
-          setAudio(!audio);
-        }}
-        toggleVideo={() => {
-          setVideo(!video);
-        }}
-        toggleFocus={toggleFocus}
-        localCameraTrack={localCameraTrack}
-        otherUsers={remoteUsers.length > 0}
-        makeFullscreen={makeFullscreen}
-      />
-    </div>
+    </AgoraRTCScreenShareProvider>
   );
 }
 
@@ -157,7 +236,11 @@ const Call = (props: { channelName: string; appId: string }) => {
 
   return (
     <AgoraRTCProvider client={client}>
-      <Videos channelName={props.channelName} AppID={props.appId} />
+      <Videos
+        channelName={props.channelName}
+        AppID={props.appId}
+        client={client}
+      />
     </AgoraRTCProvider>
   );
 };

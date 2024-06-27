@@ -5,9 +5,11 @@ import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 const FocusVideo = ({
   children,
   onClick,
+  emotion,
 }: {
   children: ReactElement;
   onClick: () => void;
+  emotion?: string;
 }) => {
   return (
     <div
@@ -17,6 +19,9 @@ const FocusVideo = ({
       <div
         className={`relative aspect-[4/3] md:h-[90vh] w-[95vw] md:w-auto md:left-8 rounded-lg overflow-hidden bg-black border-2 border-solid border-[#1E2640]`}
       >
+        <div className="absolute top-0 left-1/2 text-lg text-white">
+          {emotion}
+        </div>
         <div className="absolute right-2 top-2 z-50" onClick={onClick}>
           <FullscreenExitIcon fontSize="large" sx={{ color: "white" }} />
         </div>
