@@ -16,6 +16,7 @@
     "@nextui-org/react": "^2.4.2",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.4.0",
+    "@vladmandic/face-api": "^1.7.13",
     "agora-rtc-react": "^2.2.0",
     "clsx": "^2.1.1",
     "cookies-next": "^4.2.1",

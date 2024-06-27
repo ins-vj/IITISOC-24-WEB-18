@@ -9,7 +9,6 @@ import { LocalVideoTrack } from "agora-rtc-react";
 import { ILocalVideoTrack } from "agora-rtc-react";
 import { animate, motion, useDragControls } from "framer-motion";
 import { useRef } from "react";
-import { useContext } from "react";
 import arrowImg from "@/../public/icons/arrow.svg";
 import PersonIcon from "@mui/icons-material/Person";
 import { ReactElement } from "react";
@@ -19,19 +18,19 @@ const ControlBar = ({
   audio,
   toggleVideo,
   toggleAudio,
-  toggleFocus,
   localCameraTrack,
   otherUsers,
   makeFullscreen,
+  emotion,
 }: {
   video: boolean;
   audio: boolean;
   toggleVideo: () => void;
   toggleAudio: () => void;
-  toggleFocus: (e: HTMLElement) => void;
   localCameraTrack: ILocalVideoTrack | null;
   otherUsers: boolean;
   makeFullscreen: (e: ReactElement) => void;
+  emotion?: string;
 }) => {
   const container = useRef<HTMLDivElement>(null);
   const controler = useRef<HTMLDivElement>(null);
@@ -65,6 +64,9 @@ const ControlBar = ({
               {/* <div className="absolute w-full h-full flex justify-center items-center z-10">
                 <PersonIcon sx={{ color: "white", fontSize: 150 }} />
               </div> */}
+              <div className="absolute bottom-0 w-full text-center text-white text-lg">
+                {emotion}
+              </div>
               <div className="z-50 w-full h-full">
                 <LocalVideoTrack track={localCameraTrack} play={true} />
               </div>
