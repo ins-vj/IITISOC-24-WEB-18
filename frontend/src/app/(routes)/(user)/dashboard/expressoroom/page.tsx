@@ -11,6 +11,11 @@ import { Button, Input } from "@nextui-org/react";
 import Quickroom from "./components/quickroom";
 import Joinroom from "./components/joinroom";
 import Customroom from "./components/customroom";
+import Upcoming from "./components/upcoming";
+import Tasks from "./components/tasks";
+import WordRotate from "../../components/word-rotate";
+import TypingAnimation from "../../components/typinganimation";
+
 
 export default function Dashboard() {
   const [user, setUser] = useState("Jai");
@@ -28,24 +33,48 @@ export default function Dashboard() {
   } else {
     return (
       <div className={`flex flex-col gap-[4rem] `}>
-        <div className="flex flex-row justify-between items-center ">
-          <div className=" flex flex-col">
-            <span className=" text-[3rem] comfortaa font-bold ">
-              {user}'s Dashboard
-            </span>
-            <span className=" text-[1.5rem] comfortaa text-[#10101075]">
-              Connecting world
-            </span>
-          </div>
-        </div>
 
-        <div className=" w-[100%] flex flex-row flex-wrap gap-14">
-          <Quickroom />
-
-          <Joinroom />
-          <Customroom />
+      <div className="flex flex-row justify-between items-center ">
+        
+       <div className=" flex flex-col">
+  
+       <WordRotate
+        className=" text-[3rem] comfortaa font-bold "
+        words={[`${user}'s Dashboard`]}
+      />
+  
+  <TypingAnimation
+        className=" text-[1.5rem] comfortaa text-[#10101075]"
+        text="Connecting world"
+      />
+     
+       </div>
+  
+      
+       
         </div>
+  
+        <div className=" w-[100%] flex flex-row flex-wrap gap-14 ">
+  
+        <Quickroom />
+  
+        <Joinroom/>
+        <Customroom/>
+        <Upcoming/>
+        <Tasks/>
+  
+        </div>
+  
+  
+  
+  
       </div>
-    );
-  }
+  
+
+ 
+
+
+    
+  );
+}
 }

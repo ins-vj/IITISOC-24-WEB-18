@@ -1,10 +1,10 @@
 import { Button, Input } from "@nextui-org/react";
-import VideocamIcon from '@mui/icons-material/Videocam';
-import VideocamOffIcon from '@mui/icons-material/VideocamOff';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
-import MicIcon from '@mui/icons-material/Mic';
-import MicOffIcon from '@mui/icons-material/MicOff';
-import { useState } from 'react';
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
+import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import Logo from './logo';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
@@ -21,24 +21,19 @@ export default function joinroom() {
   function toggleVideo() {
     if (video) {
       setVideo(false);
-    }
-    else {
+    } else {
       setVideo(true);
     }
   }
   function toggleMic() {
     if (mic) {
       setMic(false);
-    }
-    else {
+    } else {
       setMic(true);
     }
   }
 
   return (
-
-
-
     <div className="  flex flex-col h-min  backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
 
 
@@ -49,7 +44,7 @@ export default function joinroom() {
         color="default"
         value={link}
         onValueChange={setLink}
-        label="Link" />
+        label="Code" />
         
 
       <div className=" flex flex-row gap-[10px] justify-between">
@@ -78,8 +73,5 @@ export default function joinroom() {
 
 
     </div>
-
-
-
   );
 }
