@@ -44,14 +44,14 @@ const emojis = ["😀", "😂", "😅", "😍", "😎", "🤓", "🥳", "🤩", 
 
 const Particles: React.FC<ParticlesProps> = ({
   className = "",
-  quantity = 100,
+  quantity = 10,
   staticity = 50,
   ease = 50,
-  size = 20,
+  size = 50,
   refresh = false,
   color = "#ffffff",
   vx = 0,
-  vy = 0,
+  vy = -5,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);

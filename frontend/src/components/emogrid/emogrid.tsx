@@ -9,16 +9,16 @@ export default function Emogrid(){
 
     const [count, setCount] = useState<number>(0);
 
-  // Function to update the state variable
+
   const updateCount = () => {
     setCount(prevCount => prevCount + 1);
   };
 
-  // Effect to start interval when component mounts
-  useEffect(() => {
-    const intervalId = setInterval(updateCount, 1000); // Update count every 5000 milliseconds (5 seconds)
 
-    // Cleanup function to stop interval when component unmounts
+  useEffect(() => {
+    const intervalId = setInterval(updateCount, 1000); 
+
+  
     return () => clearInterval(intervalId);
   }, []);
 
