@@ -17,8 +17,10 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
 
     async def connect(self):
         if not self.scope["user"] or not self.scope["user"].is_authenticated:
+            print(self.scope["user"])
             await self.close()
             raise DenyConnection("User is not authenticated")
+        print(self.scope["user"])
         await super().connect()
 
     async def disconnect(self, code):

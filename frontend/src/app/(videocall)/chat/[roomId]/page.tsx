@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Chatbox from "@/components/chat/Chatbox";
+import { getChannelsUUID } from "@/helpers/auth";
 
 const ChatApp = ({ params }: { params: { roomId: string } }) => {
   const [message, setMessage] = useState<string>("");
@@ -10,63 +11,69 @@ const ChatApp = ({ params }: { params: { roomId: string } }) => {
   const [requestId, useRequestId] = useState(Math.floor(Math.random() * 10000));
 
   useEffect(() => {
-    const w1 = new WebSocket("ws://localhost:8000/ws/messagesio/room/");
+    const newSocket = async () => {
+      const uuid = await getChannelsUUID();
+      const w1 = new WebSocket(
+        `ws://localhost:8000/ws/messagesio/room/?uuid=${uuid}`
+      );
 
-    w1.onopen = function () {
-      console.log("connected");
-      const startSocket = async () => {
-        await w1.send(
-          JSON.stringify({
-            pk: params.roomId,
-            action: "join_room",
-            request_id: requestId,
-          })
-        );
-        await w1.send(
-          JSON.stringify({
-            pk: params.roomId,
-            action: "retrieve",
-            request_id: requestId,
-          })
-        );
-        await w1.send(
-          JSON.stringify({
-            pk: params.roomId,
-            action: "subscribe_to_messages_in_room",
-            request_id: requestId,
-          })
-        );
-        await w1.send(
-          JSON.stringify({
-            pk: params.roomId,
-            action: "subscribe_instance",
-            request_id: requestId,
-          })
-        );
+      w1.onopen = function () {
+        console.log("connected");
+        const startSocket = async () => {
+          await w1.send(
+            JSON.stringify({
+              pk: params.roomId,
+              action: "join_room",
+              request_id: requestId,
+            })
+          );
+          await w1.send(
+            JSON.stringify({
+              pk: params.roomId,
+              action: "retrieve",
+              request_id: requestId,
+            })
+          );
+          await w1.send(
+            JSON.stringify({
+              pk: params.roomId,
+              action: "subscribe_to_messages_in_room",
+              request_id: requestId,
+            })
+          );
+          await w1.send(
+            JSON.stringify({
+              pk: params.roomId,
+              action: "subscribe_instance",
+              request_id: requestId,
+            })
+          );
+        };
+        startSocket();
       };
-      startSocket();
-    };
 
-    w1.onmessage = function (e: any) {
-      const data = JSON.parse(e.data);
-      switch (data.action) {
-        case "retrieve":
-          setRoom((old) => data.data);
-          setMessages(data.messages);
-          break;
-        case "create":
-          setMessages((prev: any) => [...prev, data]);
-          break;
-        default:
-          break;
-      }
-    };
+      w1.onmessage = function (e: any) {
+        const data = JSON.parse(e.data);
+        switch (data.action) {
+          case "retrieve":
+            setRoom((old) => data.data);
+            setMessages(data.messages);
+            break;
+          case "create":
+            setMessages((prev: any) => [...prev, data]);
+            break;
+          default:
+            break;
+        }
+      };
 
-    w1.onclose = function (e: any) {
-      console.log("Chat socket closed unexpectedly");
-    };
+      w1.onclose = function (e: any) {
+        console.log("Chat socket closed unexpectedly");
+      };
 
-    setSocket(w1);
+      setSocket(w1);
+    };
+    newSocket();
   }, []);
 
   function sendText() {

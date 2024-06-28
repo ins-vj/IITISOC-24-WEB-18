@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'channels',
+    'django_channels_jwt',
     
     #  local
     'api',

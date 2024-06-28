@@ -73,3 +73,21 @@ export async function register(data: RegisterPostData) {
   });
   return response.ok;
 }
+
+export async function getChannelsUUID() {
+  const csrftoken = getCSRFCookie("csrftoken")!;
+  const accessToken = getCookie("accessToken");
+  const response = await fetch(
+    `${BASE_URL}/channels-auth/auth_for_ws_connection/
+`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  const uuid = await response.json();
+  return uuid.uuid;
+}

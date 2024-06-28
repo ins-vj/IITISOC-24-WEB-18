@@ -25,5 +25,6 @@ urlpatterns = [
     path('account/', include('allauth.urls')),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), 
+    path("api/v1/channels-auth/", include('django_channels_jwt.urls')),
     # path(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
 ]
