@@ -42,7 +42,6 @@ class RoomSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
     
 class MeetUserSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
 
     class Meta:
         model = MeetUser
@@ -56,6 +55,7 @@ class MeetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meet
+        exclude = []
     
     def create(self, validated_data):
         # Automatically set the host based on the authenticated user

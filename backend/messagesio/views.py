@@ -10,6 +10,10 @@ class UsersDetail(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class MeetList(generics.ListAPIView):
+    queryset = Meet.objects.all()
+    serializer_class = MeetSerializer
+
 class MeetDetail(generics.RetrieveAPIView):
     queryset = Meet.objects.all()
     serializer_class = MeetSerializer
