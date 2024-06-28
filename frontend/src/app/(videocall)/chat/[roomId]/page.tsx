@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Chatbox from "@/components/chat/Chatbox";
 import { getChannelsUUID } from "@/helpers/auth";
 
 const ChatApp = ({ params }: { params: { roomId: string } }) => {
@@ -57,10 +56,10 @@ const ChatApp = ({ params }: { params: { roomId: string } }) => {
         switch (data.action) {
           case "retrieve":
             setRoom((old) => data.data);
-            setMessages(data.messages);
+            setMessages(data.data.messages);
             break;
           case "create":
-            setMessages((prev: any) => [...prev, data]);
+            // setMessages((prev: any) => [...prev, data]);
             break;
           default:
             break;
@@ -85,6 +84,7 @@ const ChatApp = ({ params }: { params: { roomId: string } }) => {
     socket!.send(JSON.stringify(msg));
 
     console.log(messaages);
+    console.log(room);
 
     setMessage("");
   }

@@ -1,4 +1,5 @@
-from channels.exceptions import DenyConnection
+import json
+
 from channels.db import database_sync_to_async
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 from djangochannelsrestframework.observer import model_observer
@@ -7,21 +8,12 @@ from djangochannelsrestframework.observer.generics import ObserverModelInstanceM
 from .models import Message, Room
 from users.models import CustomUser as User
 from .serializers import MessageSerializer, RoomSerializer, UserSerializer
-import json
 
 
 class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     lookup_field = "pk"
-
-    async def connect(self):
-        if not self.scope["user"] or not self.scope["user"].is_authenticated:
-            print(self.scope["user"])
-            await self.close()
-            raise DenyConnection("User is not authenticated")
-        print(self.scope["user"])
-        await super().connect()
 
     async def disconnect(self, code):
         if hasattr(self, "room_subscribe"):
@@ -60,6 +52,11 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
         subscribing_request_ids = [],
         **kwargs
     ):
+        """
+        This is evaluated once for each subscribed consumer.
+        The result of `@message_activity.serializer` is provided here as the message.
+        """
+        # since we provide the request_id when subscribing we can just loop over them here.
         for request_id in subscribing_request_ids:
             message_body = dict(request_id=request_id)
             message_body.update(message)
@@ -77,6 +74,10 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
 
     @message_activity.serializer
     def message_activity(self, instance:Message, action, **kwargs):
+        """
+        This is evaluated before the update is sent
+        out to all the subscribing consumers.
+        """
         return dict(data=MessageSerializer(instance).data, action=action.value, pk=instance.pk)
 
     async def notify_users(self):
@@ -111,3 +112,7 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
         user: User = self.scope["user"]
         if not user.current_rooms.filter(pk=self.room_subscribe).exists():
             user.current_rooms.add(Room.objects.get(pk=pk))
+
+
+class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
+    pass

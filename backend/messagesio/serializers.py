@@ -1,4 +1,4 @@
-from .models import Room, Message
+from .models import Room, Message, Meet, MeetUser
 from users.models import CustomUser as User
 from rest_framework import serializers
 
@@ -40,3 +40,25 @@ class RoomSerializer(serializers.ModelSerializer):
         # Automatically set the host based on the authenticated user
         validated_data['host'] = self.context['request'].user
         return super().create(validated_data)
+    
+class MeetUserSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = MeetUser
+        exclude = []
+        depth = 1
+
+    
+class MeetSerializer(serializers.ModelSerializer):
+    users = MeetUserSerializer(many=True, read_only=True)
+    host = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Meet
+    
+    def create(self, validated_data):
+        # Automatically set the host based on the authenticated user
+        validated_data['host'] = self.context['request'].user
+        return super().create(validated_data)
+    
