@@ -11,9 +11,8 @@ export default function Features() {
         offset: ["start end", "end start"]
     });
 
-    // Animation for .textContainer
-    const text = "                     lorem ipsum ipsum loredm dbfjdbvjsn hbdvhdbsdv";
-    const letters = text.split(' ').map(word => `${word}  `); // Adding a space after each word
+    const text = "Diving into the world of AI with expresso";
+    const letters = text.split(' ').map(word => `${word}  `);
 
     const textAnimations = letters.map((letter, index) => {
         const start = index / letters.length / 3; // Compress the scroll range
@@ -40,7 +39,7 @@ export default function Features() {
     return (
         <div className={styles.wrapper} ref={targetRef}>
             <motion.div className={styles.features} style={{ position: 'sticky', top: 0 }}>
-                <div className={styles.left}>FEATURES</div>
+                <div className={styles.left}>EXPRESSO</div>
                 <div className={styles.right}>
                     <div className={styles.top}>
                         <motion.div className={styles.topLeftWrapper} style={{ opacity: particlesOpacity, y: particlesY }}>
@@ -50,7 +49,7 @@ export default function Features() {
                             {cards.map((animation, index) => (
                                 <motion.div key={index} className={styles.card} style={{ opacity: animation.opacity, x: animation.x }}>
                                     <h2>Latency</h2>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quae, nulla culpa asperiores alias veritatis corrupti deleniti soluta vitae temporibus.</p>
+                                    <p>Dive into the world of AI with expresso </p>
                                 </motion.div>
                             ))}
                         </div>
