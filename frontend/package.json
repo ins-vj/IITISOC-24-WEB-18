@@ -30,7 +30,10 @@
     "react-hot-toast": "^2.4.1",
     "react-icon-cloud": "^4.1.4",
     "react-webcam": "^7.2.0",
-    "tailwind-merge": "^2.3.0"
+    "socket.io-client": "^4.7.5",
+    "tailwind-merge": "^2.3.0",
+    "websocket": "^1.0.35",
+    "ws": "^8.17.1"
   },
   "devDependencies": {
     "@types/node": "^20",

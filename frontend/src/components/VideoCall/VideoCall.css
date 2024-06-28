@@ -41,7 +41,7 @@
   transform-origin: center;
 }
 
-button::before {
+.join-button::before {
   content: "";
   transform-origin: center;
   position: absolute;
@@ -53,11 +53,11 @@ button::before {
   transition: 0.5s;
 }
 
-button:hover::before,
-button:hover::after {
+.join-button:hover::before,
+.join-button:hover::after {
   transform: scale(0);
 }
 
-button:hover {
+.join-button:hover {
   box-shadow: inset 0px 0px 25px #dc9750;
 }

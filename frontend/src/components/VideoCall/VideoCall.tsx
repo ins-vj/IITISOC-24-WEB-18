@@ -33,6 +33,8 @@ function Videos(props: {
   channelName: string;
   AppID: string;
   client: IAgoraRTCClient;
+  video: boolean;
+  audio: boolean;
 }) {
   const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
   const [cam, setCam] = useState<ICameraVideoTrack | null>();
@@ -65,18 +67,10 @@ function Videos(props: {
   const remoteUsers = useRemoteUsers();
   const { audioTracks } = useRemoteAudioTracks(remoteUsers);
 
-  const [video, setVideo] = useState(true);
-  const [audio, setAudio] = useState(true);
+  const [video, setVideo] = useState(props.video);
+  const [audio, setAudio] = useState(props.audio);
   const [screenShare, setScreenShare] = useState(false);
   const screenShareClient = useRTCScreenShareClient(props.client);
-  var [tracks, setTracks] = useState<any>([
-    localMicrophoneTrack as ILocalAudioTrack,
-    localCameraTrack as ILocalVideoTrack,
-  ]);
-  // var tracks = [
-  //   localMicrophoneTrack as ILocalAudioTrack,
-  //   localCameraTrack as ILocalVideoTrack,
-  // ];
 
   const {
     screenTrack: screenTrack,
@@ -106,7 +100,7 @@ function Videos(props: {
   } else {
   }
 
-  usePublish(tracks);
+  usePublish([localMicrophoneTrack, localCameraTrack]);
 
   useJoin({
     appid: AppID,
@@ -138,19 +132,14 @@ function Videos(props: {
         const detectionsWithExpression = await faceapi
           .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceExpressions();
-        console.log(
-          detectionsWithExpression?.expressions.asSortedArray()[0].expression
-        );
         setEmotion(
           detectionsWithExpression?.expressions.asSortedArray()[0].expression
         );
       }
-      console.log(cam.getTrackId());
-      console.log(video);
     } else {
-      console.log("ggh");
+      // console.log("ggh");
     }
-    console.log("triggered");
+    // console.log("triggered");
   };
 
   useEffect(() => {
@@ -184,6 +173,9 @@ function Videos(props: {
       >
         <div className="-z-50 w-[50vw] h-[50vh] absolute top-0 left-0">
           <LocalVideoTrack track={cam} play={true} />
+        </div>
+        <div className="text-white text-xl absolute left-8 top-8 z-50">
+          {emotion}
         </div>
         {!(remoteUsers.length > 0) && (
           <div className="relative">
@@ -229,7 +221,12 @@ function Videos(props: {
   );
 }
 
-const Call = (props: { channelName: string; appId: string }) => {
+const Call = (props: {
+  channelName: string;
+  appId: string;
+  video: boolean;
+  audio: boolean;
+}) => {
   const client = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   );
@@ -240,6 +237,8 @@ const Call = (props: { channelName: string; appId: string }) => {
         channelName={props.channelName}
         AppID={props.appId}
         client={client}
+        video={props.video}
+        audio={props.audio}
       />
     </AgoraRTCProvider>
   );

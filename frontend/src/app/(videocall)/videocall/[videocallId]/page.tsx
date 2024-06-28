@@ -13,9 +13,7 @@ const VideoCallComponent = dynamic(
 const VideoCall = ({ params }: { params: { videocallId: string } }) => {
   return (
     <div className="relative w-screen h-screen bg-black overflow-hidden">
-      <Loader>
-        <VideoCallComponent channelName={params.videocallId} appId={APP_ID} />
-      </Loader>
+      <Loader videocallId={params.videocallId} APP_ID={APP_ID} />
     </div>
   );
 };
