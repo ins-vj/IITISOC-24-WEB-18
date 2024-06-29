@@ -1,5 +1,8 @@
 # IITISOC-24-WEB-18
 
+![Expresso](https://github.com/Pradeep-Kumar-Rebbavarapu/IITISOC-24-WEB-18/blob/main/frontend/public/data/logos/logo.png?raw=true)
+
+
 # EXPRESSO
 
 ### Dive in the world of AI, expresso provides a user-friendly interface to connecting with people by creating meeting rooms equipped with Expresso Intelligence. Expresso is designed in such a way that it is fully equipped to handle all your complicated tasks with it's extra ordinary functionalities that boost your productivity to next-level.
