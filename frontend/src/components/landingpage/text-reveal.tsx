@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FC, ReactNode, useRef } from "react";
 import Particles from "@/components/magicui/particles";
+import Image from "next/image";
+import BoxReveal from "./boxreveal";
 interface TextRevealByWordProps {
   text: string;
   className?: string;
@@ -23,12 +25,13 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   return (
 
 
-    <div ref={targetRef} className={cn("relative z-0 h-[200vh]", className)}>
+    <div ref={targetRef} className={cn("relative  z-0 h-[200vh]", className)}>
+        <div className="  absolute top-0 opacity-30 flex items-center justify-center w-[100%] h-[100%]"><Image src="/data/logos/expressoai.png" width={1500} height={200} alt="" className=" blur-md"></Image></div>
         
-       <Particles className=" absolute w-full h-full z-0"/>
+       
       <div
         className={
-          "sticky z-10 top-0 mx-auto flex flex-col justify-center   h-[50%] max-w-[95%]  items-center bg-transparent px-[1rem] py-[1rem]"
+          "sticky z-10 top-0 mx-auto flex flex-col justify-center   h-[50%] max-w-[95%]  items-center bg-transparent px-[1rem] "
         }
       >
         
@@ -36,7 +39,7 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
         <p
           ref={targetRef}
           className={
-            "flex flex-wrap items-center p-5 h-[80%] text-2xl  font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-[10rem]"
+            "flex flex-wrap items-center p-5 h-[80%] text-2xl  font-bold text-black/20 dark:text-white/20  md:text-3xl  lg:text-4xl xl:text-[10rem]"
           }
         >
           {words.map((word, i) => {
@@ -48,6 +51,9 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
               </Word>
             );
           })}
+         
+        <div className=" text-[5rem]">introducing <span className=" text-customorange-700 opacity-50">Expresso Intelligence</span></div>
+   
         </p>
       </div>
     </div>

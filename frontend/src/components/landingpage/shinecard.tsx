@@ -40,7 +40,7 @@ export default function ShineBorder({
         } as React.CSSProperties
       }
       className={cn(
-        " relative w-[40%] h-[90%] overflow-hidden bg-[#00000045] flex flex-col justify-center items-center  gap-[20px] rounded-xl",
+        " relative w-[40%] h-[90%] overflow-hidden bg-[#00000045] flex flex-col justify-center items-center  gap-[20px] rounded-full ",
         className,
       )}
     >
@@ -48,8 +48,8 @@ export default function ShineBorder({
         style={
           {
             "--border-width": `${borderWidth}px`,
-            "--border-radius": `${borderRadius}px`,
-            "--border-radius-child": `${borderRadius * 0.2}px`,
+            "--border-radius": `200px`,
+            "--border-radius-child": `200px`,
             "--shine-pulse-duration": `${duration}s`,
             "--mask-linear-gradient": `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
             "--background-radial-gradient": `radial-gradient(transparent,transparent, ${!(color instanceof Array) ? color : color.join(",")},transparent,transparent)`,
@@ -57,15 +57,15 @@ export default function ShineBorder({
         }
         className={`before:bg-shine-size before:absolute before:inset-[0] before:aspect-square before:h-full before:w-full before:rounded-[--border-radius] before:p-[--border-width] before:will-change-[background-position] before:content-[""] before:![-webkit-mask-composite:xor] before:![mask-composite:exclude] before:[background-image:var(--background-radial-gradient)] before:[background-size:300%_300%] before:[mask:var(--mask-linear-gradient)] motion-safe:before:animate-[shine-pulse_var(--shine-pulse-duration)_infinite_linear]`}
       ></div>
-      <div className={"z-[1] h-[90%]  flex flex-col items-center justify-around rounded-[--border-radius-child]"}>
+      <div className={"z-[1] h-[90%] gap-[30px]  flex flex-row items-center justify-center rounded-full"}>
         {children}
       </div>
       <div>
 
       </div>
-      <div className=" absolute opacity-10">
+      {/* <div className=" absolute opacity-10">
       <Logo width={1000}  />
-      </div>
+      </div> */}
       
     </div>
   );

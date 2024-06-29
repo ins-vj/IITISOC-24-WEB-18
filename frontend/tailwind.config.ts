@@ -41,6 +41,7 @@ const config: Config = {
       },
       animation: {
         backgroundPositionSpin: "background-position-spin 3000ms infinite alternate",
+          
           ripple: "ripple 3400ms ease infinite",
           gradient: "gradient 8s linear infinite",
           shimmer: "shimmer 8s infinite",
