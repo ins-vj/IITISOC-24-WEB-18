@@ -39,26 +39,26 @@ export default function Home() {
       <>
         <Particles className="absolute w-full h-full" />
 
+      <div className=" w-[100%] h-[110vh] absolute left-0 top-[-50px] animate-rise ">
         <Globe />
+        </div>
 
 
-
-        <div className="relative z-10 p-3 gap-14 flex flex-col ">
-          {/* <div className={` absolute backdrop-invert l h-[100px] w-[100px] rounded-[50%] -translate-x-[50%] -translate-y-[50%] `} style={{ left: `${mousePosition.x}px`, top: `${mousePosition.y}px` }}></div> */}
-
+        <div className="relative z-10  gap-14 flex flex-col ">
+      
           <Navbar />
 
 
 
 
 
-          <div className=" flex flex-col w-[70%]  justify-center">
+          <div className=" flex flex-col   justify-center p-3">
 
-            <div className=' flex flex-col justify-center max-w-[800px]     items-center  '>
-              <div className=' text-[6rem] uppercase font-extrabold w-[100%]  '>
+            <div className=' flex flex-col justify-center  2xl:max-w-[850px] items-center xl:max-w-[700px] lg:max-w-[600px] md:max-w-[450px] sm:max-w-[400px] max-w-[300px]  '>
+              <div className='  text-[2rem] uppercase font-extrabold w-[100%] 2xl:text-[6rem] xl:text-[5rem] lg:text-[4rem] md:text-[3.5rem] sm:text-[3rem]  '>
                 The Gen-z way to connect
               </div>
-              <div className=' text-[2rem] font-semibold text-customorange-700 w-[100%]  '>
+              <div className=' 2xl:text-[2rem] xl:text-[1.8rem] lg:text-[1.6rem] md:text-[1.4rem] sm:text-[1.2rem] text-[0.8rem] font-semibold text-customorange-700 w-[100%]  '>
                 <BoxReveal boxColor={"#F86400"} duration={0.5}>
                   <div>Don't let distances hold you back</div>
                 </BoxReveal>
@@ -66,7 +66,7 @@ export default function Home() {
 
             </div>
 
-            <div className="my-9 text-[1rem] text-justify w-[50%]">
+            <div className="xl:my-9 lg:my-6 my-3 2xl:max-w-[620px] xl:max-w-[510px] lg:max-w-[430px] md:max-w-[370px] sm:max-w-[320px] max-w-[230px]  text-justify  2xl:text-[1rem] xl:text-[1rem] lg:text-[1rem] md:text-[0.9rem] sm:text-[0.9rem] text-[0.7rem]">
               <BoxReveal boxColor={"#FFFFFF"} duration={0.5}>
                 <div>
                   Connect with your friends and family. Expresso provides the best user-experience giving a seamless connection with lowest latency matched with power our all-new AI allowing you to express yourself easier than ever.
@@ -80,41 +80,26 @@ export default function Home() {
 
 
 
-          <div className=" flex w-[100%] justify-between items-center gap-9">
+          <div className=" flex w-[100%] justify-between  gap-9 p-3 flex-col-reverse items-start md:flex-row md:items-center">
             <div>
               <Emogrid />
             </div>
 
             <Link href="/signup" className="relative w-[100%] " >
 
-              <div className="z-100 flex justify-center items-center w-[100%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold "> Sign Up</div>
+              <div className="z-100 flex justify-center items-center w-[100%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold max-[825px]:text-[4rem] "> Sign Up</div>
             </Link>
 
 
           </div>
 
-          {/* <VelocityScroll
-      text="😀 😂 😅 😍 😎 🤓 🥳 🤩 🥺 😴 😶‍🌫️"
-      default_velocity={3}
-      className="  font-display text-center text-[3rem] font-bold tracking-[-0.02em] text-black drop-shadow-sm dark:text-white  md:leading-[5rem] "
-    /> */}
+      
 
           <div className="flex flex-col items-center">
             <TextReveal text="Expresso will change the way you connect." />
 
 
-{/* 
-            <div className="w-[90%] h-[70vh] relative bg-black shadow-lg  rounded-3xl " style={{boxShadow: "inset 0px 0px 100px 0px rgb(248,100,0,0.2)"}}>
 
-              <DotPattern
-                className={cn(
-                  "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
-                )}
-              />
-
-            </div> */}
-
-            {/* <RevealAI text="Expresso Intelligence"></RevealAI> */}
 
           </div>
 
@@ -125,15 +110,7 @@ export default function Home() {
 
 
 
-          {/* <div className=" w-[100%] h-[20rem] flex justify-center">
-          <BoxReveal2 boxColor={"#F86400"} duration={1}>
-           <div className=" w-[95vw] h-[100%]"> 
-kjsndfjk
-           </div>
-                  
-          </BoxReveal2>
-          </div> */}
-
+        
 
 
 

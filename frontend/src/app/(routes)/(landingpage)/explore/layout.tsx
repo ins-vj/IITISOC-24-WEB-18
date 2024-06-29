@@ -9,7 +9,7 @@ export default function landingPageLayout({
     return (
         <>
     
-        <div className=" min-h-[100vh] ">
+        <div className=" relative min-h-[100vh] p-0 w-[100vw] overflow-x-clip">
        
          
 <AnimatedCursor

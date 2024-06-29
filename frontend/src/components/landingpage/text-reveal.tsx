@@ -26,12 +26,12 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
 
 
     <div ref={targetRef} className={cn("relative  z-0 h-[200vh]", className)}>
-        <div className="  absolute top-0 opacity-30 flex items-center justify-center w-[100%] h-[100%]"><Image src="/data/logos/expressoai.png" width={1500} height={200} alt="" className=" blur-md"></Image></div>
+        <div className="  absolute top-0 opacity-30 flex items-center justify-center w-[100%] h-[100%]"><Image src="/data/logos/expressoai.png" width={1500} height={200} alt="" className=" blur-sm"></Image></div>
         
        
       <div
         className={
-          "sticky z-10 top-0 mx-auto flex flex-col justify-center   h-[50%] max-w-[95%]  items-center bg-transparent px-[1rem] "
+          "sticky z-10 top-0 mx-auto flex flex-col justify-center   h-[50%] max-w-[95%]  items-center bg-transparent md:px-[1rem] "
         }
       >
         
@@ -39,7 +39,7 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
         <p
           ref={targetRef}
           className={
-            "flex flex-wrap items-center p-5 h-[80%] text-2xl  font-bold text-black/20 dark:text-white/20  md:text-3xl  lg:text-4xl xl:text-[10rem]"
+            "flex flex-wrap  items-start  h-[80%] 2xl:text-[10rem] xl:text-[9rem] lg:text-[7.5rem] md:text-[5.75rem] sm:text-[5rem] text-[4rem]  font-bold text-black/20 dark:text-white/20  "
           }
         >
           {words.map((word, i) => {
@@ -52,7 +52,7 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
             );
           })}
          
-        <div className=" text-[5rem]">introducing <span className=" text-customorange-700 opacity-50">Expresso Intelligence</span></div>
+        <div className=" text-[1.3rem] min-[540px]:text-[2rem] 2xl:text-[5rem] xl:text-[4.5rem] lg:text-[3.5rem] md:text-[2.8rem] sm:text-[2.5rem]">introducing <span className=" text-customorange-700 opacity-50">Expresso Intelligence</span></div>
    
         </p>
       </div>
