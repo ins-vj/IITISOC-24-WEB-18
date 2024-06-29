@@ -85,6 +85,8 @@ export default function Home() {
 
             
             
+            <Features/>
+
 
 
 <div className=" w-[100vw] h-[100vh]"></div>
