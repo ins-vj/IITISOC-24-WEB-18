@@ -59,7 +59,7 @@ const ChatApp = ({ params }: { params: { roomId: string } }) => {
             setMessages(data.data.messages);
             break;
           case "create":
-            // setMessages((prev: any) => [...prev, data]);
+           
             break;
           default:
             break;

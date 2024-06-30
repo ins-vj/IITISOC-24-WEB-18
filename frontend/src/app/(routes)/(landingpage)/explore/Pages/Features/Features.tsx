@@ -15,19 +15,19 @@ export default function Features() {
     const letters = text.split(' ').map(word => `${word}  `);
 
     const textAnimations = letters.map((letter, index) => {
-        const start = index / letters.length / 3; // Compress the scroll range
+        const start = index / letters.length / 3;
         const end = start + 1 / letters.length / 3;
         const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
         const y = useTransform(scrollYProgress, [start, end], [20, 0]);
         return { opacity, y };
     });
 
-    // Animation for ParticlesDemo
-    const particlesStart = 1 / 3; // Animation starts after .textContainer animation
+   
+    const particlesStart = 1 / 3;
     const particlesOpacity = useTransform(scrollYProgress, [particlesStart, particlesStart + 0.1 / 3], [0, 1]);
     const particlesY = useTransform(scrollYProgress, [particlesStart, particlesStart + 0.1 / 3], [80, 0]);
 
-    // Animation for .topRight cards
+   
     const cards = Array(3).fill(0).map((_, index) => {
         const start = particlesStart + 0.1 / 3 + (index * 0.1 / 3);
         const end = start + 0.1 / 3;

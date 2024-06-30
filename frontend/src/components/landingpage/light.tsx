@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './Card.css'; // Import CSS for card styling and animations
+import './Card.css'; 
 
 const AnimatedCard: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,7 +15,7 @@ const AnimatedCard: React.FC = () => {
           }
         });
       },
-      { threshold: 0.5 } // Adjust threshold as needed
+      { threshold: 0.5 } 
     );
 
     if (cardRef.current) {

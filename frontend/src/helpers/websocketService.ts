@@ -53,7 +53,7 @@ class SocketService {
         break;
       case "message":
         console.log("Message:", data.message);
-        // Handle incoming messages
+      
         break;
       case "secret_key":
         this.secret_key = data.secret_key;

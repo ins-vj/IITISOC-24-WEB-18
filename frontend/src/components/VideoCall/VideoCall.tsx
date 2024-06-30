@@ -147,15 +147,15 @@ function Videos(props: {
         }
       }
     } else {
-      // console.log(socketUsers);
+
     }
-    // console.log(socketUsers);
+   
   };
 
   useEffect(() => {
     const load = async () => {
       await loadModels();
-      await props.socketConnection.updateClientId(); //update client id on join
+      await props.socketConnection.updateClientId();
     };
     load();
   }, []);
@@ -246,7 +246,7 @@ const Call = (props: {
   socketConnection: SocketService;
 }) => {
   useEffect(() => {
-    // Set the log level to none
+  
     AgoraRTC.setLogLevel(0);
     AgoraRTC.disableLogUpload();
   }, []);
