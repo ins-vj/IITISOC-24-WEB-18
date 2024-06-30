@@ -41,10 +41,12 @@ const config: Config = {
       },
       animation: {
         backgroundPositionSpin: "background-position-spin 3000ms infinite alternate",
+          
           ripple: "ripple 3400ms ease infinite",
           gradient: "gradient 8s linear infinite",
           shimmer: "shimmer 8s infinite",
           "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+          rise: "rise 15s infinite ease-in-out forwards alternate-reverse",
       },
       keyframes: {
         "shine-pulse": {
@@ -86,6 +88,20 @@ const config: Config = {
         "border-beam": {
           "100%": {
             "offset-distance": "100%",
+          },
+        },
+        "rise": {
+          "0%": {
+            transform: "translateY(5%) translateX(5%)",
+          },
+          "25%": {
+            transform: "translateY(-5%) translateX(-5%)",
+          },
+          "75%": {
+            transform: "translateY(5%) translateX(-5%)",
+          },
+          "100%": {
+            transform: "translateY(-5%) translateX(5%)",
           },
         },
       },

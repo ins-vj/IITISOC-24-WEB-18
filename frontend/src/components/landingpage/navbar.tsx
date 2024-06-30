@@ -7,7 +7,7 @@ import { logOut } from "@/helpers/auth";
 
 export default function Navbar() {
   return (
-    <div className=" flex justify-between items-center w-[100%] h-[5rem]  ">
+    <div className=" flex justify-between items-center w-[100%] h-[5rem] p-3  ">
       <Image
         src="/data/logos/logo.png"
         width={200}

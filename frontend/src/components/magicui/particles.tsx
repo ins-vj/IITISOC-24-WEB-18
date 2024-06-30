@@ -44,13 +44,13 @@ const emojis = ["😀", "😂", "😅", "😍", "😎", "🤓", "🥳", "🤩", 
 
 const Particles: React.FC<ParticlesProps> = ({
   className = "",
-  quantity = 100,
-  staticity = 50,
+  quantity = 50,
+  staticity = 10,
   ease = 50,
-  size = 20,
-  refresh = false,
+  size = 300,
+  refresh = true,
   color = "#ffffff",
-  vx = 0,
+  vx = -1,
   vy = 0,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -257,7 +257,7 @@ const Particles: React.FC<ParticlesProps> = ({
 
   return (
     <div className={className} ref={canvasContainerRef} aria-hidden="true">
-      <canvas ref={canvasRef} className="h-full w-full" />
+      <canvas ref={canvasRef} className=" relative -z-10  h-full w-full" />
     </div>
   );
 };
