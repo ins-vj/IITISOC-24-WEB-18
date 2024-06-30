@@ -43,7 +43,7 @@ export async function login(data: LoginPostData) {
   });
   const res = await response.json();
   if (response.ok) {
-    setCookie("accessToken", res.access);
+    setCookie("accessToken", res.access, { maxAge: 30 * 24 * 60 * 60 });
   }
   return response.ok;
 }
@@ -72,4 +72,22 @@ export async function register(data: RegisterPostData) {
     body: JSON.stringify(data),
   });
   return response.ok;
+}
+
+export async function getChannelsUUID() {
+  const csrftoken = getCSRFCookie("csrftoken")!;
+  const accessToken = getCookie("accessToken");
+  const response = await fetch(
+    `${BASE_URL}/channels-auth/auth_for_ws_connection/
+`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  const uuid = await response.json();
+  return uuid.uuid;
 }

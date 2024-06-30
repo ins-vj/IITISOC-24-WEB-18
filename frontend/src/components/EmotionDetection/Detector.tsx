@@ -7,11 +7,19 @@ import micOff from "@/../public/icons/mic_off.svg";
 import cameraOff from "@/../public/icons/camera_off.svg";
 import Image from "next/image";
 
-const Detector = () => {
+const Detector = ({
+  video,
+  audio,
+  setVideo,
+  setAudio,
+}: {
+  video: boolean;
+  audio: boolean;
+  setVideo: (video: boolean) => void;
+  setAudio: (audio: boolean) => void;
+}) => {
   const webcamRef = useRef<Webcam>(null);
   const [emotion, setEmotion] = useState<string>();
-  const [video, setVideo] = useState<boolean>(true);
-  const [audio, setAudio] = useState<boolean>(true);
 
   const loadModels = async () => {
     const MODEL_URL = `/models`;
@@ -31,9 +39,7 @@ const Detector = () => {
         detectionsWithExpression?.expressions.asSortedArray()[0].expression
       );
     } else {
-      // console.log("Not visible");
     }
-    // console.log("triggered");
   };
 
   useEffect(() => {
@@ -50,7 +56,7 @@ const Detector = () => {
   return (
     <div>
       <div className="relative w-[600px] max-w-[90vw] md:aspect-[4/3] aspect-[3/4] outline-2 outline outline-[#DC9750] overflow-hidden">
-        <div className="text-white text-lg text-center capitalize absolute top-0 w-full">
+        <div className="text-white text-lg text-center capitalize absolute top-0 w-full z-40">
           {emotion}
         </div>
         {video && (
@@ -60,6 +66,7 @@ const Detector = () => {
             className="rounded-lg max-w-[90vw] md:aspect-[4/3] aspect-[3/4]"
             muted={!video}
             ref={webcamRef}
+            mirrored={true}
           />
         )}
       </div>

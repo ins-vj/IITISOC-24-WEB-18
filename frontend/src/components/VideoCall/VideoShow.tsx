@@ -9,9 +9,11 @@ import { IAgoraRTCRemoteUser } from "agora-rtc-react";
 const VideoShow = ({
   users,
   makeFullscreen,
+  socketUsers,
 }: {
   users: IAgoraRTCRemoteUser[];
   makeFullscreen: (e: ReactElement) => void;
+  socketUsers: any;
 }) => {
   const vConfig: VideoPlayerConfig = {
     fit: "contain",
@@ -31,7 +33,7 @@ const VideoShow = ({
       >
         {users.map((user, index) => (
           <div
-            key={index}
+            key={user.uid}
             className={`relative md:w-72 w-[45vw] md:aspect-[4/3] aspect-[3/4] rounded-lg overflow-hidden bg-black border-2 border-solid border-[#1E2640]`}
           >
             <div
@@ -43,6 +45,13 @@ const VideoShow = ({
             >
               <FullscreenIcon sx={{ color: "white" }} />
             </div>
+            <div className="absolute left-0 bottom-0 text-[#DC9750] z-30">
+              {socketUsers?.map(
+                (socketuser: any) =>
+                  user.uid == socketuser.client_id && socketuser.user__username
+              )}
+            </div>
+            <div className="absolute top-0 z-10 text-white">emotion</div>
             {!user.hasVideo && (
               <div className="absolute w-full h-full flex justify-center items-center left-auto right-auto top-auto bottom-auto z-50">
                 <PersonIcon sx={{ color: "white", fontSize: 150 }} />

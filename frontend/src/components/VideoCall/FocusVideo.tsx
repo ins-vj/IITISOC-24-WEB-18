@@ -19,7 +19,7 @@ const FocusVideo = ({
       <div
         className={`relative aspect-[4/3] md:h-[90vh] w-[95vw] md:w-auto md:left-8 rounded-lg overflow-hidden bg-black border-2 border-solid border-[#1E2640]`}
       >
-        <div className="absolute top-0 left-1/2 text-lg text-white">
+        <div className="absolute top-0 left-1/2 text-lg text-white z-30">
           {emotion}
         </div>
         <div className="absolute right-2 top-2 z-50" onClick={onClick}>
