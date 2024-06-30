@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip, getKeyValue} from "@nextui-org/react";
-import {EditIcon} from "./EditIcon";
+
 import {DeleteIcon} from "./DeleteIcon";
 import {columns, users} from "./task";
 
