@@ -21,6 +21,7 @@ import { motion } from "framer-motion";
 import Light from "@/components/landingpage/light";
 import DotPattern from "@/components/landingpage/dotpattern";
 
+
 export default function Home() {
 
 
@@ -80,7 +81,7 @@ export default function Home() {
 
 
 
-          <div className=" flex w-[100%] justify-between  gap-9 p-3 flex-col-reverse items-start md:flex-row md:items-center">
+          <div className=" flex w-[100%] justify-between  gap-9 px-3 flex-col-reverse items-start md:flex-row md:items-center">
             <div>
               <Emogrid />
             </div>
@@ -115,7 +116,12 @@ export default function Home() {
 
 
 
-          <div className=" w-[100vw] h-[100vh]"></div>
+          <div className=" w-[100vw] h-[100vh]">
+
+        
+
+
+          </div>
 
 
 
