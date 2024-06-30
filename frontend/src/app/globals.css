@@ -7,8 +7,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 :root {
-  --background-color: rgb(10, 10, 10); 
-    --text-color: #ffffff;
+  --background-color: #ffffff; 
+  --text-color: #1f1f1f;
 }
 
 
