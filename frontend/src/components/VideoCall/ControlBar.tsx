@@ -73,6 +73,7 @@ const ControlBar = ({
               <div className="absolute bottom-0 w-full text-center text-white text-lg">
                 {emotion}
               </div>
+            
               <div className="z-50 w-full h-full">
                 <LocalVideoTrack
                   className="aspect-[3/4] md:aspect-[4/3]"
