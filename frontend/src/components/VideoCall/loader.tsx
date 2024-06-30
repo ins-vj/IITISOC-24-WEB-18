@@ -5,6 +5,8 @@ import { getUserDetails, UserDetailsFC } from "@/helpers/api";
 import "@/components/VideoCall/VideoCall.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import SocketService from "@/helpers/websocketService";
+import { getChannelsUUID } from "@/helpers/auth";
 
 const Detector = dynamic(
   () => import("@/components/EmotionDetection/Detector"),
@@ -32,9 +34,9 @@ const VideoCallLoader = ({
   const router = useRouter();
   const [data, setData] = useState<UserDetailsFC>();
   const [proceed, setProceed] = useState(false);
-  const [waiting, setWaiting] = useState(false);
   const [video, setVideo] = useState<boolean>(true);
   const [audio, setAudio] = useState<boolean>(true);
+  const [socketConnection, setSocketConnection] = useState<SocketService>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,11 +45,18 @@ const VideoCallLoader = ({
         router.push("/login");
       }
       setData(c1);
+      const uuid = await getChannelsUUID();
+
+      const socketConn = new SocketService(videocallId);
+      socketConn.setUsers = (users: [any]) => {};
+      socketConn.newSocket();
+
+      setSocketConnection((prev) => socketConn);
     };
     fetchData();
   }, []);
 
-  if (!proceed || waiting) {
+  if (!proceed || !socketConnection?.secret_key) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center text-xl font-semibold">
         <Detector
@@ -56,10 +65,7 @@ const VideoCallLoader = ({
           setVideo={setVideo}
           setAudio={setAudio}
         />
-        <button
-          className="join-button mt-8"
-          onClick={() => setProceed(!proceed)}
-        >
+        <button className="join-button mt-8" onClick={() => setProceed(true)}>
           Join Now as {data?.username}
         </button>
       </div>
@@ -73,6 +79,7 @@ const VideoCallLoader = ({
         appId={APP_ID}
         video={video}
         audio={audio}
+        socketConnection={socketConnection!}
       />
     </div>
   );

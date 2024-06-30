@@ -15,8 +15,8 @@ const Detector = ({
 }: {
   video: boolean;
   audio: boolean;
-  setVideo?: React.Dispatch<React.SetStateAction<boolean>>;
-  setAudio?: React.Dispatch<React.SetStateAction<boolean>>;
+  setVideo: (video: boolean) => void;
+  setAudio: (audio: boolean) => void;
 }) => {
   const webcamRef = useRef<Webcam>(null);
   const [emotion, setEmotion] = useState<string>();

@@ -43,7 +43,7 @@ export async function login(data: LoginPostData) {
   });
   const res = await response.json();
   if (response.ok) {
-    setCookie("accessToken", res.access);
+    setCookie("accessToken", res.access, { maxAge: 30 * 24 * 60 * 60 });
   }
   return response.ok;
 }

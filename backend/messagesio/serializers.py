@@ -42,6 +42,7 @@ class RoomSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
     
 class MeetUserSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
 
     class Meta:
         model = MeetUser
@@ -50,7 +51,7 @@ class MeetUserSerializer(serializers.ModelSerializer):
 
     
 class MeetSerializer(serializers.ModelSerializer):
-    users = MeetUserSerializer(many=True, read_only=True)
+    all_users = MeetUserSerializer(many=True, read_only=True)
     host = UserSerializer(read_only=True)
 
     class Meta:

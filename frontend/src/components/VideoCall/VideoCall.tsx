@@ -27,7 +27,8 @@ import { CircularProgress } from "@mui/material";
 import { VideoPlayerConfig } from "agora-rtc-react";
 import * as faceapi from "@vladmandic/face-api";
 import { useLocalScreenTrack } from "agora-rtc-react";
-import { ILocalTrack } from "agora-rtc-react";
+import SocketService from "@/helpers/websocketService";
+import { UserEmotion } from "./types";
 
 function Videos(props: {
   channelName: string;
@@ -35,10 +36,12 @@ function Videos(props: {
   client: IAgoraRTCClient;
   video: boolean;
   audio: boolean;
+  socketConnection: SocketService;
 }) {
   const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
-  const [cam, setCam] = useState<ICameraVideoTrack | null>();
+  const [cam, setCam] = useState<string | null>();
   const [emotion, setEmotion] = useState<any>();
+  const [usersEmotion, setUsersEmotion] = useState<UserEmotion[] | null>(null);
 
   const makeFullscreen = (e: ReactElement) => {
     if (videoInFocus) {
@@ -55,12 +58,10 @@ function Videos(props: {
   const { isLoading: isLoadingCam, localCameraTrack } = useLocalCameraTrack();
 
   useEffect(() => {
-    const c1 = localCameraTrack?.clone();
-    console.log(c1);
-    console.log("check");
+    const c1 = localCameraTrack;
+
     if (c1) {
-      setCam(c1);
-      console.log("applied");
+      setCam(c1.getTrackId());
     }
   }, [isLoadingCam]);
 
@@ -71,6 +72,12 @@ function Videos(props: {
   const [audio, setAudio] = useState(props.audio);
   const [screenShare, setScreenShare] = useState(false);
   const screenShareClient = useRTCScreenShareClient(props.client);
+  const [socketUsers, setSocketUsers] = useState<any>([]);
+  props.socketConnection.setUsers = (users: [any]) => {
+    console.log("setting");
+    setSocketUsers((prev: any) => users);
+  };
+  props.socketConnection.setEmotion = (emotion: UserEmotion) => {};
 
   const {
     screenTrack: screenTrack,
@@ -106,6 +113,7 @@ function Videos(props: {
     appid: AppID,
     channel: channelName,
     token: null,
+    uid: props.socketConnection.uuid,
   });
 
   audioTracks.map((track) => track.play());
@@ -124,30 +132,33 @@ function Videos(props: {
 
   const predictEmotion = async () => {
     if (cam) {
-      const video = document.getElementById(
-        `video_${cam.getTrackId()}`
-      ) as HTMLVideoElement;
+      const video = document.getElementById(`video_${cam}`) as HTMLVideoElement;
 
       if (video) {
         const detectionsWithExpression = await faceapi
           .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceExpressions();
-        setEmotion(
-          detectionsWithExpression?.expressions.asSortedArray()[0].expression
-        );
+        const predicted_emotion =
+          detectionsWithExpression?.expressions.asSortedArray()[0].expression;
+        setEmotion((emotion: any) => predicted_emotion);
+        if (predicted_emotion) {
+          console.log(predicted_emotion);
+          props.socketConnection.updateUserEmotion(predicted_emotion);
+        }
       }
     } else {
-      // console.log("ggh");
+      // console.log(socketUsers);
     }
-    // console.log("triggered");
+    // console.log(socketUsers);
   };
 
   useEffect(() => {
     const load = async () => {
       await loadModels();
+      await props.socketConnection.updateClientId(); //update client id on join
     };
     load();
-  });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -171,18 +182,11 @@ function Videos(props: {
         id="videoBody"
         className="absolute h-screen w-screen flex flex-col md:flex-row md:justify-center items-center md:items-start bg-[#0d111c]"
       >
-        <div className="-z-50 w-[50vw] h-[50vh] absolute top-0 left-0">
-          <LocalVideoTrack track={cam} play={true} />
-        </div>
-        <div className="text-white text-xl absolute left-8 top-8 z-50">
-          {emotion}
-        </div>
         {!(remoteUsers.length > 0) && (
           <div className="relative">
             <FocusVideo onClick={exitFullscreen} emotion={emotion}>
               <LocalVideoTrack track={localCameraTrack} play={true} />
             </FocusVideo>
-            <canvas className="absolute h-full w-full top-0 left-0"></canvas>
           </div>
         )}
         {videoInFocus && (
@@ -191,11 +195,24 @@ function Videos(props: {
         <div className="">
           {remoteUsers.length === 1 && (
             <FocusVideo onClick={exitFullscreen}>
-              <RemoteUser user={remoteUsers[0]} />
+              <div className="w-full h-full relative">
+                <div className="absolute left-0 bottom-0 text-[#DC9750] z-30">
+                  {socketUsers?.map(
+                    (user: any) =>
+                      remoteUsers[0].uid == user.client_id &&
+                      user.user__username
+                  )}
+                </div>
+                <RemoteUser user={remoteUsers[0]} />
+              </div>
             </FocusVideo>
           )}
           {remoteUsers.length > 1 && (
-            <VideoShow users={remoteUsers} makeFullscreen={makeFullscreen} />
+            <VideoShow
+              users={remoteUsers}
+              socketUsers={socketUsers}
+              makeFullscreen={makeFullscreen}
+            />
           )}
         </div>
         <ControlBar
@@ -226,9 +243,19 @@ const Call = (props: {
   appId: string;
   video: boolean;
   audio: boolean;
+  socketConnection: SocketService;
 }) => {
+  useEffect(() => {
+    // Set the log level to none
+    AgoraRTC.setLogLevel(0);
+    AgoraRTC.disableLogUpload();
+  }, []);
+
   const client = useRTCClient(
-    AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
+    AgoraRTC.createClient({
+      codec: "vp8",
+      mode: "rtc",
+    })
   );
 
   return (
@@ -239,6 +266,7 @@ const Call = (props: {
         client={client}
         video={props.video}
         audio={props.audio}
+        socketConnection={props.socketConnection}
       />
     </AgoraRTCProvider>
   );

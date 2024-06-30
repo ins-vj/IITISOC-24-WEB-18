@@ -22,11 +22,21 @@ class Message(models.Model):
     def __str__(self):
         return f"Message({self.user} {self.room})"
     
+
+class MeetUser(models.Model):
+    user  = models.ForeignKey(User, on_delete=models.CASCADE, related_name="emotions")
+    client_id = models.TextField(max_length=500, editable=True)
+    emotion =  models.TextField(max_length=500, editable=True, blank=True)
+
+    def __str__(self):
+        return f"Room({self.user} : {self.client_id})"
+    
+
 class Meet(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     secret_key = models.UUIDField(default=uuid.uuid4, editable=False)
     host = models.ForeignKey(User, on_delete=models.CASCADE, related_name="meets")
-    all_users = models.ManyToManyField(User, related_name="current_meet", blank=True)
+    all_users = models.ManyToManyField(MeetUser, related_name="current_meets", blank=True)
     private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     scheduled_at = models.DateTimeField(default=timezone.now)
@@ -40,10 +50,4 @@ class Meet(models.Model):
     #     else:
     #         super().save(*args, **kwargs)
     
-class MeetUser(models.Model):
-    user  = models.ForeignKey(User, on_delete=models.CASCADE, related_name="emotions")
-    client_id = models.TextField(max_length=500, editable=True)
-    emotion =  models.TextField(max_length=500, editable=True)
 
-    def __str__(self):
-        return f"Room({self.user} : {self.client_id})"
