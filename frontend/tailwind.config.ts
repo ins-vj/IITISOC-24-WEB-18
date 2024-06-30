@@ -92,16 +92,16 @@ const config: Config = {
         },
         "rise": {
           "0%": {
-            transform: "translateY(5%) translateX(5%)",
+            transform: "translateY(2%) translateX(2%)",
           },
           "25%": {
-            transform: "translateY(-5%) translateX(-5%)",
+            transform: "translateY(-2%) translateX(-2%)",
           },
           "75%": {
-            transform: "translateY(5%) translateX(-5%)",
+            transform: "translateY(2%) translateX(-2%)",
           },
           "100%": {
-            transform: "translateY(-5%) translateX(5%)",
+            transform: "translateY(-2%) translateX(2%)",
           },
         },
       },

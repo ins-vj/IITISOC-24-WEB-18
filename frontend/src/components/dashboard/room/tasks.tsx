@@ -1,13 +1,11 @@
 import React from "react";
-import {Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
+import {Button} from "@nextui-org/react";
 import WordPullUp from "./pullup";
-import Link from "next/link";
-import { AnchorIcon } from "./AnchorIcon";
 import TaskList from "./tasktable";
 import {Input} from "@nextui-org/react";
 import AddIcon from '@mui/icons-material/Add';
 
-export default function quickroom() {
+export default function Tasks() {
 
   const [newtask, setNewTask] = React.useState("");
 

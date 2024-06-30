@@ -1,7 +1,7 @@
 import React from "react";
 import {Select, SelectItem, Avatar, Chip} from "@nextui-org/react";
 import {users} from "./data";
-import { cloudProps } from "@/components/magicui/icon-cloud";
+
 
 export default function App(props: any) {
   return (
@@ -12,7 +12,7 @@ export default function App(props: any) {
       isMultiline={true}
       selectionMode="multiple"
       placeholder="Select a user"
-      // labelPlacement="outside"
+
       classNames={{
         base: " w-[100%]",
         trigger: "min-h-12 py-2",
