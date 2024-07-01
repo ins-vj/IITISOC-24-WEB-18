@@ -3,9 +3,23 @@ version: "1.1"
 services:
   web:
     build: .
+    image: 471112891073.dkr.ecr.eu-north-1.amazonaws.com/expresso-backend:latest
+    platform: linux/amd64
     command: bash -c "python manage.py makemigrations api messagesio users videocall && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     container_name: expresso-backend
     volumes:
       - .:/expresso:rw
     ports:
       - "8000:8000"
+
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache:/data
+volumes:
+  cache:
+    driver: local
