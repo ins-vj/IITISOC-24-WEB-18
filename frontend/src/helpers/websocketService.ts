@@ -1,7 +1,7 @@
 import { getChannelsUUID } from "@/helpers/auth";
 import React from "react";
 
-const BASE_URL = "ws://localhost:8000";
+const BASE_URL = process.env.WEBSOCKETS_URL;
 
 class SocketService {
   private socket!: WebSocket;

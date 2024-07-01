@@ -2,7 +2,6 @@
 
 ![Expresso](https://github.com/Pradeep-Kumar-Rebbavarapu/IITISOC-24-WEB-18)
 
-
 # EXPRESSO CONNECT
 
 ### Dive in the world of AI, expresso provides a user-friendly interface to connecting with people by creating meeting rooms equipped with Expresso Intelligence. Expresso is designed in such a way that it is fully equipped to handle all your complicated tasks with it's extra ordinary functionalities that boost your productivity to next-level.
@@ -43,16 +42,19 @@ Deployed with AWS
 
 ## To run on localHost:
 
-### Backend: 
+### Backend:
 
-open vs code terminal 
+Use pyhton 11.9
+
+open vs code terminal
 
 > cd IITISOC-24-WEB-18/backend/
+
 > Install dependencies
 
 > docker run --rm -p 6379:6379 redis:7
 
-press CTRL+Shift+P > search for Python: Create Environment (.venv) > follow the steps and select requirements.txt file > relaunch vs code > and then run migrations 
+press CTRL+Shift+P > search for Python: Create Environment (.venv) > follow the steps and select requirements.txt file > relaunch vs code > and then run migrations
 
 > python3 manage.py makemigrations
 
@@ -64,7 +66,7 @@ and start server
 
 ### Frontend:
 
-open another vs code terminal 
+open another vs code terminal
 
 > cd IITISOC-24-WEB-18/frontend/
 
@@ -72,12 +74,10 @@ open another vs code terminal
 
 > npm run dev
 
-and run localhost 
+and run localhost
 
 Color Pallette for VC-
 #1E2640
 #DC9750
 #DC9750
 #922C40
-
-
