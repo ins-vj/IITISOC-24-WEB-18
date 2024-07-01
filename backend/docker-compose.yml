@@ -1,0 +1,11 @@
+version: "1.1"
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations api messagesio users videocall && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    container_name: expresso-backend
+    volumes:
+      - .:/expresso:rw
+    ports:
+      - "8000:8000"

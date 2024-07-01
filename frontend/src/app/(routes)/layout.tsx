@@ -13,12 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-      </head>
+      <head></head>
       <body>
         <Toaster />
         <div className=" min-h-[100vh] ">{children}</div>
