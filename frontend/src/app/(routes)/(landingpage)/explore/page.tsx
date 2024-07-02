@@ -14,17 +14,10 @@ import Particles from "@/components/landingpage/particles";
 import TextReveal from "@/components/landingpage/text-reveal";
 import RevealAI from "@/components/landingpage/revealai";
 import BoxReveal from "@/components/landingpage/boxreveal";
-import BoxReveal2 from "@/components/landingpage/boxreveal2";
-import trapezium from "@/components/extras/Trapezium/Trapezium";
-import Trapezium from "@/components/extras/Trapezium/Trapezium";
-import { motion } from "framer-motion";
-import Light from "@/components/landingpage/light";
-import DotPattern from "@/components/landingpage/dotpattern";
-import Image from "next/image";
-import Logo from "@/components/logo/logo";
-import Typing from "@/components/landingpage/typing";
+
 import Expressoprompt from "@/components/landingpage/expressoprompt";
 import Intelligenceprompt from "@/components/landingpage/intelligenceprompt";
+import Game from "@/components/game/game"
 
 export default function Home() {
 
@@ -103,7 +96,6 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <TextReveal text="Expresso will change the way you connect." />
 
-
           </div>
 
 
@@ -158,7 +150,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className=" w-[100vw] h-[100vh]"></div>
+          <div className=" w-[100vw] h-[100vh]">
+<Game/>
+          </div>
 
 
 
