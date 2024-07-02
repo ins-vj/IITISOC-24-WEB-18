@@ -44,14 +44,13 @@ const VideoCallLoader = ({
       if (!c1.username) {
         router.push("/login");
       }
-      setData(c1);
-      const uuid = await getChannelsUUID();
-
-      const socketConn = new SocketService(videocallId);
-      socketConn.setUsers = (users: [any]) => {};
-      socketConn.newSocket();
-
-      setSocketConnection((prev) => socketConn);
+      setData((prev) => c1);
+      if (!socketConnection) {
+        const socketConn = new SocketService(videocallId);
+        socketConn!.setUsers = (users: [any]) => {};
+        await socketConn!.newSocket();
+        setSocketConnection((prev) => socketConn);
+      }
     };
     fetchData();
   }, []);

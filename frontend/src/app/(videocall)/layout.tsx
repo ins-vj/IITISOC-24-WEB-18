@@ -16,6 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head></head>
       <body className=" ">
         <div className=" min-h-[100vh]">{children}</div>
       </body>
