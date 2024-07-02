@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import Logo from '@/components/logo/logo';
 const icons = ["😂", "😎", "🤩", "😡", "🤑", "😴", "😍", "🤡"];
 const shuffledIcons = [...icons, ...icons].sort(() => Math.random() - 0.5);
 
@@ -21,7 +21,7 @@ const Card: React.FC<{
       }`}
       onClick={() => !card.flipped && !card.matched && onClick(index)}
     >
-      {card.flipped || card.matched ? card.icon : <img src="/data/logos/image.png" /> }
+      {card.flipped || card.matched ? card.icon : <Logo width={50}/> }
     </div>
   );
 };
@@ -69,7 +69,7 @@ const [count, setCount] = useState(0);
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900">
+    <div className="flex flex-col justify-center items-center  bg-gray-900">
       <button
         onClick={resetGame}
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-lg"

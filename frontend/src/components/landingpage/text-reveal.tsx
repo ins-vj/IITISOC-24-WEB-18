@@ -26,7 +26,7 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
 
 
     <div ref={targetRef} className={cn("relative  z-0 h-[200vh]", className)}>
-        <div className="  absolute top-0 opacity-30 flex items-center justify-center w-[100%] h-[100%]"><Image src="/data/logos/expressoai.png" width={1500} height={200} alt="" className=" blur-sm"></Image></div>
+        <div className="  absolute top-[20%] left-[-50%] opacity-30 flex items-center justify-center w-[100%] h-[100%]"><Image src="/data/logos/expressoai.png" width={1500} height={200} alt="" className=""></Image></div>
         
        
       <div
