@@ -1,10 +1,10 @@
 import { getChannelsUUID } from "@/helpers/auth";
 import React from "react";
 
-const BASE_URL = process.env.WEBSOCKETS_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_WS_URL;
 
 class SocketService {
-  private socket!: WebSocket;
+  public socket!: WebSocket;
   private meetId: string;
   public secret_key!: string;
   public uuid!: string;
@@ -18,6 +18,7 @@ class SocketService {
   newSocket = async () => {
     const uuid = await getChannelsUUID();
     this.uuid = uuid;
+    console.log(`${BASE_URL}/ws/messagesio/meet/?uuid=${uuid}`);
     this.socket = new WebSocket(`${BASE_URL}/ws/messagesio/meet/?uuid=${uuid}`);
 
     this.socket.onopen = () => {

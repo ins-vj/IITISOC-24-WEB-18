@@ -123,9 +123,10 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        meet_id = self.meet_subscribe
-        await self.remove_user_from_meet(id=meet_id)
-        await self.notify_users_in_meet(meet_id=meet_id)
+        # meet_id = self.meet_subscribe
+        # await self.remove_user_from_meet(id=meet_id)
+        # await self.notify_users_in_meet(meet_id=meet_id)
+        pass
 
     @action()
     async def join_meet(self, id, **kwargs):

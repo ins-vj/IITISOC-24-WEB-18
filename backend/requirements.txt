@@ -15,6 +15,7 @@ Django==5.0.6
 django-allauth==0.63.3
 django-channels-jwt==0.0.3
 django-cors-headers==4.4.0
+django-environ==0.11.2
 djangochannelsrestframework==1.2.0
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
@@ -29,6 +30,8 @@ jsonschema==4.22.0
 jsonschema-specifications==2023.12.1
 msgpack==1.0.8
 packaging==24.1
+priority==2.0.0
+psycopg==3.2.1
 pyasn1==0.6.0
 pyasn1_modules==0.4.0
 pycparser==2.22
