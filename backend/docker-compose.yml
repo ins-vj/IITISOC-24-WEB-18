@@ -3,7 +3,6 @@ version: "1.1"
 services:
   api:
     build: .
-    image: 471112891073.dkr.ecr.eu-north-1.amazonaws.com/expresso-backend:latest
     platform: linux/amd64
     command: bash -c "python manage.py makemigrations api messagesio users videocall && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     container_name: expresso-backend
