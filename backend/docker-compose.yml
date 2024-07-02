@@ -36,10 +36,10 @@ services:
       - ./ssl:/etc/nginx/ssl
 
   # Only for localhost
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - "6379:6379"
 
 volumes:
   public_assets:
