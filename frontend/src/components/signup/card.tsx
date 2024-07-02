@@ -93,7 +93,7 @@ export default function Card() {
           isInvalid={isUsernameInvalid}
           color={isUsernameInvalid ? "danger" : "warning"}
           errorMessage="Username can only contain a-z 0-9"
-          // variant="underlined"
+
           size="sm"
           className="max-w-[25rem] dark"
           value={username}
@@ -108,7 +108,7 @@ export default function Card() {
           isInvalid={isInvalid}
           color={isInvalid ? "danger" : "warning"}
           errorMessage="Please enter a valid email"
-          // variant="underlined"
+    
           size="sm"
           className="max-w-[25rem] dark"
           value={email}
@@ -122,7 +122,7 @@ export default function Card() {
           isInvalid={isPassInvalid}
           color={isPassInvalid ? "danger" : "warning"}
           errorMessage="Password must contain atleast 8 digits"
-          // variant="underlined"
+     
           size="sm"
           className="max-w-[25rem] dark"
           value={password}
@@ -138,7 +138,7 @@ export default function Card() {
           color={isConfirmPassInvalid ? "danger" : "warning"}
           errorMessage="Password must match with above password"
           size="sm"
-          // variant="underlined"
+        
           endContent={
             <button
               className="focus:outline-none"
@@ -160,7 +160,7 @@ export default function Card() {
           <Link href="/login">
             <span>Already Signed Up?</span>{" "}
           </Link>
-          {/* <span>Forgot?</span>  */}
+          
         </div>
       </div>
 

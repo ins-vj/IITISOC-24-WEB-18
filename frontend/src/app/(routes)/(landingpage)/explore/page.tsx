@@ -20,7 +20,11 @@ import Trapezium from "@/components/extras/Trapezium/Trapezium";
 import { motion } from "framer-motion";
 import Light from "@/components/landingpage/light";
 import DotPattern from "@/components/landingpage/dotpattern";
-
+import Image from "next/image";
+import Logo from "@/components/logo/logo";
+import Typing from "@/components/landingpage/typing";
+import Expressoprompt from "@/components/landingpage/expressoprompt";
+import Intelligenceprompt from "@/components/landingpage/intelligenceprompt";
 
 export default function Home() {
 
@@ -40,13 +44,13 @@ export default function Home() {
       <>
         <Particles className="absolute w-full h-full" />
 
-      <div className=" w-[100%] h-[110vh] absolute left-0 top-[-50px] animate-rise ">
-        <Globe />
+        <div className=" w-[100%] h-[110vh] absolute left-0 top-[-50px] animate-rise ">
+          <Globe />
         </div>
 
 
         <div className="relative z-10  gap-14 flex flex-col ">
-      
+
           <Navbar />
 
 
@@ -94,14 +98,12 @@ export default function Home() {
 
           </div>
 
-      
+
 
           <div className="flex flex-col items-center">
             <TextReveal text="Expresso will change the way you connect." />
 
 
-
-
           </div>
 
 
@@ -111,17 +113,58 @@ export default function Home() {
 
 
 
-        
 
 
 
 
-          <div className=" w-[100vw] h-[100vh]">
 
-        
 
+
+
+
+          <div className=" relative flex flex-col w-[100%] ">
+
+
+
+
+
+            <Expressoprompt prompt="Expresso Intelligence" />
+            <Intelligenceprompt prompt="Hi, I am a pre-trained model that can recoganize your facial-expressions and based on that can overlay emoji's that perfectly depicts your mood. Imagine talking to your friend in which you can vibe together on-screen full of your favourite emojis based on your moods." />
 
           </div>
+
+          {/* <div className=" -z-10 top-0">
+            <VelocityScroll className="  text-[rgb(50,50,50)] font-extrabold opacity-30 text-[1.3rem] min-[540px]:text-[2rem] 2xl:text-[10rem] xl:text-[4.5rem] lg:text-[3.5rem] md:text-[2.8rem] sm:text-[2.5rem]" text="EXPRESSO INTELLIGENCE" />
+          </div>
+          <div className=" -z-10 bottom-0 ">
+            <VelocityScroll className=" text-customorange-700  font-extrabold opacity-30 text-[1.3rem] min-[540px]:text-[2rem] 2xl:text-[10rem] xl:text-[4.5rem] lg:text-[3.5rem] md:text-[2.8rem] sm:text-[2.5rem]" text="EXPRESSO INTELLIGENCE" />
+          </div> */}
+
+
+
+          <div className=" flex w-[100%] relative p-[8rem]">
+
+
+         
+
+          <div className=" w-[750px] bg-[rgb(10,10,10)] relative p-3 flex items-center justify-center ">
+            <div className="">
+              <span className=" text-[1.5rem] lowercase font-extrabold  2xl:text-[4rem] xl:text-[3.5rem] lg:text-[3rem] md:text-[2.6rem] sm:text-[2rem]" >Do More with </span><span className="text-customorange-700 text-[2rem] uppercase font-extrabold w-[50%] 2xl:text-[6rem] xl:text-[5rem] lg:text-[4rem] md:text-[3.5rem] sm:text-[3rem]">Expresso Intelligence</span>
+            </div>
+            
+          </div>
+          <div className=" left-[15rem] -z-10  -rotate-[15deg] absolute top-[6rem] w-[700px]  h-[550px] border-customorange-700 border-[3px]">
+         
+            </div>
+          </div>
+
+          <div className=" w-[100vw] h-[100vh]"></div>
+
+
+
+
+
+
 
 
 

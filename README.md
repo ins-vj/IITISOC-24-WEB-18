@@ -1,6 +1,8 @@
 # IITISOC-24-WEB-18
 
+
 ![Expresso](https://github.com/Pradeep-Kumar-Rebbavarapu/IITISOC-24-WEB-18)
+
 
 # EXPRESSO CONNECT
 
@@ -44,7 +46,14 @@ Deployed with AWS
 
 ### Backend:
 
-Use pyhton 11.9
+## Using Docker
+
+> cd backend/
+
+> docker -t expresso-backend .
+> docker-compose up
+
+Use python 11.9
 
 open vs code terminal
 

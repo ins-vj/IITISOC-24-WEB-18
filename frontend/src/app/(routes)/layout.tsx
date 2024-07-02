@@ -16,7 +16,7 @@ export default function RootLayout({
       <head></head>
       <body>
         <Toaster />
-        <div className=" min-h-[100vh] ">{children}</div>
+        <div className=" min-h-[100vh] overflow-y-clip ">{children}</div>
       </body>
     </html>
   );
