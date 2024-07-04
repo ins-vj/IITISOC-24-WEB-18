@@ -19,3 +19,5 @@ const VideoCall = ({ params }: { params: { videocallId: string } }) => {
 };
 
 export default VideoCall;
+
+export const runtime = "edge";

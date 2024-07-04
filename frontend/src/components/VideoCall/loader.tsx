@@ -6,7 +6,6 @@ import "@/components/VideoCall/VideoCall.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import SocketService from "@/helpers/websocketService";
-import { getChannelsUUID } from "@/helpers/auth";
 
 const Detector = dynamic(
   () => import("@/components/EmotionDetection/Detector"),
