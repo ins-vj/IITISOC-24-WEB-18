@@ -37,8 +37,8 @@ export default function quickroom() {
   }
 
   return (
-    <div className="  flex flex-col h-min w-min backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
-      <div className=" flex flex-row gap-[10px] justify-between">
+    <div className="flex w-[100%] flex-col items-center h-min  max-w-[350px] 2xl:max-w-[500px] backdrop-blur-md bg-[rgb(30,30,30)] gap-[20px] p-[20px] rounded-3xl">
+      <div className=" flex flex-row w-[100%]  gap-[10px] justify-between items-start">
         <Button
           color="warning"
           size="lg"
@@ -46,11 +46,16 @@ export default function quickroom() {
           radius="full"
           variant="solid"
           className=" text-white"
+
         >
           Quick Room
         </Button>
 
-        <div className=" flex gap-[5px]">
+        <div className=" bg-[rgb(10,10,10)] w-[60px] h-[40px] rounded-2xl border-customorange-700 border-[1px]">
+
+        </div>
+
+        {/* <div className=" flex gap-[5px]">
           <div
             onClick={toggleVideo}
             className=" bg-[#ffffff81] h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center"
@@ -71,10 +76,10 @@ export default function quickroom() {
               <MicOffIcon fontSize="small" color="action" />
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
-      <div className="flex items-center justify-between ">
+      <div className="flex items-end justify-between w-[100%] ">
         <div className=" relative min-w-[215px] max-w-[215px] h-[2.75rem] flex justify-between items-center  rounded-xl border-[2px] border-default-200 p-[3px]">
           <div
             className=" absolute -z-10 flex items-center justify-center h-[calc(100%-6px)] bg-customorange-600 rounded-lg w-[calc(50%-5px)] transition-left duration-200"
@@ -97,8 +102,8 @@ export default function quickroom() {
             <PublicIcon />
             <span>Public</span>
           </div>
+          
         </div>
-
         <Tooltip
           offset={30}
           content="In Public rooms, users cannot freely share any video or audio"
@@ -108,9 +113,11 @@ export default function quickroom() {
         >
           <HelpIcon fontSize="small" color="warning" />
         </Tooltip>
+
+
       </div>
 
-      {video ? (
+      {/* {video ? (
         <div className=" flex justify-center items-center h-[225px] w-[300px] bg-[#0000003b] rounded-3xl">
           <Webcam mirrored height={300} width={300} className=" rounded-lg" />
         </div>
@@ -118,9 +125,9 @@ export default function quickroom() {
         <div className=" flex justify-center items-center h-[225px] w-[300px] bg-[#ffffff81] rounded-3xl ">
           <Logo width={40} />
         </div>
-      )}
+      )} */}
 
-      <div className=" text-default-500">Invite Friends</div>
+      <div className=" text-default-500 w-[100%]">Invite Friends</div>
 
       <FriendPicker color="warning" />
 
