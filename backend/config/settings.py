@@ -19,7 +19,7 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     REDIS_PORT=(int, 6379),
-    REDIS_HOST=(str, 'localhost')
+    REDIS_HOST=(str, 'redis')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -163,14 +163,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
 # Example Channel Layer Configuration (using Redis in this case)
-REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_HOST = os.getenv('REDIS_HOST', 'redis')
 REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(REDIS_HOST, 6379)],
         },
     },
 }

@@ -1,3 +1,4 @@
+import { UserEmotion } from "@/components/VideoCall/types";
 import { getChannelsUUID } from "@/helpers/auth";
 import React from "react";
 
@@ -9,7 +10,7 @@ class SocketService {
   public secret_key!: string;
   public uuid!: string;
   public setUsers!: (users: [any]) => void;
-  public setEmotion!: (emotion: any) => void;
+  public setUsersEmotions!: (emotion: UserEmotion) => void;
 
   constructor(meetId: string) {
     this.meetId = meetId;
@@ -51,10 +52,13 @@ class SocketService {
         break;
       case "update_emotion_users":
         console.log("Updated emotion:", data);
+        if (this.setUsersEmotions) {
+          this.setUsersEmotions(data.emotion);
+        }
         break;
       case "message":
         console.log("Message:", data.message);
-      
+
         break;
       case "secret_key":
         this.secret_key = data.secret_key;

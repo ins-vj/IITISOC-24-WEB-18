@@ -54,7 +54,7 @@ const VideoCallLoader = ({
     fetchData();
   }, []);
 
-  if (!proceed || !socketConnection?.secret_key) {
+  if (!proceed) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center text-xl font-semibold">
         <Detector

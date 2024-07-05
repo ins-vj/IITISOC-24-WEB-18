@@ -41,7 +41,7 @@ function Videos(props: {
   const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
   const [cam, setCam] = useState<string | null>();
   const [emotion, setEmotion] = useState<any>();
-  const [usersEmotion, setUsersEmotion] = useState<UserEmotion[] | null>(null);
+  const [usersEmotions, setUsersEmotions] = useState<any>({});
 
   const makeFullscreen = (e: ReactElement) => {
     if (videoInFocus) {
@@ -77,7 +77,14 @@ function Videos(props: {
     console.log("setting");
     setSocketUsers((prev: any) => users);
   };
-  props.socketConnection.setEmotion = (emotion: UserEmotion) => {};
+  props.socketConnection.setUsersEmotions = (emotion: UserEmotion) => {
+    console.log("updating emotion states");
+    const e1 = usersEmotions;
+    e1[emotion.client_id] = emotion.emotion;
+    console.log(e1);
+    setUsersEmotions(e1);
+    return true;
+  };
 
   const {
     screenTrack: screenTrack,
@@ -147,9 +154,7 @@ function Videos(props: {
         }
       }
     } else {
-
     }
-   
   };
 
   useEffect(() => {
@@ -246,7 +251,6 @@ const Call = (props: {
   socketConnection: SocketService;
 }) => {
   useEffect(() => {
-  
     AgoraRTC.setLogLevel(0);
     AgoraRTC.disableLogUpload();
   }, []);
