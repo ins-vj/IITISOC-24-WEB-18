@@ -1,7 +1,8 @@
 # IITISOC-24-WEB-18
 
 
-![Expresso](https://github.com/Pradeep-Kumar-Rebbavarapu/IITISOC-24-WEB-18)
+![logo](https://github.com/Pradeep-Kumar-Rebbavarapu/IITISOC-24-WEB-18/assets/142983705/ac198c0c-92f0-4726-a6f0-54d28ec745f3)
+
 
 
 # EXPRESSO CONNECT
