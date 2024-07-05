@@ -60,14 +60,16 @@ export default function Dashboard() {
           <Sections>
 
 
-
+            <div className=" enter w-[100%]">
             <Joinroom />
-
+            </div>
             <div className=" w-[100%] flex flex-col gap-[10px] sm:flex-row">
               <div className=" [@media(min-width:1101px)]:hidden w-[100%] h-[100%]">
                 <Quickroom />
               </div>
+              <div className=" enter2 w-[100%]">
               <Customroom />
+              </div>
             </div>
 
 
@@ -76,24 +78,38 @@ export default function Dashboard() {
           </Sections>
 
           <div className=" w-[100%] items-center min-w-[270px] justify-around   flex flex-col gap-[10px]">
+          <div className=" enter7 w-[100%]">
             <Topbar></Topbar>
-            <div className=" [@media(min-width:1101px)]:hidden w-[100%]">
-              <Profile user={user} username={username} mail={mail} />
             </div>
+            <div className=" [@media(min-width:1101px)]:hidden w-[100%]">
+            <div className=" enter5 w-[100%]">
+              <Profile user={user} username={username} mail={mail} />
+              </div>
+            </div>
+            <div className=" enter8 w-[100%]">
             <ViewAI />
+            </div>
             <div className=" [@media(max-width:1100px)]:hidden w-[100%] ">
+            <div className=" enter3 w-[100%]">
               <Quickroom />
+              </div>
             </div>
           </div>
 
         </div>
         <Sections>
           <div className=" [@media(max-width:1100px)]:hidden w-[100%]">
+          <div className=" enter4 w-[100%]">
             <Profile user={user} username={username} mail={mail} />
+            </div>
           </div>
+          <div className=" enter5 w-[100%]">
           <Upcoming />
+          </div>
+          <div className=" enter6 w-[100%]">
           <Tasks />
 
+          </div>
 
         </Sections>
 
