@@ -145,8 +145,8 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
     @action()
     async def update_emotion(self, emotion, **kwargs):
         print(emotion)
-        await self.update_meetuser_emotion(emotion)
         await self.notify_users_emotion_change(self.meet_subscribe, emotion)
+        await self.update_meetuser_emotion(emotion)
 
     @database_sync_to_async
     def update_meetuser_emotion(self, emotion):

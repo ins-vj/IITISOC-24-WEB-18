@@ -148,7 +148,11 @@ function Videos(props: {
         const predicted_emotion =
           detectionsWithExpression?.expressions.asSortedArray()[0].expression;
         setEmotion((emotion: any) => predicted_emotion);
-        if (predicted_emotion) {
+        if (
+          predicted_emotion &&
+          predicted_emotion !== "neutral" &&
+          predicted_emotion !== undefined
+        ) {
           console.log(predicted_emotion);
           props.socketConnection.updateUserEmotion(predicted_emotion);
         }
@@ -217,6 +221,7 @@ function Videos(props: {
               users={remoteUsers}
               socketUsers={socketUsers}
               makeFullscreen={makeFullscreen}
+              usersEmotions={usersEmotions}
             />
           )}
         </div>
