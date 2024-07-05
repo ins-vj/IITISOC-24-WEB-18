@@ -51,9 +51,9 @@ export default function quickroom() {
           Quick Room
         </Button>
 
-        <div className=" bg-[rgb(10,10,10)] w-[60px] h-[40px] rounded-2xl border-customorange-700 border-[1px]">
+        {/* <div className=" bg-[rgb(10,10,10)] w-[60px] h-[40px] rounded-2xl border-customorange-700 border-[1px]">
 
-        </div>
+        </div> */}
 
         {/* <div className=" flex gap-[5px]">
           <div

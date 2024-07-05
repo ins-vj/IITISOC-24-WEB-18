@@ -18,10 +18,10 @@ export default function userLayout({
     
     return (
         <>
-        <div className=" relative w-[100vw]  overflow-x-clip p-[15px] flex justify-center  text-customtextblack-500">
-          <div className=' absolute'>
+        <div className=" relative w-[100vw]  overflow-x-clip p-[15px] flex justify-center ">
+          {/* <div className=' absolute w-[100%] '>
         <Topbar />
-        </div>
+        </div> */}
       {children}
    
       </div>

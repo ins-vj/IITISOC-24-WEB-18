@@ -15,9 +15,9 @@ export default function topbar(){
 
     return(
 
-        <div className="relative w-[350px] md:w-[85%] lg:w-[500px] h-[4.5rem] ">
+        <div className="relative z-10  w-[100%] h-[4.5rem]   flex justify-center ">
     
-            <div className=' absolute w-[350px] md:w-[85%] lg:w-[500px] h-[4.5rem] z-50 bg-[rgb(30,30,30)] rounded-[35px] flex justify-around items-center'>
+            <div className=' absolute w-[100%]   h-[4.5rem] z-50 bg-[rgb(30,30,30)] rounded-[35px] flex justify-around items-center'>
 
 
           
