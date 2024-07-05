@@ -20,47 +20,9 @@ export default function sidebar() {
 
             <Logo width={50}></Logo>
             <div className=' flex flex-col gap-[15px]'>
-                <Link href='/dashboard/expressoroom'>
-                <Tooltip content="Rooms" color='warning' placement='right'>
-                    <div className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-                        <CameraIndoorIcon fontSize='small' color='action' />
-                    </div>
-                </Tooltip>
-                </Link>
-                <Link href='/dashboard/friends'>
-                <Tooltip content="Friends" color='primary' placement='right'>
-                    <div className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-                        <PeopleIcon fontSize='small' color='action' />
-                    </div>
-                </Tooltip>
-                </Link>
-                <Link href='/dashboard/expressoinbox'>
-                <Tooltip content="Messages" color='success' placement='right'>
-                    <div className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-                        <ChatBubbleIcon fontSize='small' color='action' />
-                    </div>
-                </Tooltip>
-                </Link>
-                <Link href='/dashboard/expressoai'>
-                <Tooltip content="AI" color='danger' placement='right'>
-                    <div className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-                        <AutoAwesomeIcon fontSize='small' color='action' />
-                    </div>
-                </Tooltip>
-                </Link>
-                <Link href='/dashboard/features'>
-                <Tooltip content="Features" color='secondary' placement='right'>
-                    <div className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-                        <InsightsIcon fontSize='small' color='action' />
-                    </div>
-                </Tooltip>
-                </Link>
+                
             </div>
-            <Link href='/explore'>
-            <div className=' bg-white h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
-                <LogoutIcon fontSize='small' color='action' />
-            </div>
-            </Link>
+            
         </div>
 
 

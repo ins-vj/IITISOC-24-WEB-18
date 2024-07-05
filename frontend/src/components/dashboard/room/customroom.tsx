@@ -41,9 +41,9 @@ export default function joinroom() {
 
 
 
-        <div className="  flex flex-col h-min backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
+        <div className=" flex w-[100%] flex-col items-center h-min  max-w-[350px] 2xl:max-w-[500px] backdrop-blur-md bg-[rgb(30,30,30)] gap-[20px] p-[20px] rounded-3xl">
 
-            <div className=" flex flex-row gap-[10px] justify-between">
+            <div className=" flex flex-row gap-[10px] w-[100%] justify-between">
 
                 <Button color="secondary" size="lg" startContent={<SettingsSuggestIcon fontSize='small' />} radius="full" variant="solid" className="  text-white" >
                     Create Custom Room
@@ -70,7 +70,7 @@ export default function joinroom() {
 
 
 
-<div className="flex items-center justify-between ">
+<div className="flex items-center w-[100%] justify-between ">
 
      
 
@@ -112,7 +112,7 @@ export default function joinroom() {
 
 
 
-      <div className=" text-default-500">Invite Friends</div>
+      <div className="w-[100%] text-default-500">Invite Friends</div>
 
         <FriendPicker color="secondary" />
 
@@ -121,7 +121,7 @@ export default function joinroom() {
 
 
       
-      <div className="w-[400px] flex gap-[18px] items-center ">
+      <div className="w-[100%] flex gap-[18px] items-center ">
         <UpcomingIcon fontSize='small' color='secondary' />
         <div className="text-default-500 text-sm text-justify">
         Friends will be notified about the upcoming meeting scheduled on {date} at {time} {zone}

@@ -15,14 +15,14 @@ export default function Tasks() {
 
 
 
-    <div className="  flex flex-col h-min w-min backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
+    <div className="flex w-[100%] flex-col items-center h-min  max-w-[350px] 2xl:max-w-[500px] backdrop-blur-md bg-[rgb(30,30,30)] gap-[20px] p-[20px] rounded-3xl">
 
       <WordPullUp
-        className="text-[2rem] w-[600px] flex justify-start font-bold tracking-[-0.02em] text-white  "
+        className="text-[2rem] w-[100%] flex justify-start font-bold tracking-[-0.02em] text-white  "
         words="Tasks"
       />
 
-      <div className=" flex justify-between gap-4">
+      <div className=" flex justify-between gap-4 w-[100%]">
 
       <Input
      size="lg"

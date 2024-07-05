@@ -9,7 +9,8 @@ import Upcoming from "@/components/dashboard/room/upcoming";
 import Tasks from "@/components/dashboard/room/tasks";
 import WordRotate from "@/components/dashboard/word-rotate";
 import TypingAnimation from "@/components/dashboard/typinganimation";
-
+import Topbar from "@/components/dashboard/topbar";
+import Cards from "@/components/dashboard/room/cards";
 
 export default function Dashboard() {
   const [user, setUser] = useState("Jai");
@@ -26,49 +27,39 @@ export default function Dashboard() {
     );
   } else {
     return (
-      <div className={`flex flex-col gap-[4rem] `}>
+      <div className={`flex gap-[10px] w-[100%] justify-around [@media(max-width:1100px)]:flex-col lg:flex-row  `}>
 
-      <div className="flex flex-row justify-between items-center ">
-        
-       <div className=" flex flex-col">
-  
-       <WordRotate
-        className=" text-[3rem] comfortaa font-bold "
-        words={[`${user}'s Dashboard`]}
-      />
-  
-  <TypingAnimation
-        className=" text-[1.5rem] comfortaa text-[#10101075]"
-        text="Connecting world"
-      />
-     
-       </div>
-  
+    <div className=" flex  [@media(max-width:1100px)]:flex-col-reverse lg:flex-row gap-[10px] w-[100%]">
+    <Cards>
+    <Quickroom/>
+    <Joinroom/>
+      <Customroom/>
       
-       
-        </div>
-  
-        <div className=" w-[100%] flex flex-row flex-wrap gap-14 ">
-  
-        <Quickroom />
-  
-        <Joinroom/>
-        <Customroom/>
-        <Upcoming/>
-        <Tasks/>
-  
-        </div>
-  
-  
-  
-  
-      </div>
-  
+    </Cards>
 
- 
-
-
+    <div className=" w-[100%] items-center min-w-[350px]  min-h-[100vh] flex flex-col gap-[15px]">
+      <Topbar></Topbar>
+      
+      <Upcoming/> 
+    </div>
+  
+    </div>
+    <Cards>
+      <Tasks/>
+      {/* <Profile/> */}
+    </Cards>
     
-  );
-}
+    
+   
+  
+
+      </div>
+
+
+
+
+
+
+    );
+  }
 }
