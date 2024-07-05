@@ -129,7 +129,7 @@ AUTHENTICATION_BACKENDS = [
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1', 'https://videovive-1.onrender.com', 'https://65.0.81.98']
+CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1', 'https://videovive-1.onrender.com', 'https://65.0.81.98', 'https://expresso-six.vercel.app']
 
 CORS_ALLOW_HEADERS = (
     "accept",
