@@ -9,6 +9,7 @@ import Webcam from "react-webcam";
 import Logo from './logo';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import React from "react";
+import Cards from "@/components/dashboard/room/cards";
 
 export default function joinroom() {
 
@@ -34,10 +35,10 @@ export default function joinroom() {
   }
 
   return (
-    <div className="w-[100%] flex flex-col items-center h-min  max-w-[350px]  2xl:max-w-[500px] backdrop-blur-md bg-[rgb(30,30,30)] gap-[20px] p-[20px] rounded-3xl ">
+    <Cards>
 
 
-<Input
+      <Input
         isClearable
         type="email"
         variant="bordered"
@@ -45,11 +46,11 @@ export default function joinroom() {
         value={link}
         onValueChange={setLink}
         label="Code" />
-        
+
 
       <div className=" flex flex-row w-[100%] justify-between">
 
-        <Button  isDisabled={link === "" ? true : false} color="primary" size="lg" startContent={<AddReactionIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
+        <Button isDisabled={link === "" ? true : false} color="primary" size="lg" startContent={<AddReactionIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
           Join Room
         </Button>
 
@@ -68,10 +69,10 @@ export default function joinroom() {
       </div>
 
 
-      {video ? <div className=" flex justify-center items-center h-[225px] w-[100%] bg-[#0000003b] rounded-3xl"><Webcam mirrored height={300} width={300} className=" rounded-lg" /></div> : <div className=" flex justify-center items-center h-[225px] w-[100%] bg-[#ffffff81] rounded-3xl "><Logo width={40} /></div>}
+      {video ? <div className=" flex justify-center items-center h-[325px] w-[100%] bg-[#0000003b] rounded-3xl overflow-hidden"><Webcam mirrored height={470} width={470} className=" rounded-lg" /></div> : <div className=" flex justify-center items-center h-[325px] w-[100%] bg-[rgba(24,24,27)] rounded-3xl overflow-hidden"><div className=" -translate-x-[30%] translate-y-[20%]  "><Logo width={400}/></div></div>}
 
 
-
-    </div>
+      </Cards>
+    
   );
 }

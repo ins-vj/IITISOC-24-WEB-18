@@ -18,6 +18,10 @@ const users = [
     id: 3,
     task: "Tony Reichert"
   },
+  {
+    id: 4,
+    task: "Tony Reichert"
+  },
 ];
 
 export {columns, users};
