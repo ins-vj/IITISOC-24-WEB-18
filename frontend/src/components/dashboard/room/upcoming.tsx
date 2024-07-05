@@ -4,7 +4,7 @@ import WordPullUp from "./pullup";
 import meetData from "./meetings.json";
 import Link from "next/link";
 import { AnchorIcon } from "./AnchorIcon";
-
+import Cards from "@/components/dashboard/room/cards";
 
 export default function quickroom() {
 
@@ -35,14 +35,14 @@ export default function quickroom() {
 
 
 
-    <div className="  flex flex-col h-min w-min backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
+    <Cards>
 
       <WordPullUp
-        className="text-[2rem] w-[600px] font-bold tracking-[-0.02em] text-white  "
+        className="text-[1.5rem] w-[100%] font-bold tracking-[-0.02em] text-left  "
         words="Upcoming Meetings"
       />
 
-      <Table aria-label="Upcoming meeting">
+      <Table aria-label="Upcoming meeting" className=" h-[310px] dark">
         <TableHeader columns={columns}>
           {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
         </TableHeader>
@@ -65,7 +65,7 @@ export default function quickroom() {
 
 
 
-    </div>
+    </Cards>
 
 
 

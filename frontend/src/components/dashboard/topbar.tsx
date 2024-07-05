@@ -15,10 +15,9 @@ export default function topbar(){
 
     return(
 
-        <div className="relative z-10  w-[100%] h-[4.5rem]   flex justify-center ">
+        <div className="relative hover:scale-[1.01] transition-all duration-300  p-[10px]  w-[100%]   h-[4.5rem] z-50 bg-[rgb(20,20,20)] rounded-[35px] flex justify-around items-center">
     
-            <div className=' absolute w-[100%]   h-[4.5rem] z-50 bg-[rgb(30,30,30)] rounded-[35px] flex justify-around items-center'>
-
+           
 
           
 
@@ -60,8 +59,7 @@ export default function topbar(){
 
 
 
-            </div>
-            {/* <Avatar  color="warning" src="" /> */}
+            
 
         </div>
 

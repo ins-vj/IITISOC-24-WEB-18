@@ -1,11 +1,10 @@
 
 
 
-export default function Card(props:any){
+export default function Cards(props:any){
     return(
-        <div className=" 2xl:min-w-[500px] xl:min-w-[400px] md:min-w-[350px] min-w-[95%]  min-h-[100vh] flex flex-col gap-[15px] items-center">
+        <div className="flex w-[100%] h-[100%] justify-around  hover:scale-[1.01] transition-all duration-300 flex-col items-center   backdrop-blur-md bg-[rgba(20,20,20,1)] gap-[20px] p-[20px] rounded-3xl">
         {props.children}
-
         </div>
     );
 
