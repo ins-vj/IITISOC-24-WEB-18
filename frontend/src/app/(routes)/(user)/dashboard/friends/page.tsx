@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import Loader from "@/components/dashboard/loader";
+import Loader from "@/components/dashboard/loading";
 import Quickroom from "@/components/dashboard/friends/quickroom";
 import Joinroom from "@/components/dashboard/friends/joinroom";
 import Requests from "@/components/dashboard/friends/customroom";
@@ -50,10 +50,17 @@ export default function Dashboard() {
 
           <div className=" flex [@media(max-width:1100px)]:flex-col-reverse lg:flex-row gap-[10px] w-[100%]">
             <Sections>
-
+            <div className=" enter w-[100%]">
               <Search photo={photo} user={user} username={username} />
+            </div>
+            <div className=" enter2 w-[100%]">
+
               <Requests photo={photo} user={user} username={username} />
+            </div>
+            <div className=" enter3 w-[100%]">
+
               <Favourites photo={photo} user={user} username={username} />
+            </div>
 
             </Sections>
 

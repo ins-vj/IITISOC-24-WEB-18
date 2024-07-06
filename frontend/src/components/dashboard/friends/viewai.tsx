@@ -30,11 +30,11 @@ export default function joinroom(props:any) {
 
 
 
-        <div className="flex w-[100%] justify-around h-[85vh] [@media(min-width:1100px)]:h-[870px] hover:scale-[1.01] transition-all duration-300 flex-col items-center p-[15px]  backdrop-blur-md bg-[rgba(20,20,20,1)]  rounded-3xl   ">
+        <div className="flex w-[100%] justify-around h-[85vh] [@media(min-width:1100px)]:h-[870px] hover:scale-[1.01] transition-all duration-300 flex-col items-center p-[15px] bg-[rgba(20,20,20,1)]  rounded-3xl   ">
 
             <Image src="/data/generative/friends.jpg" width={2000} height={2000} alt="cool" className=" h-[100%] object-cover rounded-3xl absolute  " />
 
-            <div className=" border-[1px] relative z-10 border-[rgba(254,254,254,0.2)] backdrop-blur-md p-[15px] w-[100%] h-[100%] flex flex-col gap-[15px]  rounded-3xl bg-[rgba(0,0,0,0.3)]">
+            <div className=" border-[1px] relative z-10 border-[rgba(254,254,254,0.2)] backdrop-blur-sm p-[15px] w-[100%] h-[100%] flex flex-col gap-[15px]  rounded-3xl bg-[rgba(0,0,0,0)]">
 
                 <div className={` w-[100%] flex justify-between  text-wrap text-left text-[2rem] font-black ${blackops.className}`}>
                     EXPRESSO FRIENDS
@@ -63,7 +63,7 @@ export default function joinroom(props:any) {
 
                 </div>
 
-                <div className="w-full bg-[rgba(25,25,25,0.8)] flex flex-col   border-small px-[5px] py-[2px] rounded-l-3xl border-default-200 dark:border-default-100 dark overflow-y-auto">
+                <div className="w-full bg-[rgba(25,25,25,0.9)] flex flex-col   border-small px-[5px] py-[2px] rounded-l-3xl border-default-200 dark:border-default-100 dark overflow-y-auto">
 
                  <Profile user={props.user} username={props.username} photo={props.photo} favourite={true} />
                  <Profile user={props.user} username={props.username} photo={props.photo} favourite={true} />
