@@ -1,10 +1,6 @@
 from rest_framework import generics
-from .models import User, Room, Message, Meet
-from .serializers import RoomSerializer, MessageSerializer, UserSerializer, MeetSerializer, MeetUserSerializer
-
-class RoomsList(generics.ListCreateAPIView):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
+from .models import User, Meet
+from .serializers import UserSerializer, MeetSerializer
 
 class UsersDetail(generics.ListAPIView):
     queryset = User.objects.all()
