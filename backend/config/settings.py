@@ -19,7 +19,7 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     REDIS_PORT=(int, 6379),
-    REDIS_HOST=(str, 'redis')
+    REDIS_HOST=(str, 'localhost')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -129,7 +129,7 @@ AUTHENTICATION_BACKENDS = [
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1', 'https://videovive-1.onrender.com', 'https://65.0.81.98', 'https://expresso-six.vercel.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1']
 
 CORS_ALLOW_HEADERS = (
     "accept",
@@ -163,14 +163,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
 # Example Channel Layer Configuration (using Redis in this case)
-REDIS_HOST = os.getenv('REDIS_HOST', 'redis')
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
 REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [(REDIS_HOST, 6379)],
+            "hosts": [('127.0.0.1', 6379)],
         },
     },
 }
