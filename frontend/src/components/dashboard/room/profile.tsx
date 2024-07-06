@@ -35,7 +35,7 @@ export default function Profile(props:any) {
         <div className="flex w-[100%] gap-[20px] items-center ">
             <Image src="/data/generative/dp.jpg"  width={100} height={100} alt="user" className=" object-cover rounded-[50%] bg-customorange-300" />
             <div>
-            <div className=" flex items-center w-[100%] justify-between gap-[20px]">
+            <div className=" flex items-center w-[100%] justify-start gap-[10px]">
             <div className="text-[2rem]" >{props.user}</div>
             <Image src="/data/flags/in.png"  width={30} height={30} alt="user" className=" object-cover bg-customorange-300 rounded-lg" />
             </div>
