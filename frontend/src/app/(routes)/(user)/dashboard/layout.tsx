@@ -4,7 +4,7 @@ import Sidebar from '../../../../components/dashboard/sidebar'
 import Topbar from '../../../../components/dashboard/topbar'
 import Ripple from '../../../../components/dashboard/ripple'
 import styles from './dashboard.module.css'
-
+import Particles from "@/components/landingpage/particles";
 
 
 
@@ -18,19 +18,17 @@ export default function userLayout({
     
     return (
         <>
-          <Ripple/>
-        <div className="  relative z-10 w-[100vw] h-[100vh] p-[5px] overflow-hidden flex flex-row justify-center  text-customtextblack-500">
-    <Sidebar />
-    <div className=' flex flex-col w-[100%] h-[100%]'>
-    <Topbar />
-    <div className={`w-[100%] h-[100%] p-[15px] overflow-y-auto flex flex-col ${styles.scroll} `}>
+ 
+        
+        <div className=" relative w-[100vw]  overflow-x-clip p-[15px] flex justify-center ">
+        <Particles className='absolute w-[100vw] h-[100vh]'/>
+          
       {children}
-      </div>
+   
       </div>
  
 
-{/* <div className="w-[10%] h-[10%] bg-customorange-700 absolute left-0  bottom-[0] blur-[100px]  "></div> */}
-    </div>
+
    
         </>
     );

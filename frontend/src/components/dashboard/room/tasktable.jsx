@@ -48,7 +48,7 @@ export default function App() {
   }, []);
 
   return (
-  <Table aria-label="Tasks">
+  <Table aria-label="Tasks" className="w-[100%] h-[225px] dark">
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn key={column.uid} align={column.uid === "actions" ? "center" : "start"}>

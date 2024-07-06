@@ -9,6 +9,7 @@ import Webcam from "react-webcam";
 import Logo from './logo';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import React from "react";
+import Cards from "@/components/dashboard/room/cards";
 
 export default function joinroom() {
 
@@ -34,10 +35,10 @@ export default function joinroom() {
   }
 
   return (
-    <div className="  flex flex-col h-min  backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
+    <Cards>
 
 
-<Input
+      <Input
         isClearable
         type="email"
         variant="bordered"
@@ -45,20 +46,20 @@ export default function joinroom() {
         value={link}
         onValueChange={setLink}
         label="Code" />
-        
 
-      <div className=" flex flex-row gap-[10px] justify-between">
 
-        <Button  isDisabled={link === "" ? true : false} color="primary" size="lg" startContent={<AddReactionIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
+      <div className=" flex flex-row w-[100%] justify-between">
+
+        <Button isDisabled={link === "" ? true : false} color="primary" size="lg" startContent={<AddReactionIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
           Join Room
         </Button>
 
-        <div className=" flex gap-[5px]">
-          <div onClick={toggleVideo} className=' bg-[#ffffff81] h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
+        <div className=" flex gap-[5px] items-center">
+          <div onClick={toggleVideo} className=' bg-[#ffffff81] h-[2.5rem] w-[2.5rem] rounded-[80%] flex justify-center items-center'>
             {video ? <VideocamIcon fontSize='small' color='warning' /> : <VideocamOffIcon fontSize='small' color='action' />}
 
           </div>
-          <div onClick={toggleMic} className='bg-[#ffffff81] h-[3rem] w-[3rem] rounded-[80%] flex justify-center items-center'>
+          <div onClick={toggleMic} className='bg-[#ffffff81] h-[2.5rem] w-[2.5rem] rounded-[80%] flex justify-center items-center'>
             {mic ? <MicIcon fontSize='small' color='warning' /> : <MicOffIcon fontSize='small' color='action' />}
           </div>
 
@@ -68,10 +69,10 @@ export default function joinroom() {
       </div>
 
 
-      {video ? <div className=" flex justify-center items-center h-[225px] w-[300px] bg-[#0000003b] rounded-3xl"><Webcam mirrored height={300} width={300} className=" rounded-lg" /></div> : <div className=" flex justify-center items-center h-[225px] w-[300px] bg-[#ffffff81] rounded-3xl "><Logo width={40} /></div>}
+      {video ? <div className=" flex justify-center items-center h-[325px] w-[100%] bg-[#0000003b] rounded-3xl overflow-hidden"><Webcam mirrored height={470} width={470} className=" rounded-lg" /></div> : <div className=" flex justify-center items-center h-[325px] w-[100%] bg-[rgba(24,24,27)] rounded-3xl overflow-hidden"><div className=" -translate-x-[30%] translate-y-[20%]  "><Logo width={400}/></div></div>}
 
 
-
-    </div>
+      </Cards>
+    
   );
 }

@@ -4,6 +4,7 @@ import WordPullUp from "./pullup";
 import TaskList from "./tasktable";
 import {Input} from "@nextui-org/react";
 import AddIcon from '@mui/icons-material/Add';
+import Cards from "@/components/dashboard/room/cards";
 
 export default function Tasks() {
 
@@ -15,20 +16,21 @@ export default function Tasks() {
 
 
 
-    <div className="  flex flex-col h-min w-min backdrop-blur-md bg-[#ffffff3b] gap-[20px] p-[20px] rounded-3xl ">
+   <Cards>
 
       <WordPullUp
-        className="text-[2rem] w-[600px] flex justify-start font-bold tracking-[-0.02em] text-white  "
+        className="text-[1.5rem] w-[100%] flex justify-start font-bold tracking-[-0.02em] text-white  "
         words="Tasks"
       />
 
-      <div className=" flex justify-between gap-4">
+      <div className=" flex justify-between gap-4 w-[100%]">
 
       <Input
      size="lg"
       placeholder="New Task"
       value={newtask}
       onValueChange={setNewTask}
+      className=" dark"
     />
     <Button isDisabled={newtask ? false : true} isIconOnly color="warning" size="lg" variant="solid"  className=" text-white">
         <AddIcon/>
@@ -43,7 +45,8 @@ export default function Tasks() {
 
 
 
-    </div>
+    </Cards>
+
 
 
 

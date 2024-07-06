@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 :root {
@@ -19,12 +19,20 @@
   }
 }
 
+* {
+  padding: 0;
+  margin: 0;
+  
+}
+
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: Arial, sans-serif;
   overflow-x: hidden;
+  padding: 0;
+  margin: 0;
 
   
 }
@@ -81,4 +89,170 @@ body {
   
 }
 
+
+
+.enter{
+  position: relative;
+  animation-name: enter;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+.enter2{
+  position: relative;
+  animation-name: enter2;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter2 {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) translateX(-100%) scale(0.8);
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    
+  }
+}
+.enter3{
+  position: relative;
+  animation-name: enter3;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter3 {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.enter4{
+  position: relative;
+  animation-name: enter4;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter4 {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%) translateX(100%) scale(0.8);
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    
+  }
+}
+
+.enter5{
+  position: relative;
+  animation-name: enter5;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter5 {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.enter6{
+  position: relative;
+  animation-name: enter6;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter6 {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) translateX(100%) scale(0.8);
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    
+  }
+}
+.enter7{
+  position: relative;
+  animation-name: enter7;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter7 {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%) scale(0.8);
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    
+  }
+}
+.enter8{
+  position: relative;
+  animation-name: enter8;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enter8 {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1.2);
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    
+  }
+}
 
