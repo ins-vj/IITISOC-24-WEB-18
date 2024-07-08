@@ -164,9 +164,14 @@ function Videos(props: {
   useEffect(() => {
     const load = async () => {
       await loadModels();
-      await props.socketConnection.updateClientId();
     };
     load();
+    if (
+      props.socketConnection.socket.CLOSED ||
+      props.socketConnection.socket.CLOSING
+    ) {
+      props.socketConnection.newSocket();
+    }
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import { UserEmotion } from "@/components/VideoCall/types";
 import { getChannelsUUID } from "@/helpers/auth";
-import React from "react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_WS_URL;
 
@@ -16,25 +15,50 @@ class SocketService {
     this.meetId = meetId;
   }
 
+  waitForConnection(callback: () => void, interval: number): void {
+    if (this.socket.readyState === 1) {
+      callback();
+    } else {
+      setTimeout(() => {
+        this.waitForConnection(callback, interval);
+      }, interval);
+    }
+  }
+
   newSocket = async () => {
+    if (this.socket) {
+      await this.socket.close();
+    }
     const uuid = await getChannelsUUID();
     this.uuid = uuid;
     console.log(`${BASE_URL}/ws/messagesio/meet/?uuid=${uuid}`);
-    this.socket = new WebSocket(`${BASE_URL}/ws/messagesio/meet/?uuid=${uuid}`);
+    this.socket = await new WebSocket(
+      `${BASE_URL}/ws/messagesio/meet/?uuid=${uuid}`
+    );
 
     this.socket.onopen = () => {
       console.log("WebSocket connected");
-      this.socket.send(
-        JSON.stringify({
-          id: this.meetId,
-          action: "join_meet",
-          request_id: uuid,
-        })
-      );
+      console.log({
+        pk: this.meetId,
+        action: "join_meet",
+        request_id: this.uuid,
+      });
+
+      this.waitForConnection(() => {
+        this.socket.send(
+          JSON.stringify({
+            pk: this.meetId,
+            action: "join_meet",
+            request_id: this.uuid,
+          })
+        );
+        this.updateClientId();
+      }, 100);
     };
 
     this.socket.onmessage = (event: any) => {
       const data = JSON.parse(event.data);
+      console.log(data);
       this.handleMessage(data);
     };
 
@@ -76,17 +100,18 @@ class SocketService {
       client_id: this.uuid,
       request_id: this.uuid,
     };
+    console.log(msg);
     this.socket.send(JSON.stringify(msg));
   }
 
   updateUserEmotion(emotion: string) {
     console.log("update emotion");
-    console.log(emotion);
     const msg = {
       action: "update_emotion",
       emotion: emotion,
       request_id: this.uuid,
     };
+    console.log(msg);
     this.socket.send(JSON.stringify(msg));
   }
 
@@ -96,6 +121,7 @@ class SocketService {
       message: message,
       request_id: this.uuid,
     };
+    console.log(msg);
     this.socket.send(JSON.stringify(msg));
   }
 }

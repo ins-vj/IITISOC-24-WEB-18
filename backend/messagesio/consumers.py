@@ -5,74 +5,107 @@ from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 from djangochannelsrestframework.observer import model_observer
 from djangochannelsrestframework.observer.generics import ObserverModelInstanceMixin, action
 
-from .models import Meet, MeetUser
+from .models import Meet, MeetUser, Message
 from users.models import CustomUser as User
-from .serializers import MeetSerializer
+from .serializers import UserSerializer, MeetSerializer, MeetUserSerializer, MessageSerializer
 
 class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
     queryset = Meet.objects.all()
     serializer_class = MeetSerializer
-    lookup_field = "id"
+    lookup_field = "pk"
 
-    async def connect(self):
-        await self.accept()
-
-    async def disconnect(self, close_code):
-        # meet_id = self.meet_subscribe
-        # await self.remove_user_from_meet(id=meet_id)
-        # await self.notify_users_in_meet(meet_id=meet_id)
-        pass
+    async def disconnect(self, code):
+        if hasattr(self, "meet_subscribe"):
+            await self.remove_user_from_meet(self.meet_subscribe)
+            await self.notify_users()
+        await super().disconnect(code)
 
     @action()
-    async def join_meet(self, id, **kwargs):
-        self.meet_subscribe = id
-        meetDetails: Meet = await self.add_user_to_meet(id)
-        await self.allow_user(str(meetDetails.secret_key))
-        await self.channel_layer.group_add(f'meet_{id}', self.channel_name)
-        await self.notify_users_in_meet(id)
+    async def join_meet(self, pk, **kwargs):
+        self.meet_subscribe = pk
+        secret_key = await self.add_user_to_meet(pk)
+        await self.allow_user(str(secret_key))
+        await self.notify_users()
+        print("User added to meet")
+
+    @action()
+    async def leave_meet(self, pk, **kwargs):
+        await self.remove_user_from_meet(pk)
+        await self.notify_users()
+
+    @action()
+    async def subscribe_to_messages_in_meet(self, pk, request_id, **kwargs):
+        await self.message_activity.subscribe(meet=pk, request_id=request_id)
 
     @action()
     async def update_clientid(self, client_id, **kwargs):
         print(client_id)
         await self.update_meetuser_clientid(client_id)
-        await self.notify_users_in_meet(self.meet_subscribe)
+        await self.notify_users()
 
     @action()
     async def update_emotion(self, emotion, **kwargs):
         print(emotion)
-        await self.notify_users_emotion_change(self.meet_subscribe, emotion)
         await self.update_meetuser_emotion(emotion)
+        await self.notify_users_emotion_change(self.meet_subscribe, emotion)
 
-    @database_sync_to_async
-    def update_meetuser_emotion(self, emotion):
-        user = self.scope["user"]
-        meet_user = MeetUser.objects.get(user=user)
-        meet_user.emotion = emotion
-        meet_user.save()
+    @model_observer(MeetUser)
+    async def message_activity(
+        self,
+        message,
+        observer=None,
+        subscribing_request_ids=[],
+        **kwargs
+    ):
+        """
+        This is evaluated once for each subscribed consumer.
+        The result of `@message_activity.serializer` is provided here as the message.
+        """
+        for request_id in subscribing_request_ids:
+            message_body = dict(request_id=request_id)
+            message_body.update(message)
+            await self.send_json(message_body)
 
-    @database_sync_to_async
-    def update_meetuser_clientid(self, client_id):
-        user = self.scope["user"]
-        meet_user = MeetUser.objects.get(user=user)
-        meet_user.client_id = client_id
-        meet_user.save()
+    @message_activity.groups_for_signal
+    def message_activity(self, instance: MeetUser, **kwargs):
+        print(f'meet_{instance.meet_id}')
+        yield f'meet_{instance.meet_id}'
+        yield f'pk__{instance.pk}'
 
-    @database_sync_to_async
-    def add_user_to_meet(self, id):
-        user = self.scope["user"]
-        meet_user, created = MeetUser.objects.get_or_create(user=user)
-        meet = Meet.objects.get(id=id)
-        if not meet.all_users.filter(pk=meet_user.pk).exists():
-            meet.all_users.add(meet_user)
-        return meet
-    
-    @database_sync_to_async
-    def remove_user_from_meet(self, id):
-        user = self.scope["user"]
-        meet_user = MeetUser.objects.get(user=user)
-        meet = Meet.objects.get(id=id)
-        if meet.all_users.filter(pk=meet_user.pk).exists():
-            meet.all_users.remove(meet_user)
+    @message_activity.groups_for_consumer
+    def message_activity(self, meet=None, **kwargs):
+        print('activity')
+        if meet is not None:
+            yield f'meet_{meet}'
+
+    @message_activity.serializer
+    def message_activity(self, instance: MeetUser, action, **kwargs):
+        """
+        This is evaluated before the update is sent
+        out to all the subscribing consumers.
+        """
+        if not instance.user:
+            print(f"MeetUser {instance.pk} has no user associated.")
+            return dict(data="No user", action=action.value, pk=instance.pk)
+        print(dict(data=MeetUserSerializer(instance).data, action=action.value, pk=instance.pk))
+        return dict(data=MeetUserSerializer(instance).data, action=action.value, pk=instance.pk)
+
+    async def notify_users(self):
+        meet = await self.get_meet(self.meet_subscribe)
+        print(f'meet_{meet.id}')
+        users_in_meet = await self.current_users(meet.id)
+        print(users_in_meet)
+
+        await self.channel_layer.group_send(
+            f'meet_{meet.id}',
+            {
+                'type': 'update_users',
+                'usuarios': users_in_meet
+            }
+        )
+
+    async def update_users(self, event: dict):
+        await self.send(text_data=json.dumps({'users': event["usuarios"]}))
 
     async def notify_user_message(self, message):
         await self.send_json({
@@ -92,7 +125,7 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
         await self.channel_layer.group_send(
             f'meet_{meet_id}',
             {
-                'type': 'update_emotion_users',
+                'type': 'update_emotion_user',
                 'emotion': {
                     'client_id': meet_user.client_id,
                     'emotion': emotion
@@ -100,46 +133,50 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
             }
         )
 
-    async def notify_users_in_meet(self, meet_id):
-        meet = await self.get_meet(meet_id)
-        users_in_meet = await self.current_users(meet)
+    async def update_emotion_users(self, event):
+        await self.send_json({
+            'type': 'update_emotion_user',
+            'emotion': event['emotion']
+        })
 
-        await self.channel_layer.group_send(
-            f'meet_{meet_id}',
-            {
-                'type': 'update_users',
-                'usuarios': users_in_meet
-            }
-        )
-
-    @database_sync_to_async
-    def get_meet(self, meet_id):
-        return Meet.objects.get(id=meet_id)
-
-    @database_sync_to_async
-    def current_users(self, meet):
-        return list(meet.all_users.values('id', 'user__id', 'user__username', 'client_id', 'emotion'))
-    
-    @database_sync_to_async
-    def current_emotions(self, meet):
-        return list(meet.all_users.values('client_id', 'emotion'))
-    
     @database_sync_to_async
     def get_meetuser(self):
         meet = self.meet_subscribe
         user = self.scope["user"]
-        meet_user: MeetUser = MeetUser.objects.get(user=user)
-        return meet_user
+        return MeetUser.objects.get(user=user, meet=meet)
 
+    @database_sync_to_async
+    def remove_user_from_meet(self, id):
+        user = self.scope["user"]
+        meet_user = MeetUser.objects.get(user=user, meet_id=id)
+        meet_user.delete()
 
-    async def update_users(self, event):
-        await self.send_json({
-            'type': 'update_users',
-            'usuarios': event['usuarios']
-        })
+    @database_sync_to_async
+    def update_meetuser_emotion(self, emotion):
+        user = self.scope["user"]
+        meet_user = MeetUser.objects.get(user=user, meet=self.meet_subscribe)
+        meet_user.emotion = emotion
+        meet_user.save()
 
-    async def update_emotion_users(self, event):
-        await self.send_json({
-            'type': 'update_emotion_users',
-            'emotion': event['emotion']
-        })
+    @database_sync_to_async
+    def update_meetuser_clientid(self, client_id):
+        user = self.scope["user"]
+        meet_user = MeetUser.objects.get(user=user, meet=self.meet_subscribe)
+        meet_user.client_id = client_id
+        meet_user.save()
+
+    @database_sync_to_async
+    def current_users(self, meet_id):
+        return list(MeetUser.objects.filter(meet_id=meet_id).values('id', 'user__id', 'user__username', 'client_id', 'emotion'))
+
+    @database_sync_to_async
+    def get_meet(self, pk: int) -> Meet:
+        return Meet.objects.get(pk=pk)
+
+    @database_sync_to_async
+    def add_user_to_meet(self, pk):
+        user = self.scope["user"]
+        meet = Meet.objects.get(pk=pk)
+        meet_user, created = MeetUser.objects.get_or_create(user=user, meet=meet)
+        print(meet_user)
+        return meet.secret_key
