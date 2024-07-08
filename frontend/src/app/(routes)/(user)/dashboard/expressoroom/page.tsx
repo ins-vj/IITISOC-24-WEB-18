@@ -13,7 +13,7 @@ import Topbar from "@/components/dashboard/topbar";
 import Sections from "@/components/dashboard/room/sections";
 import Profile from "@/components/dashboard/room/profile";
 import ViewAI from "@/components/dashboard/room/viewai";
-
+import Particles from "@/components/landingpage/particles";
 import React from "react";
 export default function Dashboard() {
 
@@ -52,6 +52,8 @@ export default function Dashboard() {
     );
   } else {
     return (
+      <>
+      <Particles className="absolute w-full h-full" />
       <div className={`flex gap-[10px] w-[100%] justify-around [@media(max-width:1100px)]:flex-col lg:flex-row  `}>
         {/* <div className=" absolute -z-0 -translate-x-[50%] -translate-y-[50%]  bg-customorange-700 w-[40%] h-[40%] blur-[500px] opacity-[0.3]"  style={{ left: `${mousePosition.x}px`, top: `${mousePosition.y}px` }}></div> */}
 
@@ -118,7 +120,7 @@ export default function Dashboard() {
 
 
       </div>
-
+      </>
 
 
 

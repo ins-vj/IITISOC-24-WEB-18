@@ -33,11 +33,11 @@ export default function Profile(props:any) {
 
         <div className=" flex w-[100%] gap-[20px] items-center justify-between">
         <div className="flex w-[100%] gap-[20px] items-center ">
-            <Image src="/data/generative/dp.jpg"  width={100} height={100} alt="user" className=" object-cover rounded-[50%] bg-customorange-300" />
+            <Image src="/data/generative/dp.jpg"  width={57} height={57} alt="user" className=" object-cover rounded-[50%] bg-customorange-300" />
             <div>
             <div className=" flex items-center w-[100%] justify-start gap-[10px]">
-            <div className="text-[2rem]" >{props.user}</div>
-            <Image src="/data/flags/in.png"  width={30} height={30} alt="user" className=" object-cover bg-customorange-300 rounded-lg" />
+            <div className="text-[1.7rem]" >{props.user}</div>
+            <Image src="/data/flags/in.png"  width={27} height={27} alt="user" className=" object-cover bg-customorange-300 rounded-lg" />
             </div>
             <div className="text-[1rem] opacity-60 lowercase">@ {props.username}</div>
             </div>
