@@ -42,12 +42,12 @@ export default function joinroom(props:any) {
                     
                 </div>
 
-                <div className="w-full max-h-[18rem] min-h-[18rem] flex flex-col   border-small px-[5px] py-[2px] rounded-l-3xl border-default-200 dark:border-default-100 dark overflow-y-auto">
+                <div className="w-full max-h-[18rem] min-h-[18.5rem] flex flex-col   border-small px-[5px] py-[2px] rounded-l-3xl border-default-200 dark:border-default-100 dark overflow-y-auto">
 
                  <Profile user={props.user} username={props.username} photo={props.photo} />
                  <Profile user={props.user} username={props.username} photo={props.photo} />
                  <Profile user={props.user} username={props.username} photo={props.photo} />
-                 <Profile user={props.user} username={props.username} photo={props.photo} />
+
     
                 </div>
 

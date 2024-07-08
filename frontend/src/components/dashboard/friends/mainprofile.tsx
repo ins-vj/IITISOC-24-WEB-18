@@ -33,7 +33,7 @@ export default function Profile(props:any) {
 
 
 
-        <div className=" relative flex w-[100%]  justify-start  hover:scale-[1.01] transition-all duration-300 flex-col items-center   gap-[20px] p-[20px] rounded-3xl">
+        <div className=" relative flex w-[100%]  justify-start  hover:scale-[1.01] transition-all duration-300 flex-col items-center   gap-[20px] [@media(max-width:420px)]:px-[3px] p-[10px] sm:p-[20px] rounded-3xl">
 
         <div className=" flex w-[100%] gap-[20px] items-center justify-between">
         <div className="flex w-[100%] gap-[20px] items-center ">
@@ -48,7 +48,7 @@ export default function Profile(props:any) {
             </div>
             <div>
      
-            <div className=" flex gap-[5px]">
+            <div className=" flex sm:gap-[5px]">
             
             <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
             <VideoCallIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>

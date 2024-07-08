@@ -30,7 +30,7 @@ export default function joinroom() {
 
 
 
-        <div className="flex w-[100%] justify-around h-[43vh]  hover:scale-[1.01] transition-all duration-300 flex-col items-center   backdrop-blur-md bg-[rgba(20,20,20,1)]  rounded-3xl   ">
+        <div className="flex w-[100%] justify-around h-[55vh] [@media(min-width:1100px)]:h-[560px] hover:scale-[1.01] transition-all duration-300 flex-col items-center   backdrop-blur-md bg-[rgba(20,20,20,1)]  rounded-3xl   ">
             
             <Image src="/data/generative/cool.jpeg"  width={2000} height={2000} alt="cool" className=" h-[100%] object-cover rounded-3xl" />
            

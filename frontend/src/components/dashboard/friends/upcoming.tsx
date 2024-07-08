@@ -4,69 +4,43 @@ import WordPullUp from "./pullup";
 import meetData from "./meetings.json";
 import Link from "next/link";
 import { AnchorIcon } from "./AnchorIcon";
-import Cards from "@/components/dashboard/room/cards";
-
+import Cards from "@/components/dashboard/friends/cards";
+import { blackops } from '@/app/fonts'
+import Image from 'next/image'
 export default function quickroom() {
 
-  const columns = [
-    {
-      key: "event",
-      label: "EVENT",
-    },
-    {
-      key: "date",
-      label: "Date",
-    },
-    {
-      key: "time",
-      label: "Time",
-    },
-    {
-      key: "link",
-      label: "Join",
-    },
-  ];
-
-  const rows = meetData;
-
-
-
+  
   return (
 
 
+    <div className="flex w-[100%] justify-around  h-[43vh] hover:scale-[1.01] transition-all duration-300 flex-col items-center   backdrop-blur-md bg-[rgba(20,20,20,1)]  rounded-3xl   ">
+            
+    <Image src="/data/generative/friends.jpg"  width={2000} height={2000} alt="cool" className=" h-[100%] object-cover rounded-3xl" />
+   
+    <div className=" border-[1px] border-[rgba(254,254,254,0.2)] backdrop-blur-md p-[15px] w-[300px] h-min absolute bottom-[20px] left-[20px] rounded-3xl">
 
-    <Cards>
+        <div className={` w-[100%] text-wrap text-left text-[2rem] font-black ${blackops.className}`}>
+            EXPRESSO FRIENDS
+            <Button disabled color="warning" size="lg" className=" dark">
+                            Connect &#124; Express &#124; Enjoy
+                        </Button>
+        </div>
 
-      <WordPullUp
-        className="text-[1.5rem] w-[100%] font-bold tracking-[-0.02em] text-left  "
-        words="Upcoming Meetings"
-      />
+    </div>
+    
 
-      <Table aria-label="Upcoming meeting" className=" h-[310px] dark">
-        <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-        </TableHeader>
-        <TableBody items={rows} >
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => <TableCell>
+</div>
 
-                {columnKey === "link" ? <Link href={getKeyValue(item, columnKey)} > <Button  color="danger" startContent={<AnchorIcon/>} isIconOnly={true} variant="light"></Button></Link> : <div>{getKeyValue(item, columnKey)}</div>}
-                
-                
-               
-                
-                </TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+
+
+    
+
+   
 
 
 
 
-    </Cards>
-
+   
 
 
   );
