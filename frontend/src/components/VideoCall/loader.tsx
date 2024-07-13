@@ -6,7 +6,8 @@ import "@/components/VideoCall/VideoCall.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import SocketService from "@/helpers/websocketService";
-import { getChannelsUUID } from "@/helpers/auth";
+import { CircularProgress } from "@mui/material";
+import { divider } from "@nextui-org/react";
 
 const Detector = dynamic(
   () => import("@/components/EmotionDetection/Detector"),
@@ -37,6 +38,7 @@ const VideoCallLoader = ({
   const [video, setVideo] = useState<boolean>(true);
   const [audio, setAudio] = useState<boolean>(true);
   const [socketConnection, setSocketConnection] = useState<SocketService>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,41 +47,55 @@ const VideoCallLoader = ({
         router.push("/login");
       }
       setData((prev) => c1);
-      if (!socketConnection) {
-        const socketConn = new SocketService(videocallId);
-        socketConn!.setUsers = (users: [any]) => {};
-        await socketConn!.newSocket();
-        setSocketConnection((prev) => socketConn);
-      }
     };
     fetchData();
+    if (socketConnection === undefined) {
+      const socketConn = new SocketService(videocallId);
+      socketConn!.setUsers = (users: [any]) => {};
+      socketConn!.newSocket();
+      setSocketConnection((prev) => socketConn);
+    }
+    setLoading(false);
   }, []);
 
-  if (!proceed || !socketConnection?.secret_key) {
+  if (!proceed) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center text-xl font-semibold">
-        <Detector
-          video={video}
-          audio={audio}
-          setVideo={setVideo}
-          setAudio={setAudio}
-        />
-        <button className="join-button mt-8" onClick={() => setProceed(true)}>
-          Join Now as {data?.username}
-        </button>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <div className="flex flex-col justify-center items-center">
+            <Detector
+              video={video}
+              audio={audio}
+              setVideo={setVideo}
+              setAudio={setAudio}
+            />
+            <button
+              className="join-button mt-8"
+              onClick={() => {
+                setProceed(true);
+                console.log(socketConnection?.secret_key);
+              }}
+            >
+              Join Now as {data?.username}
+            </button>
+          </div>
+        )}
       </div>
     );
   }
   return (
     <div>
-      {children}
-      <VideoCallComponent
-        channelName={videocallId}
-        appId={APP_ID}
-        video={video}
-        audio={audio}
-        socketConnection={socketConnection!}
-      />
+      {proceed && (
+        <VideoCallComponent
+          channelName={videocallId}
+          appId={APP_ID}
+          video={video}
+          audio={audio}
+          socketConnection={socketConnection!}
+        />
+      )}
     </div>
   );
 };

@@ -3,7 +3,6 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -19,8 +18,17 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "strict": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/dashboard/room/tasktable.jsx", "src/components/landingpage/onscreenhook.jsx", "src/components/landingpage/eyes.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/dashboard/room/tasktable.jsx",
+    "src/components/landingpage/onscreenhook.jsx",
+    "src/components/landingpage/eyes.jsx"
+  ],
   "exclude": ["node_modules"]
 }

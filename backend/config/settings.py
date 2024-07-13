@@ -170,7 +170,31 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(REDIS_HOST, 6379)],
+        },
+    },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',  # Change to 'INFO' or 'ERROR' in production
+        },
+        'channels': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # Change to 'INFO' or 'ERROR' in production
+        },
+        'channels_redis': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
         },
     },
 }

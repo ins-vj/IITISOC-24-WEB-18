@@ -1,4 +1,4 @@
-from .models import Room, Message, Meet, MeetUser
+from .models import Meet, MeetUser, Message
 from users.models import CustomUser as User
 from rest_framework import serializers
 
@@ -21,26 +21,7 @@ class MessageSerializer(serializers.ModelSerializer):
     def get_created_at_formatted(self, obj:Message):
         return obj.created_at.strftime("%d-%m-%Y %H:%M:%S")
 
-class RoomSerializer(serializers.ModelSerializer):
-    last_message = serializers.SerializerMethodField()
-    messages = MessageSerializer(many=True, read_only=True)
-    host = UserSerializer(read_only=True)
-    current_users = UserSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = Room
-        fields = ["pk", "name", "host", "messages", "current_users", "last_message"]
-        depth = 1
-        read_only_fields = ["messages", "last_message"]
-
-    def get_last_message(self, obj:Room):
-        return MessageSerializer(obj.messages.order_by('created_at').last()).data
-    
-    def create(self, validated_data):
-        # Automatically set the host based on the authenticated user
-        validated_data['host'] = self.context['request'].user
-        return super().create(validated_data)
-    
 class MeetUserSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
@@ -51,15 +32,14 @@ class MeetUserSerializer(serializers.ModelSerializer):
 
     
 class MeetSerializer(serializers.ModelSerializer):
-    all_users = MeetUserSerializer(many=True, read_only=True)
     host = UserSerializer(read_only=True)
 
     class Meta:
         model = Meet
         exclude = []
     
-    def create(self, validated_data):
-        # Automatically set the host based on the authenticated user
-        validated_data['host'] = self.context['request'].user
-        return super().create(validated_data)
+    # def create(self, validated_data):
+    #     # Automatically set the host based on the authenticated user
+    #     validated_data['host'] = self.context['request'].user
+    #     return super().create(validated_data)
     

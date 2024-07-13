@@ -41,7 +41,7 @@ function Videos(props: {
   const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
   const [cam, setCam] = useState<string | null>();
   const [emotion, setEmotion] = useState<any>();
-  const [usersEmotion, setUsersEmotion] = useState<UserEmotion[] | null>(null);
+  const [usersEmotions, setUsersEmotions] = useState<any>({});
 
   const makeFullscreen = (e: ReactElement) => {
     if (videoInFocus) {
@@ -73,11 +73,20 @@ function Videos(props: {
   const [screenShare, setScreenShare] = useState(false);
   const screenShareClient = useRTCScreenShareClient(props.client);
   const [socketUsers, setSocketUsers] = useState<any>([]);
-  props.socketConnection.setUsers = (users: [any]) => {
-    console.log("setting");
-    setSocketUsers((prev: any) => users);
-  };
-  props.socketConnection.setEmotion = (emotion: UserEmotion) => {};
+  if (props.socketConnection) {
+    props.socketConnection!.setUsers = (users: [any]) => {
+      console.log("setting");
+      setSocketUsers((prev: any) => users);
+    };
+    props.socketConnection.setUsersEmotions = (emotion: UserEmotion) => {
+      console.log("updating emotion states");
+      const e1 = usersEmotions;
+      e1[emotion.client_id] = emotion.emotion;
+      console.log(e1);
+      setUsersEmotions(e1);
+      return true;
+    };
+  }
 
   const {
     screenTrack: screenTrack,
@@ -141,23 +150,30 @@ function Videos(props: {
         const predicted_emotion =
           detectionsWithExpression?.expressions.asSortedArray()[0].expression;
         setEmotion((emotion: any) => predicted_emotion);
-        if (predicted_emotion) {
+        if (
+          predicted_emotion &&
+          predicted_emotion !== "neutral" &&
+          predicted_emotion !== undefined
+        ) {
           console.log(predicted_emotion);
           props.socketConnection.updateUserEmotion(predicted_emotion);
         }
       }
     } else {
-
     }
-   
   };
 
   useEffect(() => {
     const load = async () => {
       await loadModels();
-      await props.socketConnection.updateClientId();
     };
     load();
+    if (
+      props.socketConnection.socket.CLOSED ||
+      props.socketConnection.socket.CLOSING
+    ) {
+      props.socketConnection.newSocket();
+    }
   }, []);
 
   useEffect(() => {
@@ -212,6 +228,7 @@ function Videos(props: {
               users={remoteUsers}
               socketUsers={socketUsers}
               makeFullscreen={makeFullscreen}
+              usersEmotions={usersEmotions}
             />
           )}
         </div>
@@ -246,7 +263,6 @@ const Call = (props: {
   socketConnection: SocketService;
 }) => {
   useEffect(() => {
-  
     AgoraRTC.setLogLevel(0);
     AgoraRTC.disableLogUpload();
   }, []);

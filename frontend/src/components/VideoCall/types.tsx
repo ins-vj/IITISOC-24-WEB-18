@@ -1,11 +1,15 @@
 export interface UserEmotion {
   client_id: string;
+  emotion: emotion;
 }
 
 enum emotion {
+  "neutral",
   "happy",
   "sad",
-  "excited",
-  "surprised",
   "angry",
+  "fearful",
+  "disgusted",
+  "surprised",
+  undefined,
 }

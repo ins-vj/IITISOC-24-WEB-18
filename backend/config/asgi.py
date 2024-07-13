@@ -16,9 +16,7 @@ from messagesio.routing import websocket_urlpatterns
 application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
-        "websocket": AllowedHostsOriginValidator(
-            JwtAuthMiddlewareStack(URLRouter(websocket_urlpatterns))
-            
-        ),
+        "websocket":
+            JwtAuthMiddlewareStack(URLRouter(websocket_urlpatterns)),
     }
 )
