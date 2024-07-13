@@ -16,21 +16,27 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
 
     async def disconnect(self, code):
         if hasattr(self, "meet_subscribe"):
-            await self.remove_user_from_meet(self.meet_subscribe)
-            await self.notify_users()
+            try:
+                await self.remove_user_from_meet(self.meet_subscribe)
+                await self.notify_users()
+            finally:
+                pass
         await super().disconnect(code)
+        pass
 
     @action()
     async def join_meet(self, pk, **kwargs):
         self.meet_subscribe = pk
         secret_key = await self.add_user_to_meet(pk)
         await self.allow_user(str(secret_key))
+        await self.channel_layer.group_add(f'meet_{pk}', self.channel_name)
         await self.notify_users()
         print("User added to meet")
 
     @action()
     async def leave_meet(self, pk, **kwargs):
         await self.remove_user_from_meet(pk)
+        await self.channel_layer.group_discard(f'meet_{pk}', self.channel_name)
         await self.notify_users()
 
     @action()
@@ -66,45 +72,26 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
             message_body.update(message)
             await self.send_json(message_body)
 
-    @message_activity.groups_for_signal
-    def message_activity(self, instance: MeetUser, **kwargs):
-        print(f'meet_{instance.meet_id}')
-        yield f'meet_{instance.meet_id}'
-        yield f'pk__{instance.pk}'
-
-    @message_activity.groups_for_consumer
-    def message_activity(self, meet=None, **kwargs):
-        print('activity')
-        if meet is not None:
-            yield f'meet_{meet}'
-
-    @message_activity.serializer
-    def message_activity(self, instance: MeetUser, action, **kwargs):
-        """
-        This is evaluated before the update is sent
-        out to all the subscribing consumers.
-        """
-        if not instance.user:
-            print(f"MeetUser {instance.pk} has no user associated.")
-            return dict(data="No user", action=action.value, pk=instance.pk)
-        print(dict(data=MeetUserSerializer(instance).data, action=action.value, pk=instance.pk))
-        return dict(data=MeetUserSerializer(instance).data, action=action.value, pk=instance.pk)
-
     async def notify_users(self):
         meet = await self.get_meet(self.meet_subscribe)
         print(f'meet_{meet.id}')
         users_in_meet = await self.current_users(meet.id)
         print(users_in_meet)
 
-        await self.channel_layer.group_send(
-            f'meet_{meet.id}',
-            {
-                'type': 'update_users',
-                'usuarios': users_in_meet
-            }
-        )
+        try:
+            await self.channel_layer.group_send(
+                f'meet_{meet.id}',
+                {
+                    'type': 'update_users',
+                    'usuarios': users_in_meet
+                }
+            )
+            print("Sent update_users message to group")
+        except Exception as e:
+            print(f"Error sending update_users message: {e}")
 
     async def update_users(self, event: dict):
+        print("Updating users:", event)
         await self.send(text_data=json.dumps({'users': event["usuarios"]}))
 
     async def notify_user_message(self, message):
@@ -121,21 +108,27 @@ class MeetConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
 
     async def notify_users_emotion_change(self, meet_id, emotion):
         meet_user = await self.get_meetuser()
+        print(f"Notifying emotion change for user {meet_user.client_id}")
 
-        await self.channel_layer.group_send(
-            f'meet_{meet_id}',
-            {
-                'type': 'update_emotion_user',
-                'emotion': {
-                    'client_id': meet_user.client_id,
-                    'emotion': emotion
+        try:
+            await self.channel_layer.group_send(
+                f'meet_{meet_id}',
+                {
+                    'type': 'update_emotion_users',
+                    'emotion': {
+                        'client_id': meet_user.client_id,
+                        'emotion': emotion
+                    }
                 }
-            }
-        )
+            )
+            print("Sent update_emotion_users message to group")
+        except Exception as e:
+            print(f"Error sending update_emotion_users message: {e}")
 
     async def update_emotion_users(self, event):
+        print("Updating user emotion:", event)
         await self.send_json({
-            'type': 'update_emotion_user',
+            'type': 'update_emotion_users',
             'emotion': event['emotion']
         })
 

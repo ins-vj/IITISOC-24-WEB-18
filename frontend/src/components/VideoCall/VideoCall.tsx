@@ -73,18 +73,20 @@ function Videos(props: {
   const [screenShare, setScreenShare] = useState(false);
   const screenShareClient = useRTCScreenShareClient(props.client);
   const [socketUsers, setSocketUsers] = useState<any>([]);
-  props.socketConnection.setUsers = (users: [any]) => {
-    console.log("setting");
-    setSocketUsers((prev: any) => users);
-  };
-  props.socketConnection.setUsersEmotions = (emotion: UserEmotion) => {
-    console.log("updating emotion states");
-    const e1 = usersEmotions;
-    e1[emotion.client_id] = emotion.emotion;
-    console.log(e1);
-    setUsersEmotions(e1);
-    return true;
-  };
+  if (props.socketConnection) {
+    props.socketConnection!.setUsers = (users: [any]) => {
+      console.log("setting");
+      setSocketUsers((prev: any) => users);
+    };
+    props.socketConnection.setUsersEmotions = (emotion: UserEmotion) => {
+      console.log("updating emotion states");
+      const e1 = usersEmotions;
+      e1[emotion.client_id] = emotion.emotion;
+      console.log(e1);
+      setUsersEmotions(e1);
+      return true;
+    };
+  }
 
   const {
     screenTrack: screenTrack,

@@ -85,7 +85,9 @@ class SocketService {
 
         break;
       case "secret_key":
-        this.secret_key = data.secret_key;
+        if (data.secret_key && !this.secret_key) {
+          this.secret_key = data.secret_key;
+        }
         console.log("secret_key: ", data.secret_key);
         break;
       default:
