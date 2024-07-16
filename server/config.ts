@@ -49,5 +49,13 @@ export const config = {
     ] as TransportListenInfo[],
     maxIncomeBitrate: 150000,
     initialAvailableOutgoingBitrate: 1000000,
+    stunServers: [{ urls: "stun:stun.l.google.com:19302" }],
   },
+
+  iceServers: [
+    { urls: "stun.l.google.com:19302" },
+    {
+      urls: "stun1.l.google.com:19302,",
+    },
+  ],
 };

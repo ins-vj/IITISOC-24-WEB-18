@@ -4,8 +4,13 @@ import {
   DtlsParameters,
   IceParameters,
 } from "mediasoup/node/lib/fbs/web-rtc-transport";
+import { Worker } from "mediasoup/node/lib/Worker";
+import { WebRtcTransportOptions } from "mediasoup/node/lib/WebRtcTransport";
 
-export const createWebRTCTransport = async (mediasoupRouter: Router) => {
+export const createWebRTCTransport = async (
+  mediasoupRouter: Router,
+  worker: Worker
+) => {
   const { maxIncomeBitrate, initialAvailableOutgoingBitrate } =
     config.webRtcTransport;
 
@@ -16,6 +21,9 @@ export const createWebRTCTransport = async (mediasoupRouter: Router) => {
     preferUdp: true,
     initialAvailableOutgoingBitrate,
   });
+
+  console.log("Ice parameters: ", transport.iceParameters);
+  console.log("Ice iceCandidates: ", transport.iceCandidates);
 
   if (maxIncomeBitrate) {
     try {
@@ -29,8 +37,9 @@ export const createWebRTCTransport = async (mediasoupRouter: Router) => {
     transport,
     params: {
       id: transport.id,
-      iceParameters: transport.iceCandidates,
+      iceParameters: transport.iceParameters,
       dtlsParameters: transport.dtlsParameters,
+      iceCandidates: transport.iceCandidates,
     },
   };
 };

@@ -30,7 +30,7 @@ const createWorker = async () => {
 
   const mediaCodecs = config.router.mediaCodes;
   const mediasoupRouter = await worker.createRouter({ mediaCodecs });
-  return mediasoupRouter;
+  return { mediasoupRouter, worker };
 };
 
 export { createWorker };
