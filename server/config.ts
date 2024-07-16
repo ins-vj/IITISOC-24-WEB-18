@@ -1,4 +1,3 @@
-import ws from "ws";
 import os from "os";
 import {
   RtpCodecCapability,
