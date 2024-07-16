@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import * as Mediasoup from "mediasoup-client";
 import { Transport } from "mediasoup-client/lib/types";
 
-const WebSocketURL = "ws://localhost:4444/ws";
+const WebSocketURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 interface VideoCallContextProps {
   video: boolean;

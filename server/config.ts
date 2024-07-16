@@ -6,6 +6,8 @@ import {
   WorkerLogTag,
 } from "mediasoup/node/lib/types";
 
+const announcedIp = process.env.ANNOUNCED_IP;
+
 export const config = {
   listenIp: "0.0.0.0",
   listenPort: 3016,
@@ -43,7 +45,7 @@ export const config = {
     listenIps: [
       {
         ip: "0.0.0.0",
-        announcedIp: "127.0.0.1",
+        announcedIp: announcedIp,
       },
     ] as TransportListenInfo[],
     maxIncomeBitrate: 150000,
