@@ -22,15 +22,17 @@ const VideocallComponent = () => {
 
   return (
     <div className="flex justify-center flex-col items-center">
-      <div>
-        <div className="w-100 h-100">
-          <video autoPlay id="user-video"></video>
+      <div className="flex gap-4 flex-wrap">
+        <div>
+          <div className="w-100 h-100">
+            <video autoPlay id="user-video"></video>
+          </div>
         </div>
-      </div>
 
-      <div id="remote-videos">
-        <div className="w-100 h-100">
-          <video autoPlay id="remote-video-1"></video>
+        <div id="remote-videos">
+          <div className="w-100 h-100">
+            <video autoPlay id="remote-video-1"></video>
+          </div>
         </div>
       </div>
       <div>
