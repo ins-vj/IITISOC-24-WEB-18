@@ -26,7 +26,7 @@ const Controlbar = () => {
       <button
         className="p-4 bg-gray-600"
         onClick={() => {
-          vcContext.subscribe();
+          vcContext.videocallconnector.subscribe();
         }}
       >
         Subscribe

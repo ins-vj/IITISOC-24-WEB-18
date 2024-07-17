@@ -1,4 +1,5 @@
 import os from "os";
+import dotenv from "dotenv";
 import {
   RtpCodecCapability,
   TransportListenInfo,
@@ -6,7 +7,10 @@ import {
   WorkerLogTag,
 } from "mediasoup/node/lib/types";
 
-const announcedIp = process.env.ANNOUNCED_IP;
+dotenv.config();
+
+const IP = process.env.ANNOUNCED_IP;
+console.log(IP);
 
 export const config = {
   listenIp: "0.0.0.0",
@@ -45,7 +49,7 @@ export const config = {
     listenIps: [
       {
         ip: "0.0.0.0",
-        announcedIp: announcedIp,
+        announcedIp: IP,
       },
     ] as TransportListenInfo[],
     maxIncomeBitrate: 150000,

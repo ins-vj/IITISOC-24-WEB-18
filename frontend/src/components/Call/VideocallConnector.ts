@@ -3,288 +3,298 @@ import { Transport } from "mediasoup-client/lib/types";
 
 const WebSocketURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-let producer: Mediasoup.types.Producer;
-let transport: Mediasoup.types.Transport;
-let consumerTransport: Mediasoup.types.Transport;
-let socket: WebSocket;
-let device: Mediasoup.Device;
-let setRemoteVideos: (videos: any) => void;
+export class VideoCallConnector {
+  public producer: Mediasoup.types.Producer;
+  public transport: Mediasoup.types.Transport;
+  public consumerTransport: Mediasoup.types.Transport;
+  public socket: WebSocket;
+  public device: Mediasoup.Device;
+  public setRemoteVideos: (videos: any) => void;
+  public setLocalVideo: (videos: any) => void;
 
-export const subscribe = () => {
-  const msg = {
-    type: "createConsumerTransport",
-    forceTcp: false,
+  subscribe = () => {
+    const msg = {
+      type: "createConsumerTransport",
+      forceTcp: false,
+    };
+    this.socket.send(JSON.stringify(msg));
   };
-  socket.send(JSON.stringify(msg));
-};
 
-export const startSending = async (video: boolean) => {
-  try {
-    console.log("transport: ", transport);
-    const stream = await getUserMedia(transport, video);
-    const track = stream.getVideoTracks()[0];
-    producer = await transport.produce({ track });
-    return stream;
-  } catch (error) {
-    console.error(error);
+  constructor(
+    setRemoteVideosParam: (videos: any) => void,
+    setLocalVideo: (video: any) => void
+  ) {
+    const newSocket = new WebSocket(WebSocketURL);
+    this.socket = newSocket;
+    this.setRemoteVideos = setRemoteVideosParam;
+    this.setLocalVideo = setLocalVideo;
+
+    newSocket.onopen = () => {
+      console.log("connected");
+      newSocket.send(JSON.stringify({ type: "getRouterRtpCapabilities" }));
+    };
+
+    newSocket.onmessage = async (e: MessageEvent) => {
+      const data = JSON.parse(e.data);
+      console.log(data);
+
+      switch (data.type) {
+        case "routerCapabilities":
+          await this.onRouterCapabilities(data);
+          break;
+        case "producerTransportCreated":
+          await this.onProducerTransportCreated(data);
+          break;
+        case "subtransportCreated":
+          await this.onsubtransportCreated(data);
+          break;
+        case "resumed":
+          console.log(data.data);
+          break;
+        case "subscribed":
+          await this.onSubscribed(data);
+          break;
+
+        default:
+          console.log("Unknown message type:", data.type);
+      }
+    };
   }
-};
 
-export const connectCall = (setRemoteVideosParam: (videos: any) => void) => {
-  const newSocket = new WebSocket(WebSocketURL);
-  socket = newSocket;
-  setRemoteVideos = setRemoteVideosParam;
-
-  newSocket.onopen = () => {
-    console.log("connected");
-    newSocket.send(JSON.stringify({ type: "getRouterRtpCapabilities" }));
-  };
-
-  newSocket.onmessage = async (e: MessageEvent) => {
-    const data = JSON.parse(e.data);
-    console.log(data);
-
-    switch (data.type) {
-      case "routerCapabilities":
-        await onRouterCapabilities(data);
-        break;
-      case "producerTransportCreated":
-        await onProducerTransportCreated(data);
-        break;
-      case "subtransportCreated":
-        await onsubtransportCreated(data);
-        break;
-      case "resumed":
-        console.log(data.data);
-        break;
-      case "subscribed":
-        await onSubscribed(data);
-        break;
-
-      default:
-        console.log("Unknown message type:", data.type);
+  isJson = (str: string) => {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (error) {
+      return false;
     }
   };
-};
 
-const isJson = (str: string) => {
-  try {
-    JSON.parse(str);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
+  startSending = async (video: boolean) => {
+    try {
+      console.log("transport: ", this.transport);
+      const stream = await this.getUserMedia(this.transport, video);
+      this.setLocalVideo(stream);
+      const track = stream.getVideoTracks()[0];
+      this.producer = await this.transport.produce({ track });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-const getUserMedia = async (transport, isWebcam) => {
-  if (!device.canProduce("video")) {
-    console.error("Cannot produce video");
-    return;
-  }
+  getUserMedia = async (transport, isWebcam) => {
+    if (!this.device.canProduce("video")) {
+      console.error("Cannot produce video");
+      return;
+    }
 
-  let stream;
-  try {
-    stream = isWebcam
-      ? await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        })
-      : await navigator.mediaDevices.getDisplayMedia({ video: true });
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-  return stream;
-};
+    let stream;
+    try {
+      stream = isWebcam
+        ? await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          })
+        : await navigator.mediaDevices.getDisplayMedia({ video: true });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+    return stream;
+  };
 
-const loadDevice = async (routerRtpCapabilities) => {
-  try {
-    const newDevice = new Mediasoup.Device();
-    await newDevice.load({ routerRtpCapabilities });
-    device = newDevice;
-    return newDevice;
-  } catch (error) {
-    console.log("error: ", error);
-  }
-};
+  loadDevice = async (routerRtpCapabilities) => {
+    try {
+      const newDevice = new Mediasoup.Device();
+      await newDevice.load({ routerRtpCapabilities });
+      this.device = newDevice;
+      return newDevice;
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
 
-const onRouterCapabilities = async (data) => {
-  const newDevice = await loadDevice(data.data);
-  console.log("Device loaded");
-  if (socket && newDevice) {
-    publish(newDevice, socket);
-  }
-};
+  onRouterCapabilities = async (data) => {
+    const newDevice = await this.loadDevice(data.data);
+    console.log("Device loaded");
+    if (this.socket && newDevice) {
+      this.publish(newDevice, this.socket);
+    }
+  };
 
-const onSubscribed = async (event: any) => {
-  const { producerId, id, kind, rtpParameters, type, producerPaused } =
-    event.data;
+  onSubscribed = async (event: any) => {
+    const { producerId, id, kind, rtpParameters, type, producerPaused } =
+      event.data;
 
-  console.log(
-    "onSubscribeEvent data: ",
-    {
+    console.log(
+      "onSubscribeEvent data: ",
+      {
+        id,
+        producerId,
+        kind,
+        rtpParameters,
+      },
+      "consumer Transport: ",
+      this.consumerTransport
+    );
+
+    let codecOptions = {};
+    const consumer = await this.consumerTransport.consume({
       id,
       producerId,
       kind,
       rtpParameters,
-    },
-    "consumer Transport: ",
-    consumerTransport
-  );
+    });
 
-  let codecOptions = {};
-  const consumer = await consumerTransport.consume({
-    id,
-    producerId,
-    kind,
-    rtpParameters,
-  });
+    const stream = new MediaStream();
+    stream.addTrack(consumer.track);
+    this.setRemoteVideos(stream);
+  };
 
-  const stream = new MediaStream();
-  stream.addTrack(consumer.track);
-  setRemoteVideos(stream);
-};
+  onProducerTransportCreated = async (data) => {
+    if (data.error) {
+      console.error("Producer Transport create error!");
+      return;
+    }
 
-const onProducerTransportCreated = async (data) => {
-  if (data.error) {
-    console.error("Producer Transport create error!");
-    return;
-  }
+    this.transport = this.device.createSendTransport({
+      id: data.data.id,
+      iceParameters: data.data.iceParameters,
+      iceCandidates: data.data.iceCandidates,
+      dtlsParameters: data.data.dtlsParameters,
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" }, // Example STUN server
+      ],
+    });
 
-  transport = device.createSendTransport({
-    id: data.data.id,
-    iceParameters: data.data.iceParameters,
-    iceCandidates: data.data.iceCandidates,
-    dtlsParameters: data.data.dtlsParameters,
-    iceServers: [
-      { urls: "stun:stun.l.google.com:19302" }, // Example STUN server
-    ],
-  });
-
-  transport.on("connect", async ({ dtlsParameters }, callback, errback) => {
-    socket.send(
-      JSON.stringify({
-        type: "connectProducerTransport",
-        dtlsParameters,
-        transportId: transport.id,
-      })
+    this.transport.on(
+      "connect",
+      async ({ dtlsParameters }, callback, errback) => {
+        this.socket.send(
+          JSON.stringify({
+            type: "connectProducerTransport",
+            dtlsParameters,
+            transportId: this.transport.id,
+          })
+        );
+        this.socket.addEventListener("message", (event: MessageEvent) => {
+          console.log("connect producer transport: ", event);
+          let resp = JSON.parse(event.data);
+          if (resp.type === "producerConnected") {
+            callback();
+          }
+        });
+      }
     );
-    socket.addEventListener("message", (event: MessageEvent) => {
-      console.log("connect producer transport: ", event);
-      let resp = JSON.parse(event.data);
-      if (resp.type === "producerConnected") {
-        callback();
+
+    this.transport.on(
+      "produce",
+      async ({ kind, rtpParameters }, callback, errback) => {
+        this.socket.send(
+          JSON.stringify({
+            type: "produce",
+            transportId: this.transport.id,
+            kind,
+            rtpParameters,
+          })
+        );
+        this.socket.addEventListener("published", (event: MessageEvent) => {
+          console.log("produced: ", event.data);
+          let resp = JSON.parse(event.data);
+          if (this.isJson(event.data) && resp.type === "produced") {
+            callback(resp.data.id);
+          }
+        });
+      }
+    );
+
+    this.transport.on("connectionstatechange", (state) => {
+      switch (state) {
+        case "connecting":
+          console.log("publishing state");
+          break;
+        case "connected":
+          console.log("published state");
+          break;
+        case "failed":
+          console.error("failed state");
+          this.transport.close();
+          break;
+        default:
+          console.log("default state:", state);
+          break;
       }
     });
-  });
+  };
 
-  transport.on(
-    "produce",
-    async ({ kind, rtpParameters }, callback, errback) => {
-      socket.send(
-        JSON.stringify({
-          type: "produce",
-          transportId: transport.id,
-          kind,
-          rtpParameters,
-        })
-      );
-      socket.addEventListener("published", (event: MessageEvent) => {
-        console.log("produced: ", event.data);
+  onsubtransportCreated = (event: any) => {
+    if (event.error) {
+      console.error("On subtransport create error: ", event.errback);
+    }
+
+    const transport = this.device.createRecvTransport(event.data);
+    console.log("subTransport : ", transport);
+    this.consumerTransport = transport;
+    transport.on("connect", ({ dtlsParameters }, callback, errback) => {
+      const msg = {
+        type: "connectConsumerTransport",
+        transportId: transport.id,
+        dtlsParameters,
+      };
+
+      this.socket.send(JSON.stringify(msg));
+
+      // subConnected
+      this.socket.addEventListener("message", (event: MessageEvent) => {
         let resp = JSON.parse(event.data);
-        if (isJson(event.data) && resp.type === "produced") {
-          callback(resp.data.id);
+        if (resp.type === "subConnected") {
+          console.log("consumer Transport connected and callback made");
+          callback();
         }
       });
-    }
-  );
+    });
 
-  transport.on("connectionstatechange", (state) => {
-    switch (state) {
-      case "connecting":
-        console.log("publishing state");
-        break;
-      case "connected":
-        console.log("published state");
-        break;
-      case "failed":
-        console.error("failed state");
-        transport.close();
-        break;
-      default:
-        console.log("default state:", state);
-        break;
-    }
-  });
-};
-
-const onsubtransportCreated = (event: any) => {
-  if (event.error) {
-    console.error("On subtransport create error: ", event.errback);
-  }
-
-  const transport = device.createRecvTransport(event.data);
-  console.log("subTransport : ", transport);
-  consumerTransport = transport;
-  transport.on("connect", ({ dtlsParameters }, callback, errback) => {
-    const msg = {
-      type: "connectConsumerTransport",
-      transportId: transport.id,
-      dtlsParameters,
-    };
-
-    socket.send(JSON.stringify(msg));
-
-    // subConnected
-    socket.addEventListener("message", (event: MessageEvent) => {
-      let resp = JSON.parse(event.data);
-      if (resp.type === "subConnected") {
-        console.log("consumer Transport connected and callback made");
-        callback();
+    transport.on("connectionstatechange", async (state) => {
+      switch (state) {
+        case "connecting":
+          console.log("connecting");
+          break;
+        case "connected":
+          console.log("connected");
+          const msg = {
+            type: "resume",
+          };
+          this.socket.send(JSON.stringify(msg));
+          break;
+        case "failed":
+          transport.close();
+          console.error("connection failed");
       }
     });
-  });
-
-  transport.on("connectionstatechange", async (state) => {
-    switch (state) {
-      case "connecting":
-        console.log("connecting");
-        break;
-      case "connected":
-        console.log("connected");
-        const msg = {
-          type: "resume",
-        };
-        socket.send(JSON.stringify(msg));
-        break;
-      case "failed":
-        transport.close();
-        console.error("connection failed");
-    }
-  });
-  const stream = consume(transport);
-};
-
-const consume = async (transport: Transport) => {
-  const { rtpCapabilities } = device;
-  console.log(rtpCapabilities);
-  const msg = {
-    type: "consume",
-    rtpCapabilities,
+    const stream = this.consume(transport);
   };
-  socket.send(JSON.stringify(msg));
-};
 
-const publish = (device, socket) => {
-  if (device && socket) {
-    socket.send(
-      JSON.stringify({
-        type: "createProducerTransport",
-        forceTcp: false,
-        routerRtpCapabilities: device.rtpCapabilities,
-      })
-    );
-  } else {
-    console.error("Device or socket is not available");
-  }
-};
+  consume = async (transport: Transport) => {
+    const { rtpCapabilities } = this.device;
+    console.log(rtpCapabilities);
+    const msg = {
+      type: "consume",
+      rtpCapabilities,
+    };
+    this.socket.send(JSON.stringify(msg));
+  };
+
+  publish = (device, socket) => {
+    if (device && socket) {
+      socket.send(
+        JSON.stringify({
+          type: "createProducerTransport",
+          forceTcp: false,
+          routerRtpCapabilities: device.rtpCapabilities,
+        })
+      );
+    } else {
+      console.error("Device or socket is not available");
+    }
+  };
+}

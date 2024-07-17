@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { connectCall, startSending, subscribe } from "./VideocallConnector";
+import { VideoCallConnector } from "./VideocallConnector";
 
 interface VideoCallContextProps {
   video: boolean;
@@ -12,10 +12,12 @@ interface VideoCallContextProps {
   setScreen: (screen: boolean) => void;
   localVideo: MediaStream;
   remoteVideo: MediaStream;
-  subscribe: () => void;
+  videocallconnector: VideoCallConnector;
 }
 
 export const VideoCallContext = createContext<VideoCallContextProps>(null);
+
+let VCConnector: VideoCallConnector;
 
 export const VideoCallProvider = (props: {
   children: React.ReactNode;
@@ -31,14 +33,14 @@ export const VideoCallProvider = (props: {
   useEffect(() => {
     if (startCall && (video || screen)) {
       const start = async () => {
-        const localvideo = await startSending(video);
-        setLocalVideo(localvideo);
+        VCConnector.startSending(video);
       };
+      start();
     }
   }, [startCall, video, screen]);
 
   useEffect(() => {
-    connectCall(setRemoteVideo);
+    VCConnector = new VideoCallConnector(setRemoteVideo, setLocalVideo);
   }, []);
 
   return (
@@ -54,7 +56,7 @@ export const VideoCallProvider = (props: {
         setStartCall,
         screen,
         setScreen,
-        subscribe,
+        videocallconnector: VCConnector,
       }}
     >
       {props.children}
