@@ -17,7 +17,7 @@ const Detector = dynamic(
 );
 
 const VideoCallComponent = dynamic(
-  () => import("@/components/VideoCall/VideoCall"),
+  () => import("@/components/VideoCallV1/VideoCall"),
   {
     ssr: false,
   }
