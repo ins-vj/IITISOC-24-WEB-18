@@ -9,17 +9,6 @@ const VideocallComponent = () => {
     userVideo.srcObject = vcContext.localVideo;
   }, [vcContext.localVideo]);
 
-  useEffect(() => {
-    console.log("SETTING REMOTE VIDEO");
-
-    const remoteVideo = document.getElementById(
-      "remote-video-1"
-    ) as HTMLVideoElement;
-    remoteVideo.srcObject = vcContext.remoteVideo;
-
-    console.log(vcContext.remoteVideo);
-  }, [vcContext.remoteVideo]);
-
   return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex gap-4 flex-wrap">
@@ -31,7 +20,24 @@ const VideocallComponent = () => {
 
         <div id="remote-videos">
           <div className="w-100 h-100">
-            <video autoPlay id="remote-video-1"></video>
+            {Array.from(vcContext.remoteVideos.entries()).map(
+              ([key, remoteUser]) => {
+                return (
+                  <div key={key}>
+                    <video
+                      ref={(videoElement) => {
+                        if (videoElement) {
+                          videoElement.srcObject = remoteUser.stream;
+                        }
+                        console.log(vcContext.remoteVideos);
+                      }}
+                      autoPlay
+                    ></video>
+                    <span>{remoteUser.userData.username}</span>
+                  </div>
+                );
+              }
+            )}
           </div>
         </div>
       </div>

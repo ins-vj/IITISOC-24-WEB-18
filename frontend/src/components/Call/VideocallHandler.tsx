@@ -1,5 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import { VideoCallConnector } from "./VideocallConnector";
+import { getUserDetails } from "@/helpers/api";
+import { useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/material";
 
 interface VideoCallContextProps {
   video: boolean;
@@ -11,7 +14,7 @@ interface VideoCallContextProps {
   setStartCall: (call: boolean) => void;
   setScreen: (screen: boolean) => void;
   localVideo: MediaStream;
-  remoteVideo: MediaStream;
+  remoteVideos: Map<string, { userData: any; stream: MediaStream }>;
   videocallconnector: VideoCallConnector;
 }
 
@@ -23,12 +26,55 @@ export const VideoCallProvider = (props: {
   children: React.ReactNode;
   meetId: string;
 }) => {
+  const [userData, setUserData] = useState<any>();
   const [video, setVideo] = useState(false);
   const [audio, setAudio] = useState(false);
   const [screen, setScreen] = useState(false);
   const [localVideo, setLocalVideo] = useState<MediaStream>(null);
-  const [remoteVideo, setRemoteVideo] = useState<MediaStream>(null);
+  const [remoteVideos, setRemoteVideos] = useState<
+    Map<string, { userData: any; stream: MediaStream }>
+  >(new Map());
   const [startCall, setStartCall] = useState(false);
+  const router = useRouter();
+
+  const addRemoteVideo = (
+    producerId: string,
+    videoStream: MediaStream,
+    userData: any
+  ) => {
+    // TODO Notify users that a user connected
+
+    setRemoteVideos((prev) => {
+      const newMap = new Map(prev);
+      console.log(producerId);
+      newMap.delete(producerId);
+      newMap.set(producerId, { stream: videoStream, userData: userData });
+      return newMap;
+    });
+  };
+
+  const removeRemoteVideo = (producerId: string) => {
+    // TODO Notify users that a user disconnected
+
+    setRemoteVideos((prev) => {
+      console.log(producerId);
+      const newMap = new Map(prev);
+      console.log(newMap);
+      newMap.delete(producerId);
+      return newMap;
+    });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const c1 = await getUserDetails();
+      if (!c1.username) {
+        router.push("/login");
+      }
+      setUserData(c1);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (startCall && (video || screen)) {
@@ -40,8 +86,19 @@ export const VideoCallProvider = (props: {
   }, [startCall, video, screen]);
 
   useEffect(() => {
-    VCConnector = new VideoCallConnector(setRemoteVideo, setLocalVideo);
-  }, []);
+    try {
+      if (userData.username) {
+        VCConnector = new VideoCallConnector(
+          addRemoteVideo,
+          removeRemoteVideo,
+          setLocalVideo,
+          userData
+        );
+      }
+    } catch (error) {
+      return;
+    }
+  }, [userData]);
 
   return (
     <VideoCallContext.Provider
@@ -51,7 +108,7 @@ export const VideoCallProvider = (props: {
         setVideo,
         setAudio,
         localVideo,
-        remoteVideo,
+        remoteVideos,
         startCall,
         setStartCall,
         screen,
@@ -59,7 +116,8 @@ export const VideoCallProvider = (props: {
         videocallconnector: VCConnector,
       }}
     >
-      {props.children}
+      {!userData && <CircularProgress />}
+      {userData && props.children}
     </VideoCallContext.Provider>
   );
 };

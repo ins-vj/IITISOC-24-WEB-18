@@ -22,9 +22,6 @@ export const createWebRTCTransport = async (
     initialAvailableOutgoingBitrate,
   });
 
-  console.log("Ice parameters: ", transport.iceParameters);
-  console.log("Ice iceCandidates: ", transport.iceCandidates);
-
   if (maxIncomeBitrate) {
     try {
       await transport.setMaxIncomingBitrate(maxIncomeBitrate);

@@ -10,7 +10,6 @@ import {
 dotenv.config();
 
 const IP = process.env.ANNOUNCED_IP;
-console.log(IP);
 
 export const config = {
   listenIp: "0.0.0.0",
