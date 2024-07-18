@@ -8,22 +8,19 @@ import {
   Transport,
   Worker,
 } from "mediasoup/node/lib/types";
-import { createWorker } from "./worker";
 import WebSocket from "ws";
 import { createWebRTCTransport } from "./createWebRTCtransport";
-import { v4 as uuidv4 } from "uuid";
-import { MediaKind } from "mediasoup/node/lib/fbs/rtp-parameters";
 import { User } from "./types";
 import { send, broadcast } from "./utils";
+import { Room } from "./room";
+import { createWorker } from "./worker";
 
+let Rooms: Map<string, Room> = new Map();
 let worker: Worker;
-let mediasoupRouter: Router;
-
-const users = new Map<string, User>();
 
 const WebSocketConnection = async (websock: WebSocket.Server) => {
   try {
-    ({ mediasoupRouter, worker } = await createWorker());
+    worker = await createWorker();
   } catch (error) {
     throw error;
   }
@@ -31,27 +28,37 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
   websock.on("connection", (ws: WebSocket, req: any) => {
     let uuid: string;
     let user: User;
+    let roomId: string;
+    let room: Room;
+
+    // Code To get ROOM ID and UUID
 
     try {
       uuid = new URL(req.url, "http://localhost").searchParams.get("uuid")!;
-      if (!uuid) {
-        send(ws, "error", "UUID not provided");
+      roomId = new URL(req.url, "http://localhost").searchParams.get("roomId")!;
+      if (!uuid || !roomId) {
+        send(ws, "error", "UUID or ROOMID not provided");
         ws.close();
       }
-      console.log("UUID: ", uuid);
     } catch (error) {
       console.log(error);
       return;
     }
 
-    if (!users.has(uuid)) {
-      users.set(uuid, {
+    if (!Rooms.has(roomId)) {
+      Rooms.set(roomId, new Room({ id: roomId, worker: worker }));
+    }
+    room = Rooms.get(roomId)!;
+    console.log(room);
+
+    if (!room.users.has(uuid)) {
+      room.users.set(uuid, {
         uuid: uuid,
         consumers: new Map<string, Consumer>(),
         consumerTransports: new Map(),
       });
     }
-    user = users.get(uuid)!;
+    user = room.users.get(uuid)!;
 
     ws.on("close", () => {
       broadcast(websock, "userDisconnected", {
@@ -61,7 +68,7 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         user.consumerTransports?.forEach((consumer) => consumer.close());
       user.producerTransport && user.producerTransport?.close();
       user.producer && user.producer?.close();
-      users.delete(uuid);
+      room.users.delete(uuid);
     });
 
     ws.on("message", async (data: any) => {
@@ -109,16 +116,18 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       }
     });
 
-    const onRouterRtpCapabilities = (event: any, ws: WebSocket) => {
-      console.log(event);
+    const onRouterRtpCapabilities = async (event: any, ws: WebSocket) => {
+      if (!room.router) {
+        await room.setRouter();
+      }
       user.userData = event.data;
-      send(ws, "routerCapabilities", mediasoupRouter.rtpCapabilities);
+      send(ws, "routerCapabilities", room.router!.rtpCapabilities);
     };
 
     const onCreateProducerTransport = async (event: any, ws: WebSocket) => {
       try {
         const { transport, params } = await createWebRTCTransport(
-          mediasoupRouter,
+          room.router!,
           worker
         );
         transport.on("@close", () => {
@@ -135,13 +144,18 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
     };
 
     const oncreateConsumerTransport = async (event: any, ws: WebSocket) => {
+      console.log("CREATEDATA", event);
       try {
         const { transport, params } = await createWebRTCTransport(
-          mediasoupRouter,
+          room.router!,
           worker
         );
         user.consumerTransports?.set(params.id, transport);
-        send(ws, "subtransportCreated", params);
+        const newParams = {
+          ...params,
+          appData: { userId: event.userId },
+        };
+        send(ws, "subtransportCreated", newParams);
       } catch (error) {
         console.log(error);
       }
@@ -169,7 +183,7 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
     };
 
     const onGetUsers = async (ws: WebSocket) => {
-      const userios = Object.fromEntries(users);
+      const userios = Object.fromEntries(room.users);
       send(ws, "getUsers", userios);
     };
 
@@ -178,10 +192,9 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
 
       // Create an array of promises for each user
 
-      const consumerPromises = Array.from(users.entries()).map(
+      const consumerPromises = Array.from(room.users.entries()).map(
         async ([key, user1]) => {
-          if (key == user.uuid) {
-          } else {
+          if (user1.uuid === event.userId) {
             const con1 =
               user1.producer &&
               (await createConsumer(
@@ -191,17 +204,16 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
                 event.transportId
               ));
             if (con1) {
+              console.log("ONCONSUME RES: ", con1);
+              send(ws, "subscribed", con1);
+
               return con1;
             }
           }
         }
       );
 
-      // Wait for all promises to complete
       const consumerResults = await Promise.all(consumerPromises);
-
-      console.log("ONCONSUME RES: ", consumerResults);
-      send(ws, "subscribed", consumerResults);
     };
 
     const onConnectProducerTransport = async (event: any, ws: WebSocket) => {
@@ -225,7 +237,7 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         rtpParameters,
       });
       const resp = {
-        id: user.producer!.id,
+        id: user.userData.pk,
         userData: user.userData,
       };
       send(ws, "produced", resp);
@@ -239,7 +251,7 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       transportId: string
     ) => {
       if (
-        !mediasoupRouter.canConsume({
+        !room.router!.canConsume({
           producerId: producer.id,
           rtpCapabilities,
         })

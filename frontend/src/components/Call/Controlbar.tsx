@@ -23,14 +23,6 @@ const Controlbar = () => {
         Screen share
       </button>
       <button className="p-4 bg-gray-600">End call</button>
-      <button
-        className="p-4 bg-gray-600"
-        onClick={() => {
-          vcContext.videocallconnector.subscribe();
-        }}
-      >
-        Subscribe
-      </button>
       {/* <button>Show users</button> */}
     </div>
   );

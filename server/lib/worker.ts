@@ -28,9 +28,13 @@ const createWorker = async () => {
     }, 2000);
   });
 
-  const mediaCodecs = config.router.mediaCodes;
-  const mediasoupRouter = await worker.createRouter({ mediaCodecs });
-  return { mediasoupRouter, worker };
+  return worker;
 };
 
-export { createWorker };
+const createRouter = async (worker: Worker) => {
+  const mediaCodecs = config.router.mediaCodes;
+  const mediasoupRouter = await worker.createRouter({ mediaCodecs });
+  return mediasoupRouter;
+};
+
+export { createWorker, createRouter };

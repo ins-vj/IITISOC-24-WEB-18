@@ -27,8 +27,8 @@ export const VideoCallProvider = (props: {
   meetId: string;
 }) => {
   const [userData, setUserData] = useState<any>();
-  const [video, setVideo] = useState(false);
-  const [audio, setAudio] = useState(false);
+  const [video, setVideo] = useState(true);
+  const [audio, setAudio] = useState(true);
   const [screen, setScreen] = useState(false);
   const [localVideo, setLocalVideo] = useState<MediaStream>(null);
   const [remoteVideos, setRemoteVideos] = useState<
@@ -77,13 +77,13 @@ export const VideoCallProvider = (props: {
   }, []);
 
   useEffect(() => {
-    if (startCall && (video || screen)) {
+    if (startCall) {
       const start = async () => {
-        VCConnector.startSending(video);
+        VCConnector.startSending(true);
       };
       start();
     }
-  }, [startCall, video, screen]);
+  }, [startCall]);
 
   useEffect(() => {
     try {
@@ -92,13 +92,28 @@ export const VideoCallProvider = (props: {
           addRemoteVideo,
           removeRemoteVideo,
           setLocalVideo,
-          userData
+          userData,
+          props.meetId
         );
       }
     } catch (error) {
       return;
     }
   }, [userData]);
+
+  useEffect(() => {
+    if (VCConnector && VCConnector.localVideo) {
+      const localvideo = VCConnector.localVideo
+        .getTracks()
+        .find((track) => track.kind === "video");
+      const localaudio = VCConnector.localVideo
+        .getTracks()
+        .find((track) => track.kind === "audio");
+
+      localvideo.enabled = video;
+      localaudio.enabled = audio;
+    }
+  }, [video, audio]);
 
   return (
     <VideoCallContext.Provider
