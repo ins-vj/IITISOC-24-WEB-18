@@ -2,12 +2,12 @@
 import {
   VideoCallContext,
   VideoCallProvider,
-} from "@/components/Call/VideocallHandler";
+} from "@/components/VideoCallV2/lib/VideocallHandler";
 import dynamic from "next/dynamic";
 import React, { useContext } from "react";
 
 const VideocallComponent = dynamic(
-  () => import("@/components/Call/Videocall"),
+  () => import("@/components/VideoCallV2/UI/Videocall"),
   {
     ssr: false,
   }

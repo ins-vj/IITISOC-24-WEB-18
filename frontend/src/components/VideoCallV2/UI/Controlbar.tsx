@@ -1,14 +1,29 @@
 import React, { useContext } from "react";
-import { VideoCallContext } from "./VideocallHandler";
+import { VideoCallContext } from "../lib/VideocallHandler";
 
 const Controlbar = () => {
   const vcContext = useContext(VideoCallContext);
   return (
     <div>
-      <button className="p-4 bg-gray-600">Mic</button>
       <button
         className="p-4 bg-gray-600"
         onClick={() => {
+          vcContext.videocallconnector.updateLocalVideo(
+            vcContext.video,
+            !vcContext.audio
+          );
+          vcContext.setVideo(!vcContext.audio);
+        }}
+      >
+        Mic
+      </button>
+      <button
+        className="p-4 bg-gray-600"
+        onClick={() => {
+          vcContext.videocallconnector.updateLocalVideo(
+            !vcContext.video,
+            vcContext.audio
+          );
           vcContext.setVideo(!vcContext.video);
         }}
       >

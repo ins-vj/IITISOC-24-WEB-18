@@ -59,9 +59,7 @@ export const VideoCallProvider = (props: {
     // TODO Notify users that a user disconnected
 
     setRemoteVideos((prev) => {
-      console.log(producerId);
       const newMap = new Map(prev);
-      console.log(newMap);
       newMap.delete(producerId);
       return newMap;
     });
@@ -101,13 +99,7 @@ export const VideoCallProvider = (props: {
     } catch (error) {
       return;
     }
-  }, [userData]);
-
-  useEffect(() => {
-    if (VCConnector && VCConnector.localVideos) {
-      VCConnector.updateLocalVideo(video, audio);
-    }
-  }, [video, audio]);
+  }, [userData, props.meetId]);
 
   return (
     <VideoCallContext.Provider

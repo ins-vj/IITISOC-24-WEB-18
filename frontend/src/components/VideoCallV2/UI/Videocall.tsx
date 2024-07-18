@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+"use client";
+import React, { useContext, useEffect } from "react";
 import Controlbar from "./Controlbar";
-import { VideoCallContext } from "./VideocallHandler";
-import { predictEmotion, loadModels } from "./emotionDetection";
+import { VideoCallContext } from "../lib/VideocallHandler";
+import { predictEmotion, loadModels } from "../lib/emotionDetection";
 
 const VideocallComponent = () => {
   const vcContext = useContext(VideoCallContext);
@@ -11,22 +12,26 @@ const VideocallComponent = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const videoElement = document.getElementById(
-        "user-video"
-      ) as HTMLVideoElement;
+    if (vcContext.videocallconnector) {
+      const interval = setInterval(async () => {
+        const videoElement = document.getElementById(
+          "user-video"
+        ) as HTMLVideoElement;
 
-      if (videoElement) {
-        const predictedEmotion = await predictEmotion(videoElement);
-        if (predictedEmotion) {
-          console.log(predictedEmotion);
-          document.getElementById("self-emotion-span").innerHTML =
-            predictedEmotion;
+        if (videoElement) {
+          const predictedEmotion = await predictEmotion(videoElement);
+          if (predictedEmotion) {
+            vcContext.videocallconnector.sendEmotion(predictedEmotion);
+            console.log(predictedEmotion);
+            document.getElementById("self-emotion-span").innerHTML =
+              predictedEmotion;
+            console.log(vcContext.videocallconnector);
+          }
         }
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [vcContext.videocallconnector]);
 
   return (
     <div className="flex justify-center flex-col items-center">

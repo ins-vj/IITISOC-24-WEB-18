@@ -117,6 +117,9 @@ export class VideoCallConnector {
         case "subscribed":
           await this.onSubscribed(data);
           break;
+        case "emotionUpdate":
+          console.log(data.data);
+          break;
 
         default:
           console.log("Unknown message type:", data.type);
@@ -195,6 +198,13 @@ export class VideoCallConnector {
     this.producerTransports.delete(type);
     this.localVideos.delete(type);
     send(this.socket, "stopProducer", { producerType: type });
+  };
+
+  sendEmotion = async (emotion: string) => {
+    send(this.socket, "emotionUpdate", {
+      userId: this.userData.pk,
+      emotion: emotion,
+    });
   };
 
   onNewProducer = async (event: any) => {

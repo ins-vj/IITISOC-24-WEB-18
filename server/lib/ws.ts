@@ -115,6 +115,9 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         case "stopProducer":
           await onStopProducer(event, ws, websock);
           break;
+        case "emotionUpdate":
+          await onEmotionUpdate(event, websock);
+          break;
 
         default:
           console.log(event);
@@ -127,6 +130,11 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       }
       user.userData = event.data;
       send(ws, "routerCapabilities", room.router!.rtpCapabilities);
+    };
+
+    const onEmotionUpdate = async (event: any, websock: WebSocket.Server) => {
+      console.log(event);
+      broadcast(websock, "emotionUpdate", event.data);
     };
 
     const onStopProducer = async (
