@@ -112,6 +112,9 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         case "getUsers":
           await onGetUsers(ws);
           break;
+        case "stopProducer":
+          await onStopProducer(event, ws, websock);
+          break;
 
         default:
           console.log(event);
@@ -124,6 +127,23 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       }
       user.userData = event.data;
       send(ws, "routerCapabilities", room.router!.rtpCapabilities);
+    };
+
+    const onStopProducer = async (
+      event: any,
+      ws: WebSocket,
+      websock: WebSocket.Server
+    ) => {
+      try {
+        broadcast(websock, "userDisconnected", [
+          user.producers.get(event.data.producerType)!.id,
+        ]);
+        user.producers.get(event.data.producerType)?.close();
+        user.producers.delete(event.data.producerType);
+        // TODO delete transport also
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const onCreateProducerTransport = async (event: any, ws: WebSocket) => {

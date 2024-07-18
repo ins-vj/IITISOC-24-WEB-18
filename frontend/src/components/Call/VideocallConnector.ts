@@ -191,6 +191,12 @@ export class VideoCallConnector {
     }
   };
 
+  stopSendingScreen = async (type: string) => {
+    this.producerTransports.delete(type);
+    this.localVideos.delete(type);
+    send(this.socket, "stopProducer", { producerType: type });
+  };
+
   onNewProducer = async (event: any) => {
     if (event.data.id !== this.userData.pk) {
       const msg = {

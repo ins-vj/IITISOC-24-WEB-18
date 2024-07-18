@@ -1,9 +1,32 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Controlbar from "./Controlbar";
 import { VideoCallContext } from "./VideocallHandler";
+import { predictEmotion, loadModels } from "./emotionDetection";
 
 const VideocallComponent = () => {
   const vcContext = useContext(VideoCallContext);
+
+  useEffect(() => {
+    loadModels();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const videoElement = document.getElementById(
+        "user-video"
+      ) as HTMLVideoElement;
+
+      if (videoElement) {
+        const predictedEmotion = await predictEmotion(videoElement);
+        if (predictedEmotion) {
+          console.log(predictedEmotion);
+          document.getElementById("self-emotion-span").innerHTML =
+            predictedEmotion;
+        }
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex justify-center flex-col items-center">
@@ -21,9 +44,11 @@ const VideocallComponent = () => {
                         }
                         console.log(vcContext.remoteVideos);
                       }}
+                      id={`user-${key}`}
                       autoPlay
                     ></video>
-                    <span>Self Media</span>
+                    <span>Self Media Emotion: </span>
+                    <span id="self-emotion-span"></span>
                   </div>
                 );
               }

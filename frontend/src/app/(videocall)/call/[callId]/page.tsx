@@ -1,10 +1,17 @@
 "use client";
-import VideocallComponent from "@/components/Call/Videocall";
 import {
   VideoCallContext,
   VideoCallProvider,
 } from "@/components/Call/VideocallHandler";
+import dynamic from "next/dynamic";
 import React, { useContext } from "react";
+
+const VideocallComponent = dynamic(
+  () => import("@/components/Call/Videocall"),
+  {
+    ssr: false,
+  }
+);
 
 const CallPage = ({ params }: { params: { callId: string } }) => {
   return (

@@ -17,7 +17,12 @@ const Controlbar = () => {
       <button
         className="p-4 bg-gray-600"
         onClick={() => {
-          vcContext.videocallconnector.startSendingScreen("screen");
+          if (vcContext.screen) {
+            vcContext.videocallconnector.stopSendingScreen("screen");
+          } else {
+            vcContext.videocallconnector.startSendingScreen("screen");
+          }
+          vcContext.setScreen(!vcContext.screen);
         }}
       >
         Screen share
