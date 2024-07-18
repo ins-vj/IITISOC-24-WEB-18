@@ -56,18 +56,20 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         uuid: uuid,
         consumers: new Map<string, Consumer>(),
         consumerTransports: new Map(),
+        producerTransports: new Map(),
+        producers: new Map(),
       });
     }
     user = room.users.get(uuid)!;
 
     ws.on("close", () => {
-      broadcast(websock, "userDisconnected", {
-        producerId: user.producer && user.producer.id,
-      });
+      const producerIds = Array.from(user.producers.values()).map((p) => p.id);
+      broadcast(websock, "userDisconnected", producerIds);
       user.consumerTransports &&
         user.consumerTransports?.forEach((consumer) => consumer.close());
-      user.producerTransport && user.producerTransport?.close();
-      user.producer && user.producer?.close();
+      user.producerTransports &&
+        user.producerTransports.forEach((transport) => transport.close());
+      user.producers && user.producers.forEach((producer) => producer.close());
       room.users.delete(uuid);
     });
 
@@ -125,17 +127,21 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
     };
 
     const onCreateProducerTransport = async (event: any, ws: WebSocket) => {
+      console.log(event);
       try {
         const { transport, params } = await createWebRTCTransport(
           room.router!,
-          worker
+          worker,
+          event.producerType
         );
         transport.on("@close", () => {
           user.consumers.forEach((consumer) => {
             consumer.close();
           });
         });
-        user.producerTransport = transport;
+        user.producerTransports!.set(event.producerType, transport);
+        console.log("PTRANSPORTS: ", user.producerTransports);
+        params;
         send(ws, "producerTransportCreated", params);
       } catch (error) {
         console.error(error);
@@ -191,23 +197,32 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       console.log("onConsume data:", event);
 
       // Create an array of promises for each user
-
       const consumerPromises = Array.from(room.users.entries()).map(
         async ([key, user1]) => {
           if (user1.uuid === event.userId) {
-            const con1 =
-              user1.producer &&
-              (await createConsumer(
-                user1.producer!,
-                event.rtpCapabilities,
-                user1.userData!,
-                event.transportId
-              ));
-            if (con1) {
-              console.log("ONCONSUME RES: ", con1);
-              send(ws, "subscribed", con1);
+            const allConsumers: any = {};
+            if (user1.producers) {
+              for (const [
+                producerType,
+                producer,
+              ] of user1.producers.entries()) {
+                const c1 = await createConsumer(
+                  producer,
+                  event.rtpCapabilities,
+                  user1.userData!,
+                  event.transportId
+                );
+                if (c1) {
+                  allConsumers[producerType] = c1;
+                }
+              }
+            }
 
-              return con1;
+            if (Object.keys(allConsumers).length > 0) {
+              console.log("ONCONSUME RES: ", allConsumers);
+              send(ws, "subscribed", allConsumers);
+
+              return allConsumers;
             }
           }
         }
@@ -218,10 +233,10 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
 
     const onConnectProducerTransport = async (event: any, ws: WebSocket) => {
       console.log("connect event: ", event);
-      await user.producerTransport!.connect({
+      await user.producerTransports?.get(event.producerType)!.connect({
         dtlsParameters: event.dtlsParameters,
         transportId: event.transportId,
-        iceCandidates: user.producerTransport,
+        iceCandidates: user.producerTransports?.get(event.producerType),
       });
       send(ws, "producerConnected", "producer connected!");
     };
@@ -231,11 +246,14 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       ws: WebSocket,
       websocket: WebSocket.Server
     ) => {
-      const { kind, rtpParameters } = event;
-      user.producer = await user.producerTransport!.produce({
-        kind,
-        rtpParameters,
-      });
+      const { kind, rtpParameters, producerType } = event;
+      user.producers.set(
+        producerType,
+        await user.producerTransports?.get(event.producerType)!.produce({
+          kind,
+          rtpParameters,
+        })
+      );
       const resp = {
         id: user.userData.pk,
         userData: user.userData,

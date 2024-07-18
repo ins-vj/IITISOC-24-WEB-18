@@ -13,7 +13,7 @@ interface VideoCallContextProps {
   setAudio: (audio: boolean) => void;
   setStartCall: (call: boolean) => void;
   setScreen: (screen: boolean) => void;
-  localVideo: MediaStream;
+  localVideos: Map<string, MediaStream>;
   remoteVideos: Map<string, { userData: any; stream: MediaStream }>;
   videocallconnector: VideoCallConnector;
 }
@@ -30,7 +30,9 @@ export const VideoCallProvider = (props: {
   const [video, setVideo] = useState(true);
   const [audio, setAudio] = useState(true);
   const [screen, setScreen] = useState(false);
-  const [localVideo, setLocalVideo] = useState<MediaStream>(null);
+  const [localVideos, setLocalVideos] = useState<Map<string, MediaStream>>(
+    new Map()
+  );
   const [remoteVideos, setRemoteVideos] = useState<
     Map<string, { userData: any; stream: MediaStream }>
   >(new Map());
@@ -79,7 +81,7 @@ export const VideoCallProvider = (props: {
   useEffect(() => {
     if (startCall) {
       const start = async () => {
-        VCConnector.startSending(true);
+        VCConnector.startSending("video");
       };
       start();
     }
@@ -91,7 +93,7 @@ export const VideoCallProvider = (props: {
         VCConnector = new VideoCallConnector(
           addRemoteVideo,
           removeRemoteVideo,
-          setLocalVideo,
+          setLocalVideos,
           userData,
           props.meetId
         );
@@ -102,16 +104,8 @@ export const VideoCallProvider = (props: {
   }, [userData]);
 
   useEffect(() => {
-    if (VCConnector && VCConnector.localVideo) {
-      const localvideo = VCConnector.localVideo
-        .getTracks()
-        .find((track) => track.kind === "video");
-      const localaudio = VCConnector.localVideo
-        .getTracks()
-        .find((track) => track.kind === "audio");
-
-      localvideo.enabled = video;
-      localaudio.enabled = audio;
+    if (VCConnector && VCConnector.localVideos) {
+      VCConnector.updateLocalVideo(video, audio);
     }
   }, [video, audio]);
 
@@ -122,7 +116,7 @@ export const VideoCallProvider = (props: {
         audio,
         setVideo,
         setAudio,
-        localVideo,
+        localVideos,
         remoteVideos,
         startCall,
         setStartCall,

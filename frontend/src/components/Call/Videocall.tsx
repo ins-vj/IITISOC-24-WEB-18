@@ -4,17 +4,30 @@ import { VideoCallContext } from "./VideocallHandler";
 
 const VideocallComponent = () => {
   const vcContext = useContext(VideoCallContext);
-  useEffect(() => {
-    const userVideo = document.getElementById("user-video") as HTMLVideoElement;
-    userVideo.srcObject = vcContext.localVideo;
-  }, [vcContext.localVideo]);
 
   return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex gap-4 flex-wrap">
         <div>
           <div className="w-100 h-100">
-            <video autoPlay id="user-video"></video>
+            {Array.from(vcContext.localVideos.entries()).map(
+              ([key, localUser]) => {
+                return (
+                  <div key={key}>
+                    <video
+                      ref={(videoElement) => {
+                        if (videoElement) {
+                          videoElement.srcObject = localUser;
+                        }
+                        console.log(vcContext.remoteVideos);
+                      }}
+                      autoPlay
+                    ></video>
+                    <span>Self Media</span>
+                  </div>
+                );
+              }
+            )}
           </div>
         </div>
 

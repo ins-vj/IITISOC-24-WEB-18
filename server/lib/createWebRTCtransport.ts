@@ -9,7 +9,8 @@ import { WebRtcTransportOptions } from "mediasoup/node/lib/WebRtcTransport";
 
 export const createWebRTCTransport = async (
   mediasoupRouter: Router,
-  worker: Worker
+  worker: Worker,
+  type?: string
 ) => {
   const { maxIncomeBitrate, initialAvailableOutgoingBitrate } =
     config.webRtcTransport;
@@ -37,6 +38,7 @@ export const createWebRTCTransport = async (
       iceParameters: transport.iceParameters,
       dtlsParameters: transport.dtlsParameters,
       iceCandidates: transport.iceCandidates,
+      producerType: type,
     },
   };
 };

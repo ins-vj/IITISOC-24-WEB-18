@@ -20,7 +20,7 @@ export class VideoCallConnector {
   public roomId: string;
   public userData: any;
   public producer: Mediasoup.types.Producer;
-  public producerTransport: Mediasoup.types.Transport;
+  public producerTransports: Map<string, Mediasoup.types.Transport> = new Map();
   public consumerTransports: Map<string, Mediasoup.types.Transport>;
   public socket: WebSocket;
   public device: Mediasoup.Device;
@@ -30,8 +30,8 @@ export class VideoCallConnector {
     userrData: any
   ) => void;
   public removeRemoteVideo: (producerId: string) => void;
-  public localVideo: MediaStream;
-  public setLocalVideo: (videos: any) => void;
+  public localVideos: Map<string, MediaStream> = new Map();
+  public setLocalVideos: (videos: Map<string, MediaStream>) => void;
 
   subscribe = () => {
     send(this.socket, "getUsers", "");
@@ -55,8 +55,6 @@ export class VideoCallConnector {
         console.log(data.data);
 
         Object.values(data.data).forEach((value: any) => {
-          console.log(value);
-          console.log("USERDATA", this.userData);
           if (value.uuid !== this.userData.pk) {
             try {
               const msg = {
@@ -79,7 +77,7 @@ export class VideoCallConnector {
       userData: any
     ) => void,
     removeRemoteVideo: (producerId: string) => void,
-    setLocalVideo: (video: MediaStream) => void,
+    setLocalVideo: (videos: Map<string, MediaStream>) => void,
     userData: any,
     roomId: string
   ) {
@@ -90,7 +88,7 @@ export class VideoCallConnector {
     this.socket = newSocket;
     this.addRemoteVideo = addRemoteVideoParam;
     this.removeRemoteVideo = removeRemoteVideo;
-    this.setLocalVideo = setLocalVideo;
+    this.setLocalVideos = setLocalVideo;
     this.userData = userData;
     this.consumerTransports = new Map();
 
@@ -135,17 +133,59 @@ export class VideoCallConnector {
     }
   };
 
-  startSending = async (video: boolean) => {
+  updateLocalVideo = (video: boolean, audio: boolean) => {
+    if (this.localVideos.get("video")) {
+      this.localVideos
+        .get("video")
+        .getTracks()
+        .find((track) => track.kind === "video").enabled = video;
+      this.localVideos
+        .get("video")
+        .getTracks()
+        .find((track) => track.kind === "audio").enabled = audio;
+    }
+  };
+
+  startSending = async (type: string) => {
     try {
-      console.log("transport: ", this.producerTransport);
+      console.log("transport: ", this.producerTransports.get(type));
       const stream: MediaStream = await this.getUserMedia(
-        this.producerTransport,
-        video
+        this.producerTransports.get(type),
+        (type = "video")
       );
-      this.setLocalVideo(stream);
+      this.localVideos.set(type, stream);
+      this.setLocalVideos(new Map(this.localVideos));
       const track = stream.getVideoTracks()[0];
       this.subscribe();
-      this.producer = await this.producerTransport.produce({ track });
+      this.producer = await this.producerTransports
+        .get(type)
+        .produce({ track });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  startSendingScreen = async (type: string) => {
+    try {
+      this.publish(this.device, this.socket, type);
+      this.socket.addEventListener("message", async (e: MessageEvent) => {
+        const data = JSON.parse(e.data);
+        console.log(data);
+
+        if (data.type == "producerTransportCreated") {
+          console.log("transport: ", this.producerTransports.get(type));
+          const stream: MediaStream = await this.getUserMedia(
+            this.producerTransports.get(type),
+            type == type
+          );
+          this.localVideos.set(type, stream);
+          this.setLocalVideos(this.localVideos);
+          const track = stream.getVideoTracks()[0];
+          this.producer = await this.producerTransports
+            .get(type)
+            .produce({ track });
+        }
+      });
     } catch (error) {
       console.error(error);
     }
@@ -163,11 +203,11 @@ export class VideoCallConnector {
   };
 
   onUserDisconnected = async (event) => {
-    console.log("Event: ", event.data.producerId);
-    this.removeRemoteVideo(event.data.producerId);
+    console.log("Event: ", event);
+    event.data.map((id) => this.removeRemoteVideo(id));
   };
 
-  getUserMedia = async (transport, isWebcam) => {
+  getUserMedia = async (transport, type) => {
     if (!this.device.canProduce("video")) {
       console.error("Cannot produce video");
       return;
@@ -175,12 +215,13 @@ export class VideoCallConnector {
 
     let stream: MediaStream;
     try {
-      stream = isWebcam
-        ? await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true,
-          })
-        : await navigator.mediaDevices.getDisplayMedia({ video: true });
+      stream =
+        type === "video"
+          ? await navigator.mediaDevices.getUserMedia({
+              video: true,
+              audio: true,
+            })
+          : await navigator.mediaDevices.getDisplayMedia({ video: true });
     } catch (error) {
       console.log(error);
       throw error;
@@ -203,40 +244,50 @@ export class VideoCallConnector {
     const newDevice = await this.loadDevice(data.data);
     console.log("Device loaded");
     if (this.socket && newDevice) {
-      this.publish(newDevice, this.socket);
+      this.publish(newDevice, this.socket, "video");
     }
   };
 
   onSubscribed = async (event: any) => {
     if (event.data) {
-      const { producerId, id, kind, rtpParameters, type, producerPaused } =
-        event.data;
-
-      console.log(
-        "onSubscribeEvent data: ",
-        {
-          id,
+      for (let [producerType, streamData] of Object.entries(event.data)) {
+        const {
           producerId,
+          id,
           kind,
           rtpParameters,
-        },
-        "consumer Transport: ",
-        this.consumerTransports
-      );
+          type,
+          producerPaused,
+          transportId,
+          userData,
+        }: any = streamData;
 
-      let codecOptions = {};
-      const consumer = await this.consumerTransports
-        .get(event.data.transportId)
-        .consume({
-          id,
-          producerId,
-          kind,
-          rtpParameters,
-        });
+        console.log(
+          "onSubscribeEvent data: ",
+          {
+            id,
+            producerId,
+            kind,
+            rtpParameters,
+          },
+          "consumer Transport: ",
+          this.consumerTransports
+        );
 
-      const stream = new MediaStream();
-      stream.addTrack(consumer.track);
-      this.addRemoteVideo(producerId, stream, event.data.userData);
+        let codecOptions = {};
+        const consumer = await this.consumerTransports
+          .get(transportId)
+          .consume({
+            id,
+            producerId,
+            kind,
+            rtpParameters,
+          });
+
+        const stream = new MediaStream();
+        stream.addTrack(consumer.track);
+        this.addRemoteVideo(producerId, stream, userData);
+      }
     }
   };
 
@@ -246,24 +297,36 @@ export class VideoCallConnector {
       return;
     }
 
-    this.producerTransport = this.device.createSendTransport({
-      id: data.data.id,
-      iceParameters: data.data.iceParameters,
-      iceCandidates: data.data.iceCandidates,
-      dtlsParameters: data.data.dtlsParameters,
-      iceServers: [
-        { urls: "stun:stun.l.google.com:19302" }, // Example STUN server
-      ],
-    });
+    console.log("PRODUCER: ", data);
 
-    this.producerTransport.on(
-      "connect",
-      async ({ dtlsParameters }, callback, errback) => {
+    // if (this.producerTransports.has(data.data.producerType)) {
+    //   return;
+    // }
+
+    this.producerTransports.set(
+      data.data.producerType,
+      this.device.createSendTransport({
+        id: data.data.id,
+        iceParameters: data.data.iceParameters,
+        iceCandidates: data.data.iceCandidates,
+        dtlsParameters: data.data.dtlsParameters,
+      })
+    );
+
+    console.log(
+      "PRODUCER2: ",
+      this.producerTransports.get(data.data.producerType)
+    );
+
+    this.producerTransports
+      .get(data.data.producerType)
+      .on("connect", async ({ dtlsParameters }, callback, errback) => {
         this.socket.send(
           JSON.stringify({
             type: "connectProducerTransport",
             dtlsParameters,
-            transportId: this.producerTransport.id,
+            transportId: this.producerTransports.get(data.data.producerType).id,
+            producerType: data.data.producerType,
           })
         );
         this.socket.addEventListener("message", (event: MessageEvent) => {
@@ -272,18 +335,18 @@ export class VideoCallConnector {
             callback();
           }
         });
-      }
-    );
+      });
 
-    this.producerTransport.on(
-      "produce",
-      async ({ kind, rtpParameters }, callback, errback) => {
+    this.producerTransports
+      .get(data.data.producerType)
+      .on("produce", async ({ kind, rtpParameters }, callback, errback) => {
         this.socket.send(
           JSON.stringify({
             type: "produce",
-            transportId: this.producerTransport.id,
+            transportId: this.producerTransports.get(data.data.producerType).id,
             kind,
             rtpParameters,
+            producerType: data.data.producerType,
           })
         );
         this.socket.addEventListener("published", (event: MessageEvent) => {
@@ -293,26 +356,27 @@ export class VideoCallConnector {
             callback(resp.data.id);
           }
         });
-      }
-    );
+      });
 
-    this.producerTransport.on("connectionstatechange", (state) => {
-      switch (state) {
-        case "connecting":
-          console.log("publishing state");
-          break;
-        case "connected":
-          console.log("published state");
-          break;
-        case "failed":
-          console.error("failed state");
-          this.producerTransport.close();
-          break;
-        default:
-          console.log("default state:", state);
-          break;
-      }
-    });
+    this.producerTransports
+      .get(data.data.producerType)
+      .on("connectionstatechange", (state) => {
+        switch (state) {
+          case "connecting":
+            console.log("publishing state");
+            break;
+          case "connected":
+            console.log("published state");
+            break;
+          case "failed":
+            console.error("failed state");
+            this.producerTransports.get(data.data.producerType).close();
+            break;
+          default:
+            console.log("default state:", state);
+            break;
+        }
+      });
   };
 
   onsubtransportCreated = (event: any) => {
@@ -384,13 +448,14 @@ export class VideoCallConnector {
     this.socket.send(JSON.stringify(msg));
   };
 
-  publish = (device, socket) => {
+  publish = (device: Mediasoup.Device, socket, type: string) => {
     if (device && socket) {
       socket.send(
         JSON.stringify({
           type: "createProducerTransport",
           forceTcp: false,
           routerRtpCapabilities: device.rtpCapabilities,
+          producerType: type,
         })
       );
     } else {

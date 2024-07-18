@@ -4,9 +4,9 @@ import { Transport } from "mediasoup/node/lib/Transport";
 
 export interface User {
   uuid: string;
-  producerTransport?: Transport;
+  producerTransports: Map<string, Transport>;
   consumerTransports: Map<string, Transport>;
-  producer?: Producer;
+  producers: Map<string, Producer>;
   consumers: Map<string, Consumer>;
   userData?: any;
 }
