@@ -57,7 +57,7 @@ def user_signed_up_(request, user, **kwargs):
     send_mail(
             "Prince here",
             f"Welcome to Expresso",
-            from_email="princekumar7091258584@gmail.com",
+            from_email=None,
             recipient_list=[user.email],
             fail_silently=False,
         )

@@ -91,9 +91,9 @@ SWAGGER_SETTINGS = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'princekumar7091258584@gmail.com'
-EMAIL_HOST_PASSWORD = 'vyzq ungh xhcb wjbq'
-DEFAULT_FROM_EMAIL = 'princekumar7091258584@gmail.com'
+EMAIL_HOST_USER = env.get_value("EMAIL")
+EMAIL_HOST_PASSWORD = env.get_value("PASSWORD")
+DEFAULT_FROM_EMAIL = env.get_value("EMAIL")
 
 SITE_ID = 1
 
