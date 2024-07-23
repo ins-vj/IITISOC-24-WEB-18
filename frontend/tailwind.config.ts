@@ -15,6 +15,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      scale: {
+        '115': '1.15',
+      },
       "colors":{ 
         "customorange": {
             "700": "#F86400",
@@ -48,6 +51,8 @@ const config: Config = {
           shimmer: "shimmer 8s infinite",
           "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
           rise: "rise 15s infinite ease-in-out forwards alternate-reverse",
+        flip: 'flip 0.6s forwards',
+        flipReverse: 'flipReverse 0.6s forwards',
       },
       keyframes: {
         "shine-pulse": {
@@ -60,6 +65,14 @@ const config: Config = {
           to: {
             "background-position": "0% 0%",
           },
+        },
+        flip: {
+          '0%': { transform: 'rotateY(0)' },
+          '100%': { transform: 'rotateY(180deg)' },
+        },
+        flipReverse: {
+          '0%': { transform: 'rotateY(180deg)' },
+          '100%': { transform: 'rotateY(0)' },
         },
         "background-position-spin": {
           "0%": { backgroundPosition: "top center" },

@@ -9,19 +9,22 @@ type CardType = {
   matched: boolean;
 };
 
-const Card: React.FC<{
+interface CardProps {
   card: CardType;
   index: number;
   onClick: (index: number) => void;
-}> = ({ card, index, onClick }) => {
+}
+
+const Card: React.FC<CardProps> = ({ card, index, onClick }) => {
   return (
     <div
-      className={`h-20 w-20 flex justify-center items-center  border rounded-lg text-3xl ${
-        card.flipped || card.matched ? 'bg-black text-white' : 'bg-gray-700'
-      }`}
+      className={`h-20 w-20 flex justify-center items-center border-2 border-customorange-700 rounded-lg text-3xl transition-all duration-500 transform ${card.flipped
+          ? 'border-2 border-white bg-white  animate-flip'
+          : 'bg-black animate-flipReverse '
+        } ${card.matched ? 'bg-white ' : ''}`}
       onClick={() => !card.flipped && !card.matched && onClick(index)}
     >
-      {card.flipped || card.matched ? card.icon : <Logo width={50}/> }
+      {card.flipped || card.matched ? card.icon : <Logo width={50} />}
     </div>
   );
 };
@@ -30,7 +33,7 @@ const MemoryGame: React.FC = () => {
   const [cards, setCards] = useState<CardType[]>(shuffledIcons.map(icon => ({ icon, flipped: false, matched: false })));
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([]);
   const [isChecking, setIsChecking] = useState(false);
-const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
   useEffect(() => {
     if (flippedIndexes.length === 2) {
       setIsChecking(true);
@@ -51,7 +54,7 @@ const [count, setCount] = useState(0);
   }, [flippedIndexes, cards]);
 
   const handleCardClick = (index: number) => {
-   
+
     if (isChecking || cards[index].flipped || cards[index].matched) return;
     setCards(prevCards =>
       prevCards.map((card, i) => (i === index ? { ...card, flipped: true } : card))
