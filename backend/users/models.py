@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -7,10 +7,11 @@ import uuid
 from .managers import CustomUserManager
 
 
-class CustomUser(AbstractUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("email address"), unique=True)
     username = models.TextField(_("username"), unique=True)
+    full_name = models.TextField(blank=True, default="")
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -21,4 +22,29 @@ class CustomUser(AbstractUser, PermissionsMixin):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return f"{self.username} : {self.id}"
+    
+class FriendRequest(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    from_user = models.ForeignKey(CustomUser, related_name='sent_friend_requests', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(CustomUser, related_name='received_friend_requests', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    currentStatus = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')], default='pending')
+
+    class Meta:
+        unique_together = ('from_user', 'to_user')
+
+    def __str__(self):
+        return f"FriendRequest from {self.from_user} to {self.to_user} - {self.currentStatus}"
+    
+
+class Friend(models.Model):
+    user = models.ForeignKey(CustomUser, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(CustomUser, related_name='friend_of', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'friend')
+
+    def __str__(self) -> str:
+        return f"{self.user.username} & {self.friend.username}"
