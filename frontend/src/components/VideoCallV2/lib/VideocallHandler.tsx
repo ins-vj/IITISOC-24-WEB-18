@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { VideoCallConnector } from "./VideocallConnector";
-import { getUserDetails } from "@/helpers/api";
+import { getMeetDetails, getUserDetails } from "@/helpers/api";
 import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
 
@@ -68,10 +68,13 @@ export const VideoCallProvider = (props: {
   useEffect(() => {
     const fetchData = async () => {
       const c1 = await getUserDetails();
-      if (!c1.username) {
+      const meetDetails = await getMeetDetails(props.meetId);
+      console.log(meetDetails);
+      if (c1 && meetDetails && c1.username && meetDetails.id) {
+        setUserData(c1);
+      } else {
         router.push("/login");
       }
-      setUserData(c1);
     };
     fetchData();
   }, []);

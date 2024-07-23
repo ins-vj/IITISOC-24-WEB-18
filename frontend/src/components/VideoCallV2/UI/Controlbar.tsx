@@ -12,7 +12,7 @@ const Controlbar = () => {
             vcContext.video,
             !vcContext.audio
           );
-          vcContext.setVideo(!vcContext.audio);
+          vcContext.setAudio(!vcContext.audio);
         }}
       >
         Mic
