@@ -86,7 +86,14 @@ SWAGGER_SETTINGS = {
    }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'princekumar7091258584@gmail.com'
+EMAIL_HOST_PASSWORD = 'vyzq ungh xhcb wjbq'
+DEFAULT_FROM_EMAIL = 'princekumar7091258584@gmail.com'
 
 SITE_ID = 1
 
@@ -144,7 +151,7 @@ AUTHENTICATION_BACKENDS = [
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', env.get_value("ORIGIN_URL", default="http://locahost")]
 
 CORS_ALLOW_HEADERS = (
     "accept",
