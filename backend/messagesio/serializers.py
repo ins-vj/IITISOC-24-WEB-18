@@ -2,6 +2,7 @@ from .models import Meet, MeetUser, Message
 from users.models import CustomUser as User
 from rest_framework import serializers
 from django.core.mail import send_mail
+from config.settings import ORIGIN_URL
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,14 +43,23 @@ class MeetSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context.get('request', None)
         user = request.user if request else None
-        validated_data['host'] = self.context['request'].user
+        validated_data['host'] = user
+        
+        invited_users = validated_data["invited_users"]
+        instance = super().create(validated_data)
+        
+        emails = [user.email for user in invited_users]
+
+        meet_id = instance.id
+        join_meet_url = f"{ORIGIN_URL}/call/{meet_id}"
 
         send_mail(
             "You're Invited to a meeting",
-            f"Click here to join the meet: ",
+            f"Click here to join the meet: <a>{join_meet_url}</a>",
             from_email=None,
-            recipient_list=[user.email],
+            recipient_list=emails,
             fail_silently=False,
         )
-        return super().create(validated_data)
+        
+        return instance
     
