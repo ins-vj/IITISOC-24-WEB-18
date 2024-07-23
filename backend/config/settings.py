@@ -49,6 +49,20 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'api.schema.CustomAutoSchema',
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": False,
+        "persistAuthorization": True,
+        "displayOperationId": True
+    },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Expresso API',
+    'DESCRIPTION': 'An AI powered videocalling app',
+    'VERSION': '2.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'DEFAULT_GENERATOR_CLASS': 'drf_spectacular.generators.SchemaGenerator',
 }
 
 SIMPLE_JWT = {
@@ -101,6 +115,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'channels',
     'django_channels_jwt',
+    'drf_spectacular',
     
     #  local
     'api',
