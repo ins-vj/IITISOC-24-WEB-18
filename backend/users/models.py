@@ -12,7 +12,7 @@ from django.core.mail import send_mail
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("email address"), unique=True)
-    username = models.TextField(_("username"), unique=True)
+    username = models.TextField(_("username"), unique=True, max_length=50)
     full_name = models.TextField(blank=True, default="")
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

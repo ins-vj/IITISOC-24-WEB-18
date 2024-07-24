@@ -27,15 +27,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 STATICFILES_DIRS = []
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = env.get_value("SECRET_KEY", default='django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh')
+DEBUG = env.get_value("DEBUG", default=True)
 
 ALLOWED_HOSTS = [env.get_value("HOST", default="localhost")]
 
@@ -65,9 +58,9 @@ SPECTACULAR_SETTINGS = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=30),
     'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=30),
     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
 }
 
@@ -142,6 +135,28 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+REST_USE_JWT = True
+
+# DJ-REST-AUTH SETTINGS
+JWT_AUTH_COOKIE = 'accessToken'
+JWT_AUTH_REFRESH_COOKIE = 'refreshToken'
+
+SOCIALACCOUNT_STORE_TOKENS = True
+
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
 
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
