@@ -8,7 +8,6 @@ import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { login } from "@/helpers/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import GoogleLoginButton from "../googleLogin";
 
 export default function Card() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -101,8 +100,6 @@ export default function Card() {
       >
         Login
       </Button>
-
-      <GoogleLoginButton />
     </div>
   );
 }
