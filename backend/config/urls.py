@@ -6,15 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 # from allauth.account.views import confirm_email
 
-@csrf_exempt
-def options(request):
-    response = JsonResponse({})
-    response['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-    response['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-    response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken, Authorization'
-    return response
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.urls')),

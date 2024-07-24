@@ -18,8 +18,6 @@ import os
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    REDIS_PORT=(int, 6379),
-    REDIS_HOST=(str, 'localhost')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,7 +37,7 @@ SECRET_KEY = 'django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [env.get_value("HOST", default="localhost")]
 
 # REST framework
 REST_FRAMEWORK = {
@@ -101,7 +99,6 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,10 +115,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    'drf_yasg',
+    'allauth.socialaccount.providers.google',
     'corsheaders',
-    'channels',
-    'django_channels_jwt',
     'drf_spectacular',
     
     #  local
@@ -141,18 +136,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend'
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
 
 ORIGIN_URL = env.get_value("ORIGIN_URL", default="http://locahost:8000")
-print(ORIGIN_URL)
 CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', ORIGIN_URL]
 
 CORS_ALLOW_HEADERS = (
@@ -183,45 +177,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-ASGI_APPLICATION = 'config.asgi.application'
-
-# Example Channel Layer Configuration (using Redis in this case)
-REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
-REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(REDIS_HOST, 6379)],
-        },
-    },
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',  # Change to 'INFO' or 'ERROR' in production
-        },
-        'channels': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Change to 'INFO' or 'ERROR' in production
-        },
-        'channels_redis': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
-}
 
 
 # Database
