@@ -152,6 +152,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ORIGIN_URL = env.get_value("ORIGIN_URL", default="http://locahost:8000")
+print(ORIGIN_URL)
 CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', ORIGIN_URL]
 
 CORS_ALLOW_HEADERS = (
