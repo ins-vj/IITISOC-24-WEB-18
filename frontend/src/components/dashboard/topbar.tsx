@@ -21,7 +21,7 @@ export default function topbar(){
 
           
 
-                <Link href='/dashboard/friends'>
+                <Link href='/dashboard/expressofriends'>
                     <Tooltip content="Friends" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' offset={28}>
              
                             <PeopleIcon fontSize='medium' color='warning' className=' text-[1.5rem] hover:text-[2.5rem] transition-all duration-300  '  style={{color: "white" }} />
