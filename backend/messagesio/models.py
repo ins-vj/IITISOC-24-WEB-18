@@ -21,6 +21,7 @@ class Meet(models.Model):
     private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     scheduled_at = models.DateTimeField(default=timezone.now)
+    invited_users = models.ManyToManyField(User, related_name="invited_meetings")
 
     def __str__(self):
         return f"Meet({self.id})"

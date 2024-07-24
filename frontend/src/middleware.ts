@@ -3,7 +3,6 @@ import type { NextRequest } from "next/server";
 
 export default function middleware(request: NextRequest) {
   const userCookie = request.cookies.get("accessToken");
-  console.log(userCookie);
   if (!userCookie) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -11,5 +10,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/videocall/:path*",
+  matcher: ["/videocall/:path*", "/call/:path*"],
 };

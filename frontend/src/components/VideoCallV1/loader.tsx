@@ -2,7 +2,7 @@
 import React, { ReactNode } from "react";
 import { useState, useEffect } from "react";
 import { getUserDetails, UserDetailsFC } from "@/helpers/api";
-import "@/components/VideoCall/VideoCall.css";
+import "@/components/VideoCallV1/VideoCall.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import SocketService from "@/helpers/websocketService";

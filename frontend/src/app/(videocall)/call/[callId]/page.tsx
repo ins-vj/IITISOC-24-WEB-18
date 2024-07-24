@@ -3,8 +3,9 @@ import {
   VideoCallContext,
   VideoCallProvider,
 } from "@/components/VideoCallV2/lib/VideocallHandler";
+import { getMeetDetails } from "@/helpers/api";
 import dynamic from "next/dynamic";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 const VideocallComponent = dynamic(
   () => import("@/components/VideoCallV2/UI/Videocall"),

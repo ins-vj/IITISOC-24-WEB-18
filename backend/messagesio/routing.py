@@ -3,5 +3,5 @@ from . import consumers
 
 
 websocket_urlpatterns = [
-    re_path(r'ws/messagesio/meet/$', consumers.MeetConsumer.as_asgi())
+    # re_path(r'ws/messagesio/meet/$', consumers.MeetConsumer.as_asgi())
 ]

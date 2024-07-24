@@ -3,8 +3,10 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import uuid
-
+from allauth.account.signals import user_signed_up
+from django.dispatch import receiver
 from .managers import CustomUserManager
+from django.core.mail import send_mail
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -48,3 +50,14 @@ class Friend(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username} & {self.friend.username}"
+    
+
+@receiver(user_signed_up, dispatch_uid="CustomUser.uuid")
+def user_signed_up_(request, user, **kwargs):
+    send_mail(
+            "Prince here",
+            f"Welcome to Expresso",
+            from_email=None,
+            recipient_list=[user.email],
+            fail_silently=False,
+        )
