@@ -8,9 +8,7 @@ import { cn } from "@/lib/utils";
 import Text from "@/components/landingpage/text";
 import Features from "./Pages/Features/Features";
 import Emogrid from "@/components/emogrid/emogrid";
-import Globe from "@/components/purpleglobe/globe";
 import { VelocityScroll } from "@/components/landingpage/scroll-based-velocity";
-import Particles from "@/components/landingpage/particles";
 import TextReveal from "@/components/landingpage/text-reveal";
 import RevealAI from "@/components/landingpage/revealai";
 import BoxReveal from "@/components/landingpage/boxreveal";
@@ -35,11 +33,7 @@ export default function Home() {
   } else {
     return (
       <>
-        <Particles className="absolute w-full h-full" />
-
-        <div className=" w-[100%] h-[110vh] absolute left-0 top-[-50px] animate-rise ">
-          <Globe />
-        </div>
+       
 
 
         <div className="relative z-10  gap-14 flex flex-col ">
@@ -85,7 +79,7 @@ export default function Home() {
 
             <Link href="/signup" className="relative w-[100%] " >
 
-              <div className="z-100 flex justify-center items-center w-[100%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold max-[825px]:text-[4rem] "> Sign Up</div>
+              <div className="z-100 flex justify-center items-center w-[50%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold max-[825px]:text-[4rem] "> Sign Up</div>
             </Link>
 
 
