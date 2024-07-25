@@ -5,13 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
-import { FRONTEND_URL, login } from "@/helpers/auth";
+import { NEXT_PUBLIC_FRONTEND_URL, login } from "@/helpers/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import googleLogo from "@/../public/icons/google_icon.svg";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-const REDIRECT_URI = `${FRONTEND_URL}/google`;
+const REDIRECT_URI = `${NEXT_PUBLIC_FRONTEND_URL}/google`;
 
 export const GoogleAuthButton = () => {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";

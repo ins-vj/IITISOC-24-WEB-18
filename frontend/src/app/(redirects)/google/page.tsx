@@ -22,7 +22,7 @@ const Google = () => {
     if (code) {
       login(code);
     }
-  }, [router]);
+  }, []);
 
   return <div>Loading...</div>;
 };

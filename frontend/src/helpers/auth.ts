@@ -1,5 +1,5 @@
 const API_BACKEND = process.env.NEXT_PUBLIC_API_URL;
-export const FRONTEND_URL = process.env.FRONTEND_URL;
+export const NEXT_PUBLIC_FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 const BASE_URL = `${API_BACKEND}/api/v1`;
 
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
@@ -56,7 +56,7 @@ export const loginWithGoogle = async (code: string) => {
     body: {
       provider: "google-oauth2",
       code,
-      redirect_uri: `${FRONTEND_URL}/google`,
+      redirect_uri: `${NEXT_PUBLIC_FRONTEND_URL}/google`,
     },
     isAuth: false,
   });
