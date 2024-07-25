@@ -61,10 +61,7 @@ export const apiCall = async (
   }
 
   const res = await fetch(requestUrl, req);
-  if (method === "GET") {
-    if (res.ok) return await res.json();
-    else return false;
-  } else return res.ok;
+  return res.json();
 };
 
 function getCSRFCookie(name: string) {

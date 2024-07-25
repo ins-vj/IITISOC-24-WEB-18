@@ -1,7 +1,9 @@
 const API_BACKEND = process.env.NEXT_PUBLIC_API_URL;
+export const FRONTEND_URL = process.env.FRONTEND_URL;
 const BASE_URL = `${API_BACKEND}/api/v1`;
 
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
+import { apiCall } from "./api";
 
 function getCSRFCookie(name: string) {
   let cookieValue = null;
@@ -9,7 +11,7 @@ function getCSRFCookie(name: string) {
     const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-     
+
       if (cookie.substring(0, name.length + 1) === name + "=") {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
@@ -47,6 +49,21 @@ export async function login(data: LoginPostData) {
   }
   return response.ok;
 }
+
+export const loginWithGoogle = async (code: string) => {
+  const tokens = await apiCall(`/social/jwtsocial/jwt-pair-user`, {
+    method: "POST",
+    body: {
+      provider: "google-oauth2",
+      code,
+      redirect_uri: `${FRONTEND_URL}/google`,
+    },
+    isAuth: false,
+  });
+  console.log(tokens);
+  setCookie("accessToken", tokens.token, { maxAge: 30 * 24 * 60 * 60 });
+  return tokens;
+};
 
 export async function logOut() {
   const csrftoken = getCSRFCookie("csrftoken")!;

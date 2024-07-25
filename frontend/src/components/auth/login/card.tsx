@@ -5,9 +5,30 @@ import Link from "next/link";
 import Image from "next/image";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
-import { login } from "@/helpers/auth";
+import { FRONTEND_URL, login } from "@/helpers/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const REDIRECT_URI = `${FRONTEND_URL}/google`;
+
+const getGoogleAuthURL = () => {
+  const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+  const options = {
+    redirect_uri: REDIRECT_URI,
+    client_id: GOOGLE_CLIENT_ID,
+    access_type: "offline",
+    response_type: "code",
+    prompt: "consent",
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ].join(" "),
+  };
+
+  const qs = new URLSearchParams(options);
+  return `${rootUrl}?${qs.toString()}`;
+};
 
 export default function Card() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -100,6 +121,7 @@ export default function Card() {
       >
         Login
       </Button>
+      <Link href={getGoogleAuthURL()}>GOOGLE</Link>
     </div>
   );
 }
