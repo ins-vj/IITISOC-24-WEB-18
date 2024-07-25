@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  nextjs:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - django
+      - nodejs
+    env_file:
+      - ./frontend/.env
+
+  django:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+
+  nodejs:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4444:4444"
+    depends_on:
+      - django
+    env_file:
+      - ./server/.env
+
+volumes:
+  postgres_data:

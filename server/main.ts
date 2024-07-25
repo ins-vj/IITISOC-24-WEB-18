@@ -7,7 +7,6 @@ const main = () => {
   const app = express();
   const server = http.createServer(app);
 
-  //@ts-ignore
   const webSocket = new WebSocket.Server({ server, path: "/ws" });
 
   WebSocketConnection(webSocket);
