@@ -7,6 +7,7 @@ from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 from .managers import CustomUserManager
 from django.core.mail import send_mail
+from allauth.socialaccount.signals import social_account_added
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -61,3 +62,14 @@ def user_signed_up_(request, user, **kwargs):
             recipient_list=[user.email],
             fail_silently=False,
         )
+    
+@receiver(social_account_added, dispatch_uid="CustomUser.social_account_added")
+def social_account_added_(request, sociallogin, **kwargs):
+    user = sociallogin.user
+    send_mail(
+        "Prince here",
+        "Welcome to Expresso",
+        from_email=None,
+        recipient_list=[user.email],
+        fail_silently=False,
+    )
