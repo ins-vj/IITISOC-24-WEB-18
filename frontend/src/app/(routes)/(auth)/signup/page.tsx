@@ -1,10 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-
 import Link from "next/link";
-import Particle from "@/components/signup/particle";
+import Particle from "@/components/auth/signup/particle";
 import Image from "next/image";
-import Card from "@/components/signup/card";
+import Card from "@/components/auth/signup/card";
 
 export default function SignUp() {
   return (

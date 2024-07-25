@@ -8,6 +8,7 @@ import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { FRONTEND_URL, login } from "@/helpers/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import googleLogo from "@/../public/icons/google_icon.svg";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = `${FRONTEND_URL}/google`;
@@ -121,7 +122,16 @@ export default function Card() {
       >
         Login
       </Button>
-      <Link href={getGoogleAuthURL()}>GOOGLE</Link>
+      <Link href={getGoogleAuthURL()}>
+        <button className="bg-white h-2rem pl-2 pr-4 flex items-center border-2 border-gray-200 rounded-xl hover:shadow-inner transition-shadow">
+          <img
+            src={googleLogo.src}
+            alt=""
+            className="aspect-square h-12 float-left"
+          />
+          Login With google
+        </button>
+      </Link>
     </div>
   );
 }
