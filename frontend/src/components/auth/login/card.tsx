@@ -13,7 +13,7 @@ import googleLogo from "@/../public/icons/google_icon.svg";
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = `${FRONTEND_URL}/google`;
 
-const getGoogleAuthURL = () => {
+export const GoogleAuthButton = () => {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
     redirect_uri: REDIRECT_URI,
@@ -28,7 +28,20 @@ const getGoogleAuthURL = () => {
   };
 
   const qs = new URLSearchParams(options);
-  return `${rootUrl}?${qs.toString()}`;
+  return (
+    <Link href={`${rootUrl}?${qs.toString()}`}>
+      <button className="bg-white text-black h-2rem pl-2 pr-4 flex items-center border-2 border-gray-200 rounded-xl hover:shadow-inner transition-shadow">
+        <Image
+          src={googleLogo.src}
+          alt=""
+          className="aspect-square h-12 float-left"
+          width={50}
+          height={50}
+        />
+        Login With google
+      </button>
+    </Link>
+  );
 };
 
 export default function Card() {
@@ -61,13 +74,6 @@ export default function Card() {
     <div className="flex flex-col gap-[2.5rem] justify-around items-center relative z-10   backdrop-blur-md  rounded-[20px] border-[2px] border-customblue-600 p-14">
       <div className="flex gap-[20px]">
         <Logo width={60} />
-        <Divider
-          className="h-[60px] bg-customblue-600"
-          orientation="vertical"
-        />
-        <Link href="/googleauth">
-          <Image src="/data/logos/google.png" alt="G" width={60} height={60} />
-        </Link>
       </div>
 
       <div className="w-[20rem] flex flex-col gap-[1.5rem] justify-center items-center">
@@ -122,16 +128,7 @@ export default function Card() {
       >
         Login
       </Button>
-      <Link href={getGoogleAuthURL()}>
-        <button className="bg-white h-2rem pl-2 pr-4 flex items-center border-2 border-gray-200 rounded-xl hover:shadow-inner transition-shadow">
-          <img
-            src={googleLogo.src}
-            alt=""
-            className="aspect-square h-12 float-left"
-          />
-          Login With google
-        </button>
-      </Link>
+      <GoogleAuthButton />
     </div>
   );
 }

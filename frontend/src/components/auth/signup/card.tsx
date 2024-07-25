@@ -8,6 +8,7 @@ import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { register } from "@/helpers/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { GoogleAuthButton } from "../login/card";
 
 export default function Card() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -93,7 +94,6 @@ export default function Card() {
           isInvalid={isUsernameInvalid}
           color={isUsernameInvalid ? "danger" : "warning"}
           errorMessage="Username can only contain a-z 0-9"
-
           size="sm"
           className="max-w-[25rem] dark"
           value={username}
@@ -108,7 +108,6 @@ export default function Card() {
           isInvalid={isInvalid}
           color={isInvalid ? "danger" : "warning"}
           errorMessage="Please enter a valid email"
-    
           size="sm"
           className="max-w-[25rem] dark"
           value={email}
@@ -122,7 +121,6 @@ export default function Card() {
           isInvalid={isPassInvalid}
           color={isPassInvalid ? "danger" : "warning"}
           errorMessage="Password must contain atleast 8 digits"
-     
           size="sm"
           className="max-w-[25rem] dark"
           value={password}
@@ -138,7 +136,6 @@ export default function Card() {
           color={isConfirmPassInvalid ? "danger" : "warning"}
           errorMessage="Password must match with above password"
           size="sm"
-        
           endContent={
             <button
               className="focus:outline-none"
@@ -160,7 +157,6 @@ export default function Card() {
           <Link href="/login">
             <span>Already Signed Up?</span>{" "}
           </Link>
-          
         </div>
       </div>
 
@@ -175,6 +171,7 @@ export default function Card() {
       >
         Sign In
       </Button>
+      <GoogleAuthButton />
     </div>
   );
 }
