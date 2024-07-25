@@ -13,8 +13,9 @@ const main = () => {
   WebSocketConnection(webSocket);
 
   const port = 4444;
+  const host = "0.0.0.0";
 
-  server.listen(port, () => {
+  server.listen(port, host, () => {
     console.log("Server started at port ", port);
   });
 };
