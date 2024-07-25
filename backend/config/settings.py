@@ -18,8 +18,6 @@ import os
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    REDIS_PORT=(int, 6379),
-    REDIS_HOST=(str, 'localhost')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,17 +27,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 STATICFILES_DIRS = []
 
+SECRET_KEY = env.get_value("SECRET_KEY", default='django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh')
+DEBUG = env.get_value("DEBUG", default=True)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [env.get_value("HOST", default="localhost")]
 
 # REST framework
 REST_FRAMEWORK = {
@@ -67,9 +58,9 @@ SPECTACULAR_SETTINGS = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=30),
     'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=30),
     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
 }
 
@@ -101,7 +92,6 @@ SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,11 +108,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    'drf_yasg',
+    'allauth.socialaccount.providers.google',
     'corsheaders',
-    'channels',
-    'django_channels_jwt',
     'drf_spectacular',
+    'social_django',
+    'rest_social_auth',
     
     #  local
     'api',
@@ -141,12 +131,33 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend'
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.google.GoogleOAuth2',
 ]
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env.get_value('GOOGLE_OAUTH2_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env.get_value('GOOGLE_OAUTH2_CLIENT_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['profile', 'email']
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+REST_USE_JWT = True
 
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
@@ -176,51 +187,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-ASGI_APPLICATION = 'config.asgi.application'
-
-# Example Channel Layer Configuration (using Redis in this case)
-REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
-REDIS_PORT = int(os.getenv('REDIS_PORT', 6379))
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(REDIS_HOST, 6379)],
-        },
-    },
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',  # Change to 'INFO' or 'ERROR' in production
-        },
-        'channels': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Change to 'INFO' or 'ERROR' in production
-        },
-        'channels_redis': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
-}
 
 
 # Database

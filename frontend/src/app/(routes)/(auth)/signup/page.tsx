@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-
 import Link from "next/link";
 import Particle from "@/components/signup/particle";
 import Image from "next/image";
