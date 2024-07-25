@@ -1,7 +1,10 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import FriendRequest, CustomUser
-from .serializers import FriendRequestSerializer, FriendRequestUpdateSerializer, SelfUserSerializer
+from .serializers import FriendRequestSerializer, FriendRequestUpdateSerializer, SelfUserSerializer, FindUserSerializer
+from rest_framework.response import Response
+from rest_framework import status
+
 
 class FriendRequestList(generics.ListCreateAPIView):
 
@@ -63,4 +66,18 @@ class SelfUserView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return CustomUser.objects.filter(id=user.id)
+    
 
+class RetrieveUserByUsername(generics.RetrieveAPIView):
+    serializer_class = FindUserSerializer
+    lookup_field = 'username'
+    queryset = CustomUser.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs.get('username')
+        try:
+            user = CustomUser.objects.get(username=username)
+            serializer = self.get_serializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
