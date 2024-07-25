@@ -9,7 +9,7 @@ import { FRONTEND_URL, login } from "@/helpers/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = `${FRONTEND_URL}/google`;
 
 const getGoogleAuthURL = () => {
