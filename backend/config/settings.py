@@ -118,7 +118,7 @@ INSTALLED_APPS = [
     'api',
     'users',
     'videocall',
-    'messagesio'
+    'messagesio',
 ]
 
 MIDDLEWARE = [
