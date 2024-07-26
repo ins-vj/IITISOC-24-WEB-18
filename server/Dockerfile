@@ -8,6 +8,7 @@ COPY package*.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install
+RUN yarn add mediasoup
 
 # Copy the rest of the application code
 COPY . .
@@ -16,4 +17,4 @@ COPY . .
 EXPOSE 4444 3016 10000-10100/udp
 
 # Start the server
-CMD ["yarn", "dev"]
+CMD ["yarn", "devl"]
