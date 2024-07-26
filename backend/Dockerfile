@@ -10,6 +10,4 @@ COPY . /backend/
 
 EXPOSE 8000
 
-EXPOSE 6379
-
 CMD python manage.py runserver

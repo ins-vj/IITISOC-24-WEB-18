@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  nextjs:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - nodejs
+    env_file:
+      - ./frontend/.env
+
+  nodejs:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4444:4444"
+    env_file:
+      - ./server/.env
+
+volumes:
+  postgres_data:

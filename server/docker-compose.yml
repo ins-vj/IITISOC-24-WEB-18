@@ -1,0 +1,9 @@
+version: "3"
+services:
+  mediasoup:
+    build: .
+    ports:
+      - "4444:4444"
+      - "10000-10100:10000-10100/udp"
+    env_file:
+      - ./.env

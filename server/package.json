@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "set DEBUG=mediasoup:* & ts-node .",
-    "start": "ts-node ."
+    "start": "ts-node .",
+    "devl": "DEBUG=mediasoup:* ts-node ."
   },
   "dependencies": {
     "@types/node": "^20.14.11",

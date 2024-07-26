@@ -29,8 +29,10 @@ STATICFILES_DIRS = []
 
 SECRET_KEY = env.get_value("SECRET_KEY", default='django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh')
 DEBUG = env.get_value("DEBUG", default=True)
+HOST = env.get_value("HOST", default="localhost")
+FRONTEND_URL = env.get_value("FRONTEND_URL")
 
-ALLOWED_HOSTS = [env.get_value("HOST", default="localhost")]
+ALLOWED_HOSTS = [HOST]
 
 # REST framework
 REST_FRAMEWORK = {
@@ -118,7 +120,7 @@ INSTALLED_APPS = [
     'api',
     'users',
     'videocall',
-    'messagesio'
+    'messagesio',
 ]
 
 MIDDLEWARE = [
@@ -162,8 +164,7 @@ REST_USE_JWT = True
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
 
-ORIGIN_URL = env.get_value("ORIGIN_URL", default="http://locahost:8000")
-CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', ORIGIN_URL]
+CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', HOST]
 
 CORS_ALLOW_HEADERS = (
     "accept",

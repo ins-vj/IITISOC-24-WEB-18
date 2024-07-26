@@ -62,3 +62,11 @@ class SelfUserSerializer(serializers.ModelSerializer):
     def get_friends(self, obj):
         friends = Friend.objects.filter(user=obj)
         return FriendSerializer(friends, many=True).data
+    
+
+class FindUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'full_name', 'email', 'date_joined']
+
