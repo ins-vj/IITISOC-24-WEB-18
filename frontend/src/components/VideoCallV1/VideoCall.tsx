@@ -18,7 +18,7 @@ import AgoraRTC, {
   AgoraRTCScreenShareProvider,
 } from "agora-rtc-react";
 import { ICameraVideoTrack, IMicrophoneAudioTrack } from "agora-rtc-react";
-import { ReactElement, ReactHTML, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import "./VideoCall.css";
 import ControlBar from "./ControlBar";
 import VideoShow from "./VideoShow";
@@ -27,8 +27,6 @@ import { CircularProgress } from "@mui/material";
 import { VideoPlayerConfig } from "agora-rtc-react";
 import * as faceapi from "@vladmandic/face-api";
 import { useLocalScreenTrack } from "agora-rtc-react";
-import SocketService from "@/helpers/websocketService";
-import { UserEmotion } from "./types";
 
 function Videos(props: {
   channelName: string;
@@ -36,7 +34,6 @@ function Videos(props: {
   client: IAgoraRTCClient;
   video: boolean;
   audio: boolean;
-  socketConnection: SocketService;
 }) {
   const [videoInFocus, setVideoInFocus] = useState<ReactElement | null>(null);
   const [cam, setCam] = useState<string | null>();
@@ -72,21 +69,6 @@ function Videos(props: {
   const [audio, setAudio] = useState(props.audio);
   const [screenShare, setScreenShare] = useState(false);
   const screenShareClient = useRTCScreenShareClient(props.client);
-  const [socketUsers, setSocketUsers] = useState<any>([]);
-  if (props.socketConnection) {
-    props.socketConnection!.setUsers = (users: [any]) => {
-      console.log("setting");
-      setSocketUsers((prev: any) => users);
-    };
-    props.socketConnection.setUsersEmotions = (emotion: UserEmotion) => {
-      console.log("updating emotion states");
-      const e1 = usersEmotions;
-      e1[emotion.client_id] = emotion.emotion;
-      console.log(e1);
-      setUsersEmotions(e1);
-      return true;
-    };
-  }
 
   const {
     screenTrack: screenTrack,
@@ -122,7 +104,7 @@ function Videos(props: {
     appid: AppID,
     channel: channelName,
     token: null,
-    uid: props.socketConnection.uuid,
+    uid: undefined,
   });
 
   audioTracks.map((track) => track.play());
@@ -156,7 +138,7 @@ function Videos(props: {
           predicted_emotion !== undefined
         ) {
           console.log(predicted_emotion);
-          props.socketConnection.updateUserEmotion(predicted_emotion);
+          // Update emotion logic here if needed
         }
       }
     } else {
@@ -168,12 +150,6 @@ function Videos(props: {
       await loadModels();
     };
     load();
-    if (
-      props.socketConnection.socket.CLOSED ||
-      props.socketConnection.socket.CLOSING
-    ) {
-      props.socketConnection.newSocket();
-    }
   }, []);
 
   useEffect(() => {
@@ -213,11 +189,7 @@ function Videos(props: {
             <FocusVideo onClick={exitFullscreen}>
               <div className="w-full h-full relative">
                 <div className="absolute left-0 bottom-0 text-[#DC9750] z-30">
-                  {socketUsers?.map(
-                    (user: any) =>
-                      remoteUsers[0].uid == user.client_id &&
-                      user.user__username
-                  )}
+                  {remoteUsers[0].uid}
                 </div>
                 <RemoteUser user={remoteUsers[0]} />
               </div>
@@ -226,7 +198,6 @@ function Videos(props: {
           {remoteUsers.length > 1 && (
             <VideoShow
               users={remoteUsers}
-              socketUsers={socketUsers}
               makeFullscreen={makeFullscreen}
               usersEmotions={usersEmotions}
             />
@@ -260,7 +231,6 @@ const Call = (props: {
   appId: string;
   video: boolean;
   audio: boolean;
-  socketConnection: SocketService;
 }) => {
   useEffect(() => {
     AgoraRTC.setLogLevel(0);
@@ -282,7 +252,6 @@ const Call = (props: {
         client={client}
         video={props.video}
         audio={props.audio}
-        socketConnection={props.socketConnection}
       />
     </AgoraRTCProvider>
   );

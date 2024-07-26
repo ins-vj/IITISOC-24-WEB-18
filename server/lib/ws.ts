@@ -66,11 +66,11 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
       const producerIds = Array.from(user.producers.values()).map((p) => p.id);
       broadcast(websock, "userDisconnected", producerIds);
       user.consumerTransports &&
-        user.consumerTransports?.forEach((consumer) => consumer.close());
-      user.producerTransports &&
-        user.producerTransports.forEach((transport) => transport.close());
-      user.producers && user.producers.forEach((producer) => producer.close());
-      room.users.delete(uuid);
+        // user.consumerTransports?.forEach((consumer) => consumer.close());
+        user.producerTransports &&
+        // user.producerTransports.forEach((transport) => transport.close());
+        // user.producers && user.producers.forEach((producer) => producer.close());
+        room.users.delete(uuid);
     });
 
     ws.on("message", async (data: any) => {
@@ -146,7 +146,7 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         broadcast(websock, "userDisconnected", [
           user.producers.get(event.data.producerType)!.id,
         ]);
-        user.producers.get(event.data.producerType)?.close();
+        // user.producers.get(event.data.producerType)?.close();
         user.producers.delete(event.data.producerType);
         // TODO delete transport also
       } catch (error) {
@@ -164,7 +164,7 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         );
         transport.on("@close", () => {
           user.consumers.forEach((consumer) => {
-            consumer.close();
+            // consumer.close();
           });
         });
         user.producerTransports!.set(event.producerType, transport);
