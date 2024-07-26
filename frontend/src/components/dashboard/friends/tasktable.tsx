@@ -10,7 +10,7 @@ export default function App(props:any) {
   return (
     <div className="w-full flex flex-col gap-[10px]  border-small px-[5px] py-[2px] rounded-3xl border-default-200 dark:border-default-100 dark">
 
-      <Profile user={props.user} username={props.username} photo={props.photo} />
+      <Profile id={props.id} user={props.user} username={props.username} photo={props.photo} />
     
     </div>
   );

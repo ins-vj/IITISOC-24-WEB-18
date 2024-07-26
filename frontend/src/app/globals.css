@@ -12,9 +12,10 @@
 }
 
 
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: rgb(10, 10, 10); 
+    --background-color: rgb(10,10, 10); 
     --text-color: #ffffff; 
   }
 }
@@ -256,3 +257,190 @@ body {
   }
 }
 
+
+
+.sand{
+  background-image: url(/gifs/wave.gif);
+  background-position: 20% 45%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+font-weight:bolder;
+
+}
+
+.seprate1{
+  position: relative;
+  animation-name: seprate1;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes seprate1 {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(8rem+100px)) scale(1.2);
+    
+  }
+  100% {
+    opacity: 0.25;
+    transform: translateY(0) scale(1);
+    
+  }
+}
+.seprate2{
+  position: relative;
+  animation-name: seprate2;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes seprate2 {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(4rem+50px)) scale(1.2);
+    
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateY(0) scale(1);
+    
+  }
+}
+.seprate3{
+  position: relative;
+  animation-name: seprate3;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes seprate3 {
+  0% {
+    opacity: 0;
+    transform: translateY(-calc(4rem+50px)) scale(1.2);
+    
+  }
+  100% {
+    opacity: 0.5;
+    transform: translateY(0) scale(1);
+    
+  }
+}
+
+.seprate4{
+  position: relative;
+  animation-name: seprate3;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes seprate4 {
+  0% {
+    opacity: 0;
+    transform: translateY(-calc(8rem+100px)) scale(1.2);
+    
+  }
+  100% {
+    opacity: 0.25;
+    transform: translateY(0) scale(1);
+    
+  }
+}
+
+.enteremo{
+  position: relative;
+  animation-name: enteremo;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes enteremo {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.4);
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    
+  }
+}
+
+.change{
+  position: relative;
+  animation-name: change;
+ animation-duration: 0.3s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes change {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) ;
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) ;
+    
+  }
+}
+
+.appear{
+
+  animation-name: appear;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+     ;
+    
+  }
+  100% {
+    opacity: 1;
+     ;
+    
+  }
+}
+
+.appearcards{
+  position: relative;
+  animation-name: appearcards;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes appearcards {
+  0% {
+    opacity: 0;
+    transform: translateY(50%) scale(0.7)
+    
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1)
+    
+  }
+}

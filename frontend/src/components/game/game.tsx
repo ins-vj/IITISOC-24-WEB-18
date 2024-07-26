@@ -18,10 +18,10 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ card, index, onClick }) => {
   return (
     <div
-      className={`h-20 w-20 flex justify-center items-center border-2 border-customorange-700 rounded-lg text-3xl transition-all duration-500 transform ${card.flipped
-          ? 'border-2 border-white bg-white  animate-flip'
-          : 'bg-black animate-flipReverse '
-        } ${card.matched ? 'bg-white ' : ''}`}
+      className={`h-20 w-20 flex justify-center items-center border-2 border-customorange-700 bg-[rgba(20,20,20)] rounded-lg text-3xl transition-all duration-500 transform ${card.flipped
+        ? 'border-2 border-[rgba(20,20,20)] bg-[rgba(20,20,20)]  animate-flip'
+        : 'bg-[rgba(20,20,20)] animate-flipReverse '
+        } ${card.matched ? 'bg-[rgba(255,255,255,1)] shadow-[inset_0_0px_20px_rgba(0,0,0,1)] ' : ''}`}
       onClick={() => !card.flipped && !card.matched && onClick(index)}
     >
       {card.flipped || card.matched ? card.icon : <Logo width={50} />}
@@ -72,18 +72,22 @@ const MemoryGame: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center  bg-gray-900">
-      <button
-        onClick={resetGame}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-      >
-        Reset Game
-      </button>
-      <h2 className="text-2xl text-white mb-4">Number of Moves: {count}</h2>
+    <div className="flex flex-col justify-center items-center gap-5 ">
+      
       <div className="grid grid-cols-4 gap-4">
         {cards.map((card, index) => (
           <Card key={index} card={card} index={index} onClick={handleCardClick} />
         ))}
+      </div>
+      <div className=' flex flex-row gap-3 justify-between w-[100%] items-center'>
+
+        <h2 className="text-2xl text-white mb-4">Number of Moves: {Math.trunc(count / 2)}</h2>
+        <button
+          onClick={resetGame}
+          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+        >
+          Reset Game
+        </button>
       </div>
     </div>
   );
