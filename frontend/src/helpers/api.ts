@@ -103,6 +103,42 @@ export async function getUserDetails() {
   const userData = await data.json();
   return userData;
 }
+export const fetchFriendRequests = async () => {
+  return apiCall("/user/friend-requests",{method: "GET"});
+}
+export const updateFriendRequest = async (id: string, status: string) => {
+  return apiCall(`/user/friend-requests/${id}/update`, {
+    method: "PATCH",
+    body: { currentStatus: status },
+  });
+}
+export const fetchRequestedUser = async (userName:string) => {
+
+  return apiCall(`/user/user/${userName}`);
+
+}
+export const fetchSelfDetails = async () => {
+  return apiCall(`/user/user-details`);
+}
+export const sendFriendRequest = async (id: string) => {  
+  return apiCall(`/user/friend-requests`, {
+    method: "POST",
+    body: { to_user: id },
+  });
+}
+
+export const createMeeting = async (ids: [string], privateMeet: boolean) =>{
+
+  await apiCall("/meeting/meet-create", {
+    method: "POST",
+    body:{
+      private: privateMeet,
+      invited_users: ids
+    }
+    
+  }).then((data) => {window.location.href = `/call/${data.id}`});
+
+}
 
 export async function getMeetDetails(meetId: string) {
   return apiCall(`/meeting/meet-detail/${meetId}`);

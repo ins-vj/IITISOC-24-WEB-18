@@ -9,11 +9,13 @@ import Image    from 'next/image'
 
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import toast from "react-hot-toast";
+import { sendFriendRequest } from "@/helpers/api";
 
 export default function Profile(props:any) {
    
     
-    function sendRequest() {
+    const sendRequest=async()=> {
+       await sendFriendRequest(props.id);
         toast.success("Friend Request Sent");
     }
 

@@ -7,11 +7,15 @@ import AddIcon from '@mui/icons-material/Add';
 import Cards from "@/components/dashboard/friends/cards";
 import SearchIcon from '@mui/icons-material/Search';
 import Image from 'next/image'
+import { fetchRequestedUser } from "@/helpers/api";
 export default function Tasks(props:any) {
 
   const [newtask, setNewTask] = React.useState("");
+ const [user, setUser] = React.useState(null);
+const fetchUser = async() => {
+  await fetchRequestedUser(newtask).then((data) => { console.log("data23", data);setUser(data) });
 
-
+}
 
   return (
 
@@ -38,13 +42,18 @@ export default function Tasks(props:any) {
       startContent={<div className="">@</div>}
      
       />  
-    <Button isDisabled={newtask ? false : true} isIconOnly color="warning" size="lg" variant="solid"  className=" text-white">
+    <Button onClick={()=>{fetchUser()}} isDisabled={newtask ? false : true} isIconOnly color="warning" size="lg" variant="solid"  className=" text-white">
         <SearchIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
       </Button> 
 
       </div>
+      {user ? (
+  <TaskList photo={props.photo} user={user.username} username={user.username} id={user.id} />
+) : (
+  <div className="text-white">No User Found</div>
+)}
 
-      <TaskList photo={props.photo} user={props.user} username={props.username}/>
+    
     
       </div>
       

@@ -14,6 +14,7 @@ import Sections from "@/components/dashboard/room/sections";
 import Profile from "@/components/dashboard/room/profile";
 import ViewAI from "@/components/dashboard/room/viewai";
 import Particles from "@/components/landingpage/particles";
+import { fetchSelfDetails } from "@/helpers/api";
 import React from "react";
 export default function Dashboard() {
 
@@ -39,15 +40,27 @@ export default function Dashboard() {
   const [user, setUser] = useState("Jai");
   const [username, setUsername] = useState("jaipannu08");
   const [mail, setMail] = useState("ce230004019@iiti.ac.in");
-
+  const [selfDetails, setSelfDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    
     setTimeout(() => setLoading(false), 2500);
-  }, []);
+    async function loadSelfDetails() {
+      try {
+        const data = await fetchSelfDetails();
+        setSelfDetails(data);
+      console.log("data",selfDetails);
+      } catch (error) {
+        console.error("Failed to fetch self details:", error);
+      }
+    }
+    loadSelfDetails();
+
+  }, [selfDetails]);
   if (loading) {
     return (
       <>
-        <Loader user={user} />
+        {selfDetails.map((detail) =>(<Loader user={detail.username}/>))}
       </>
     );
   } else {
@@ -102,7 +115,9 @@ export default function Dashboard() {
         <Sections>
           <div className=" [@media(max-width:1100px)]:hidden w-[100%]">
           <div className=" enter4 w-[100%]">
-            <Profile user={user} username={username} mail={mail} />
+            {selfDetails.map((detail) => (
+              <Profile user={detail.username}/>
+            ))}
             </div>
           </div>
           <div className=" enter5 w-[100%]">

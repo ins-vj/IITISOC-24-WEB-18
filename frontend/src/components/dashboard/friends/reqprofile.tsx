@@ -19,7 +19,7 @@ export default function Profile(props:any) {
         toast.success("Friend Added");
     }
 
-
+    
 
 
     return (
@@ -29,7 +29,7 @@ export default function Profile(props:any) {
        <Cards>
 
         <div className=" flex w-[100%] gap-[20px] items-center justify-between">
-        <div className="flex w-[100%] gap-[20px] items-center ">
+        <div  className="flex w-[100%] gap-[20px] items-center ">
             <Image src={props.photo}  width={50} height={50} alt="user" className=" object-cover rounded-[50%] bg-customorange-300" />
             <div>
             <div className=" flex items-center w-[100%] justify-start gap-[10px]">
@@ -42,10 +42,10 @@ export default function Profile(props:any) {
             <div>
      
             <div className=" flex gap-[5px]">
-            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
-            <DoneIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
+            <Button  color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={()=>{props.accept(props.index)}}> 
+            <DoneIcon  fontSize='medium' color='warning' className=' transition-all duration-300'   style={{color: "white" }}/>
             </Button>
-            <Button color="danger" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="danger" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={()=>{props.reject(props.index)}}> 
             <ClearIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
             </Button>
             </div>  
