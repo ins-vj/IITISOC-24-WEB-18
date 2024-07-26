@@ -116,7 +116,7 @@ const VideocallComponent = () => {
           </div>
 
 
-          <div className="     flex gap-5 flex-col z-40 ">
+          <div className="  transition-all duration-300    flex gap-5 flex-col z-40 ">
             <div className=" text-[2rem]"> Dive into Expresso World </div>
             <div>
             <Button variant="ghost"
@@ -134,7 +134,7 @@ const VideocallComponent = () => {
 
           
 
-            {game ?<div className=" w-[100%] gap-5 flex flex-col"> <Button variant="light" color="danger"
+            {game ?<div className=" w-[100%] gap-5 flex flex-col transition-all duration-300"> <Button variant="light" color="danger"
               className="p-4 bg-[rgba(24,24,27)] w-[100%] light text-white rounded-3xl"
               onClick={(e) => {
                 setGame(false);

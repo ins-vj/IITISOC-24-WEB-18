@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({ card, index, onClick }) => {
       className={`h-20 w-20 flex justify-center items-center border-2 border-customorange-700 bg-[rgba(20,20,20)] rounded-lg text-3xl transition-all duration-500 transform ${card.flipped
         ? 'border-2 border-[rgba(20,20,20)] bg-[rgba(20,20,20)]  animate-flip'
         : 'bg-[rgba(20,20,20)] animate-flipReverse '
-        } ${card.matched ? 'bg-white ' : ''}`}
+        } ${card.matched ? 'bg-[rgba(255,255,255,1)] shadow-[inset_0_0px_20px_rgba(0,0,0,1)] ' : ''}`}
       onClick={() => !card.flipped && !card.matched && onClick(index)}
     >
       {card.flipped || card.matched ? card.icon : <Logo width={50} />}
