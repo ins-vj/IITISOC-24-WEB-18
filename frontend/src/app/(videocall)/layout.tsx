@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <head></head>
       <body className=" ">
-        <div className=" min-h-[100vh]">{children}</div>
+        <div className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-clip">{children}</div>
       </body>
     </html>
   );

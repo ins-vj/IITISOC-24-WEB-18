@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import React, { useContext, useEffect } from "react";
 
 const VideocallComponent = dynamic(
-  () => import("@/components/VideoCallV2/UI/Videocall"),
+  () => import("@/components/VideoCallV2/UIcopy/Videocall"),
   {
     ssr: false,
   }
@@ -17,7 +17,7 @@ const VideocallComponent = dynamic(
 const CallPage = ({ params }: { params: { callId: string } }) => {
   return (
     <VideoCallProvider meetId={params.callId}>
-      <div>{params.callId}</div>
+      <div className=" absolute right-5 bottom-5 p-3 rounded-3xl h-[4rem] bg-[rgba(50,50,50,0.3)] flex justify-center items-center"> {params.callId}</div>
       <VideocallComponent />
     </VideoCallProvider>
   );
