@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import styles from './loading.module.css'
 import Image from 'next/image'
 import { NeonGradientCard } from "./neongrad";
-
+import Logo from './logo';
 
 export default function Loader() {
 
@@ -23,7 +23,7 @@ export default function Loader() {
 
     if (loading1) {
         return (
-            <div className=' flex justify-center items-center w-[100vw] h-[100vh] p-0 m-0  bg-black  '>
+            <div className=' flex justify-center items-center w-[100%] h-[100%] p-0 m-0    '>
 
                 <div className={' gradient text-[5rem] '}>Connect</div>
 
@@ -35,7 +35,7 @@ export default function Loader() {
 
         if (loading2) {
             return (
-                <div className=' flex justify-center items-center w-[100vw] h-[100vh] p-0 m-0 bg-black   '>
+                <div className=' flex justify-center items-center w-[100%] h-[100%] p-0 m-0  '>
 
                     <div className={' gradient text-[5rem] '}>Express</div>
 
@@ -46,10 +46,14 @@ export default function Loader() {
 
     
                 return (
-                    <div className=' flex justify-center items-center w-[100vw] h-[100vh] p-0 m-0 gap-[70px] bg-black '>
+                    <div className=' flex justify-center items-center w-[100%] h-[100%] p-0 m-0 gap-[70px]  '>
+                     
+                     <video autoPlay loop muted className='h-[100vh] scale-[1.5] saturate-[80%] contrast-[135%] '>
+                        <source src="/data/videos/Dream.mp4" type="video/mp4"/>
+                    </video>
+                    
 
-
- <div className={' gradient text-[5rem] '}>Expresso</div>
+ {/* <div className={' gradient text-[5rem] '}>Expresso</div> */}
                     </div>
                 )
             

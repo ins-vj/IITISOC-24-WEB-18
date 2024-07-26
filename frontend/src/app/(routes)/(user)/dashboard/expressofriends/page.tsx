@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 
 import Loader from "@/components/dashboard/loading";
-import Quickroom from "@/components/dashboard/friends/quickroom";
-import Joinroom from "@/components/dashboard/friends/joinroom";
+
 import Requests from "@/components/dashboard/friends/customroom";
 import Favourites from "@/components/dashboard/friends/favourites";
 import Upcoming from "@/components/dashboard/friends/upcoming";

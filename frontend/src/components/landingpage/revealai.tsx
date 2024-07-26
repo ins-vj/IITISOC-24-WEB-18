@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { FC, ReactNode, useRef } from "react";
-import Particles from "@/components/magicui/particles";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+import { cn } from "@/lib/utils";
 
 interface TextRevealByWordProps {
   text: string;
@@ -22,23 +22,17 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   const words = text.split(" ");
 
   return (
-    <div ref={targetRef} className={cn("relative z-0 w-[100vw]  h-[400vh] flex flex-col justify-between ", className)}>
-
-      
-
-
+    <div ref={targetRef} className={cn("relative z-0 h-[200vh]", className)}>
       <div
         className={
-          "sticky top-[0] mx-auto flex h-[25%]  w-[100%] justify-center bg-transparent  "
+          "sticky top-0 mx-auto flex h-[50%] max-w-4xl items-center bg-transparent px-[1rem] py-[5rem]"
         }
       >
-   
         <p
           ref={targetRef}
           className={
-            "flex relative z-30 flex-wrap justify-center p-5 text-2xl  w-[100%] font-bold  text-black/20 dark:text-white/20 py-[2rem]  md:text-3xl  lg:text-4xl xl:text-[5rem]"
+            "flex flex-wrap p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl"
           }
-          style={{boxShadow: "inset 0px 50px 50px 100px rgb(10, 10, 10)"}}
         >
           {words.map((word, i) => {
             const start = i / words.length;
@@ -51,12 +45,6 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
           })}
         </p>
       </div>
-
-          <div className=" ">
-          <Particles className=" relative h-[100vh] w-[100%] "/>
-
-          </div>
-      
     </div>
   );
 };
@@ -74,7 +62,7 @@ const Word: FC<WordProps> = ({ children, progress, range }) => {
       <span className={"absolute opacity-30"}>{children}</span>
       <motion.span
         style={{ opacity: opacity }}
-        className={" text-customorange-700"}
+        className={"text-black dark:text-white"}
       >
         {children}
       </motion.span>

@@ -18,11 +18,28 @@ export default function Navbar() {
       <div className=" flex">
         <div>
           <Link href="/login" className=" w-[200px] h-[100px] relative z-50">
-            <div className="z-10 flex items-center justify-center px-[2rem] text-[1.3rem]">
+            <div className="z-10 flex items-center justify-center px-[1rem] text-[1.3rem]">
                   Log In
             </div>
           </Link>
         </div>
+        <div>
+          <Link href="/login" className=" w-[200px] h-[100px] relative z-50">
+            <div className="z-10 rounded-full border-[2px] flex items-center justify-center px-[1rem] text-[1.3rem]">
+                  Sign Up
+            </div>
+          </Link>
+        </div>
+        {/* <div className="relative flex w-[100%] justify-between  gap-9 px-3 flex-col-reverse items-start md:flex-row md:items-center">
+          
+
+          <Link href="/signup" className="relative w-[100%] " >
+
+            <div className="z-100  relative flex justify-center items-center w-[50%] rounded-full border-[2px] px-10  border-white  text-white uppercase text-[5rem] font-extrabold max-[825px]:text-[4rem] "> Sign Up</div>
+          </Link>
+
+
+        </div> */}
         {/* <div>
           <Link href="/signup">
             <div className="z-10 flex min-h-[16rem] items-center justify-center p-[15px]">
