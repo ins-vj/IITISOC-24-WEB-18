@@ -1,40 +1,59 @@
-import React from "react";
-import {Select, SelectItem, Avatar, Chip} from "@nextui-org/react";
-import {users} from "./data";
+import React, { useState, useEffect } from "react";
+import { Select, SelectItem, Chip } from "@nextui-org/react";
+import { fetchFriendRequests } from "@/helpers/api"; // Import the API call function
 
+export default function FriendPicker({ color, onSelectedFriendsChange }) {
+  const [friendsList, setFriendsList] = useState([]);
 
-export default function App(props: any) {
+  // Fetch the friend requests when the component mounts
+  useEffect(() => {
+    async function loadFriendRequests() {
+      try {
+        const data = await fetchFriendRequests(); // Make API call
+        // Filter only accepted friends
+        const acceptedFriends = data.filter(
+          (friend) => friend.currentStatus === "accepted"
+        );
+        setFriendsList(acceptedFriends); // Set the data to state
+      } catch (error) {
+        console.error("Failed to fetch friend requests:", error);
+      }
+    }
+
+    loadFriendRequests();
+  }, []); // Empty dependency array to run once on mount
+
   return (
     <Select
-      color={props.color}
-      items={users}
+      color={color}
+      items={friendsList}
       variant="bordered"
       isMultiline={true}
       selectionMode="multiple"
       placeholder="Select a user"
-
       classNames={{
-        base: " w-[100%]",
+        base: "w-[100%]",
         trigger: "min-h-12 py-2",
       }}
-      renderValue={(items) => {
-        return (
-          <div className="flex flex-wrap gap-2">
-            {items.map((item) => (
-              <Chip key={item.key}>{item.data?.name}</Chip>
-            ))}
-          </div>
-        );
-      }}
+      onSelectionChange={onSelectedFriendsChange}
+      renderValue={(items) => (
+        <div className="flex flex-wrap gap-2">
+          {items.map((item) => (
+            <Chip key={item.key}>{item.data?.from_user.username}</Chip>
+          ))}
+        </div>
+      )}
     >
-      {(user) => (
-        <SelectItem key={user.id} textValue={user.name} className=" list" >
-          <div className="flex gap-2 items-center">
-            <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.avatar} />
-            <div className="flex flex-col">
-              <span className="text-small text-customtextblack-500">{user.name}</span>
-              <span className="text-tiny text-default-500">{user.email}</span>
-            </div>
+      {(friend) => (
+        <SelectItem
+          key={friend.id}
+          textValue={friend.from_user.username}
+          className="list"
+        >
+          <div className="flex items-center">
+            <span className="text-small text-customtextblack-500">
+              {friend.from_user.username}
+            </span>
           </div>
         </SelectItem>
       )}

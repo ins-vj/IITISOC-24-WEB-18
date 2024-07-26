@@ -36,20 +36,10 @@ export default function Profile(props:any) {
             <Image src="/data/generative/dp.jpg"  width={100} height={100} alt="user" className=" object-cover rounded-[50%] bg-customorange-300" />
             <div>
             <div className=" flex items-center w-[100%] justify-start gap-[10px]">
-            <div className="text-[2rem]" >{props.user}</div>
+            <div className="text-[1.8rem]" >@ {props.user}</div>
             <Image src="/data/flags/in.png"  width={30} height={30} alt="user" className=" object-cover bg-customorange-300 rounded-lg" />
             </div>
-            <div className="text-[1rem] opacity-60 lowercase">@ {props.username}</div>
             </div>
-            </div>
-            <div>
-            <Link href='/dashboard/expressoaccount' className=" transitioncustom">
-                    <Tooltip content="Profile" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' >
-                       
-                            <PersonIcon fontSize='large' color='warning' className=' hover:scale-[1.5] transition-all duration-300'  style={{color: "white" }}/>
-                
-                    </Tooltip>
-            </Link>
             </div>
         </div>
          
