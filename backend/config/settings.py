@@ -164,7 +164,7 @@ REST_USE_JWT = True
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', HOST]
+CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', f'https://{HOST}', f'http://{HOST}']
 
 CORS_ALLOW_HEADERS = (
     "accept",
