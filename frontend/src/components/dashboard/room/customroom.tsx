@@ -24,9 +24,9 @@ export default function JoinRoom() {
     const [value, setValue] = useState(parseZonedDateTime(`${now(getLocalTimeZone())}`));
     const [selectedFriends, setSelectedFriends] = useState([]);
     const [friendsList, setFriendsList] = useState([]);
-    const [date, setDate] = useState(`${now(getLocalTimeZone()).toString().substring(0, 10)}`);
-    const [time, setTime] = useState(`${now(getLocalTimeZone()).toString().substring(11, 16)}`);
-    const [zone, setZone] = useState(`${now(getLocalTimeZone()).offset.toString()}`);
+    const [date, setDate] = React.useState(`${now(getLocalTimeZone()).toString().substring(0, 10)}`);
+    const [time, setTime] = React.useState(`${now(getLocalTimeZone()).toString().substring(11, 16)}`);
+    const [zone, setZone] = React.useState(`${now(getLocalTimeZone()).toString().substring(23)}`);
 
     useEffect(() => {
         async function loadFriendRequests() {
@@ -52,19 +52,15 @@ export default function JoinRoom() {
         });
     }
 
-    function valueHandler(value) {
+    function valueHandler(value: any) {
         setValue(value);
         if (value) {
             setDate(value.toString().substring(0, 10));
             setTime(value.toString().substring(11, 16));
-            // Properly format the time zone offset
-            const offset = value.offset.toString();
-            const hours = offset.slice(0, 3);
-            const minutes = offset.slice(3);
-            const formattedZone = `${hours}:${minutes}`;
-            setZone(formattedZone);
+            setZone(value.toString().substring(23));
         }
     }
+
 
     function formatDateTime(date, time, zone) {
         // Combine the date, time, and zone into a valid ISO 8601 string
