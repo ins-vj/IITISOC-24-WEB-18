@@ -29,7 +29,7 @@ STATICFILES_DIRS = []
 
 SECRET_KEY = env.get_value("SECRET_KEY", default='django-insecure-(3!q3dsh&3)4opq32m-c(ks!qzacg^oufdk0rz)1)%$c^^-#sh')
 DEBUG = env.get_value("DEBUG", default=True)
-HOST = env.get_value("HOST", default="localhost")
+HOST = env.get_value("HOST", default="127.0.0.1")
 FRONTEND_URL = env.get_value("FRONTEND_URL")
 
 ALLOWED_HOSTS = [HOST]
