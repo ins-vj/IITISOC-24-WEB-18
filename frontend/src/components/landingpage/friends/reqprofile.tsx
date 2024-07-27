@@ -42,10 +42,10 @@ export default function Profile(props:any) {
             <div>
      
             <div className=" flex gap-[5px]">
-            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" > 
             <DoneIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
             </Button>
-            <Button color="danger" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="danger" variant="ghost" isIconOnly size="lg" className=" border-none" > 
             <ClearIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
             </Button>
             </div>  

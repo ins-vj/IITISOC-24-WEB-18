@@ -42,7 +42,7 @@ export default function LetterPullup({
             className,
           )}
         >
-            <div className="uppercase text-[14rem] text-[rgb(253,204,146,0.3)]">      {letter === " " ? <span>&nbsp;</span> : letter}</div>
+            <div className="uppercase md:text-[14rem] sm:text-[8rem] text-[5rem] transition-all duration-300 text-[rgb(253,204,146,0.3)]">      {letter === " " ? <span>&nbsp;</span> : letter}</div>
     
         </motion.h1>
       ))}

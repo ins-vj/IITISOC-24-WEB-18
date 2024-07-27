@@ -45,57 +45,52 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
 
     return scrollYProgress.onChange((progress) => {
       console.log(progress);
-      if (progress > 0.75) {
-        setTitle("Inbox");
-      }
-      else if (progress > 0.50) {
+      if (progress > 0.5) {
         setTitle("Friends");
       }
-      else if (progress > 0.25) {
+      else {
         setTitle("Dashboard")
-      }
-      else{
-        setTitle("Welcome")
       }
     });
   }, [scrollYProgress]);
 
   return (
-    <div ref={targetRef} className={cn("relative z-0 h-[400vh] max-w-[1440px] w-[100%]", className)}>
+    <div ref={targetRef} className={cn("relative  z-0 h-[400vh] flex justify-center max-w-[1440px] w-[100%]", className)}>
+      <Image src="/data/logos/expressoai.png" width={300} height={300} alt="expresso" className=" absolute  motion1 top-[100vh] left-10   "></Image>
+      <Image src="/data/logos/expressoai.png" width={350} height={350} alt="expresso" className="  absolute motion2 top-[90vh] hidden lg:flex right-10 z-10  "></Image>
+      <Image src="/data/logos/expressoai.png" width={200} height={200} alt="expresso" className=" absolute motion3 top-[70vh] hidden sm:flex "></Image>
+      <Image src="/data/logos/frndsemo.png" width={400} height={400} alt="expresso" className=" absolute top-[220vh]  "></Image>
+
       <div
         className={
-          "sticky top-0  flex h-[25%] w-[100%] items-center justify-center bg-transparent "
+          "sticky top-0  flex h-[25%] w-[100%] items-center justify-center bg-transparent m-3 "
         }
       >
-        <div className="bg-[rgb(253,204,146,0.3)] w-[100%] h-[90%] rounded-3xl absolute ">
-          {title === "Welcome" &&
-          <div className="change w-[100%] h-[100%] flex justify-center items-center uppercase text-[9rem] text-[#FDCC92]  font-black leading-[9rem] text-center">Welcome to Expresso</div>
-          }
+        <div className="bg-[rgb(253,204,146,0.3)] w-[100%] h-[95%]  rounded-3xl absolute ">
+
           {title === "Dashboard" &&
-            <div className="w-[100%] h-[100%] flex flex-col gap-2 m-3 items-center ">
-              <div className="absolute w-[100%] h-[100%] justify-end items-start flex z-10 pr-20 appear ">
-                  <Image src="/data/logos/expressoai.png" width={200} height={200} alt="expresso"></Image>
-                </div>
+            <div className="w-[100%] h-[100%]  flex flex-col gap-2  items-center ">
+            
               <div className=" flex flex-col   w-[95%] ">
-                <div className="change w-[100%] uppercase text-[9rem] text-[#FDCC92]  font-black leading-[9rem]">{title}</div>
+                <div className="change w-[100%] uppercase xl:text-[9rem] md:text-[7rem] sm:text-[6rem] text-[3.2rem] text-[#FDCC92]  font-black leading-[5rem] sm:leading-[7rem] md:leading-[8rem] lg:leading-[9rem]">{title}</div>
                 <div className="appear text-[rgb(250,219,181)] ">Everyhting you will ever need to connect with people and organize your life better</div>
               </div>
-              <div className=" absolute bottom-0 w-[95%] h-[70%] overflow-hidden flex justify-around ">
-                
+              <div className="  absolute bottom-0 w-[95%] h-[70%] overflow-hidden flex justify-around ">
+
                 <div className=" max-w-[400px] h-min flex flex-col gap-6 appearcards ">
                   <Quickroom />
                   <div className=" ">
                     <Customroom />
                   </div>
                 </div>
-                <div className=" max-w-[400px] h-min flex flex-col gap-6 appearcards pt-9 opacity-65 ">
+                <div className=" max-w-[400px] h-min md:flex  hidden flex-col gap-6 appearcards pt-9 opacity-65 ">
                   <Joinroom />
                   <div className=" ">
                     <Upcoming />
                   </div>
                 </div>
-                <div className=" max-w-[400px] h-min flex flex-col gap-6 appearcards ">
-                  <Tasks/>
+                <div className="  max-w-[400px] h-min hidden xl:flex  flex-col gap-6 appearcards ">
+                  <Tasks />
                   <div className=" ">
                     <Quickroom />
                   </div>
@@ -105,29 +100,27 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
           }
           {title === "Friends" &&
             <div className="w-[100%] h-[100%] flex flex-col gap-2 m-3 items-center ">
-              <div className="absolute w-[100%] h-[100%] justify-end items-start flex z-10 pr-20 appear  ">
-                  <Image src="/data/logos/frndsemo.png" width={240} height={240} alt="expresso"></Image>
-                </div>
+        
               <div className=" flex flex-col   w-[95%] ">
-                <div className="change w-[100%] uppercase text-[9rem] text-[#FDCC92]  font-black leading-[9rem]">{title}</div>
+                <div className="change w-[100%] uppercase xl:text-[9rem] md:text-[7rem] sm:text-[6rem] text-[3.2rem] text-[#FDCC92]  font-black leading-[5rem] sm:leading-[7rem] md:leading-[8rem] lg:leading-[9rem]">{title}</div>
                 <div className="appear text-[rgb(250,219,181)] ">Make new friends. Looking forward connecting you to the world</div>
               </div>
               <div className=" absolute bottom-0 w-[95%] h-[70%] overflow-hidden flex justify-around ">
-                
+
                 <div className=" max-w-[420px] h-min flex flex-col gap-6 appearcards ">
-                  <Search  user={user} username={username} mail={mail} photo={photo} />
+                  <Search user={user} username={username} mail={mail} photo={photo} />
                   <div className=" ">
-                    <Requests  user={user} username={username} mail={mail} photo={photo} />
+                    <Requests user={user} username={username} mail={mail} photo={photo} />
                   </div>
                 </div>
-                <div className=" max-w-[400px] h-min flex flex-col gap-6 appearcards pt-9 opacity-65 ">
-                  <Favourites user={user} username={username} mail={mail} photo={photo}  />
+                <div className=" max-w-[400px] h-min md:flex  hidden flex-col gap-6 appearcards pt-9 opacity-65 ">
+                  <Favourites user={user} username={username} mail={mail} photo={photo} />
                   <div className=" ">
                     <Upcoming />
                   </div>
                 </div>
-                <div className=" max-w-[400px] h-min flex flex-col gap-6 appearcards ">
-                  <List user={user} username={username} mail={mail} photo={photo}/>
+                <div className=" max-w-[400px] h-min hidden xl:flex flex-col gap-6 appearcards ">
+                  <List user={user} username={username} mail={mail} photo={photo} />
                   <div className=" ">
                     <Quickroom />
                   </div>
@@ -135,30 +128,8 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
               </div>
             </div>
           }
-          {title === "Inbox" &&
-            <div className="w-[100%] h-[100%] flex flex-col gap-2 m-3 items-center ">
-              <div className="absolute w-[100%] h-[100%] justify-end items-start flex z-10 pr-20 appear ">
-                  <Image src="/data/logos/mail.png" width={200} height={200} alt="expresso"></Image>
-                </div>
-              <div className=" flex flex-col   w-[95%] ">
-                <div className="change w-[100%] uppercase text-[9rem] text-[#FDCC92]  font-black leading-[9rem]">{title}</div>
-                <div className="appear text-[rgb(250,219,181)] ">Your friends might be waiting for you to join</div>
-              </div>
-              <div className=" absolute bottom-0 w-[95%] h-[70%] overflow-hidden flex justify-around ">
-                
-                <div className=" w-[600px] h-min flex flex-col gap-6 appearcards ">
-                  <Incoming  user={user} username={username} mail={mail} photo={photo}/>
-                  
-                </div>
-                <div className=" w-[600px] h-min flex flex-col gap-6 appearcards pt-9 opacity-65 ">
-                  <Sent  user={user} username={username} mail={mail} photo={photo}/>
-                  
-                </div>
-                
-              </div>
-            </div>
-          }
-        
+
+
         </div>
         <p
           ref={targetRef}

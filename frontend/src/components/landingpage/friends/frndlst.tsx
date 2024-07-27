@@ -44,7 +44,7 @@ export default function joinroom(props: any) {
 <Profile user={props.user} username={props.username} photo={props.photo} favourite={true} />
 <Profile user={props.user} username={props.username} photo={props.photo} />
 <Profile user={props.user} username={props.username} photo={props.photo} />
-<Profile user={props.user} username={props.username} photo={props.photo} />
+
 
 
 

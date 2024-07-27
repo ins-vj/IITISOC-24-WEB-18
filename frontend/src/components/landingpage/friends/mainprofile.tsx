@@ -50,15 +50,15 @@ export default function Profile(props:any) {
      
             <div className=" flex sm:gap-[5px]">
             
-            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" > 
             <VideoCallIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
             </Button>
             
-            <Button color="default" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={addFavourite}> 
+            <Button color="default" variant="ghost" isIconOnly size="lg" className=" border-none" > 
             <StarIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{ color: props.favourite ? "rgba(248,108,0)" : "rgba(254,254,254)" } }/>
             </Button>
 
-            <Button color="danger" variant="light" isIconOnly  size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="danger" variant="light" isIconOnly  size="lg" className=" border-none" > 
             <ClearIcon fontSize='medium' className=' transition-all duration-300'  style={{color: "rgb(223,53,98)" }}/>
             </Button>
             </div>  

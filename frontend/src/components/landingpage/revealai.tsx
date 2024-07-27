@@ -2,8 +2,9 @@
 
 import { FC, ReactNode, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface TextRevealByWordProps {
   text: string;
@@ -19,19 +20,45 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
+
+  const [title, setTitle] = useState("None")
+
+  useEffect(() => {
+
+    return scrollYProgress.onChange((progress) => {
+      console.log(progress);
+      if (progress > 0.6) {
+        setTitle("Latency");
+      }
+      
+      else{
+        setTitle("Express Yourself")
+      }
+    });
+  }, [scrollYProgress]);
+
+
   const words = text.split(" ");
 
   return (
-    <div ref={targetRef} className={cn("relative z-0 h-[200vh]", className)}>
+    <div ref={targetRef} className={cn("relative z-0 h-[200vh] w-[100%]", className)}>
+      {title === "Latency" ?
+        <div className=" absolute right-5 sm:bottom-[40vh] bottom-[30vh] w-[100px] h-[100px] sm:w-[400px] sm:h-[400px] object-contain ">
+
+        <Image src="/data/emotions/happy.png" width={400} height={400} alt="expresso" className=" appear object-contain  "></Image>
+
+        </div> : null}
+
       <div
         className={
-          "sticky top-0 mx-auto flex h-[50%] max-w-4xl items-center bg-transparent px-[1rem] py-[5rem]"
+          "sticky top-0  flex h-[50%] max-w-4xl  items-center bg-transparent px-[1rem] py-[1rem]"
         }
       >
+        
         <p
           ref={targetRef}
           className={
-            "flex flex-wrap p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl"
+            "flex flex-wrap h-[80%] items-center text-[3.5rem] sm:text-[4.5rem] font-bold text-black/20 dark:text-white/20  md:text-[6rem]  lg:text-[7.5rem] xl:text-[8rem]"
           }
         >
           {words.map((word, i) => {

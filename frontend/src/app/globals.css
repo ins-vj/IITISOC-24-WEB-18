@@ -628,3 +628,25 @@ font-weight:bolder;
 .custom-scrollbar::-webkit-scrollbar-track {
   background: black;
 }
+
+
+
+@keyframes motion {
+  0%, 100% {
+      transform: translateY(-125%);
+      animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+.motion1 {
+  animation: motion 15s infinite;
+}
+.motion2 {
+  animation: motion 10s infinite;
+}
+.motion3 {
+  animation: motion 5s infinite;
+}

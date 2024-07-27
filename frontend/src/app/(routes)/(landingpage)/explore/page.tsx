@@ -10,6 +10,8 @@ import Image from 'next/image'
 import GradualSpacing from "@/components/magicui/space";
 import TextReveal from "@/components/landingpage/introcarousel";
 import Revealai from "@/components/landingpage/revealai";
+import How from "@/components/landingpage/how";
+import Revealfinal from "@/components/landingpage/revealfinal";
 export default function Home() {
 
 
@@ -62,7 +64,7 @@ export default function Home() {
 
 
               <GradualSpacing
-                className="uppercase text-[9rem] text-[#FDCC92] font-black -rotate-90"
+                className="uppercase sm:text-[9rem] text-[6rem] transition-all duration-300 md:text-[#FDCC92] text-[#fdcd9268] font-black -rotate-90"
                 text="EXPRESSO"
               />
             </div>
@@ -79,12 +81,12 @@ export default function Home() {
           </div>
 
 
-          <div className="w-[100%]  pl-[10rem] relative flex justify-center gap-[6rem]">
-            <div className=" enteremo w-[40rem] h-[40rem]">
+          <div className="w-[100%]  xl:pl-[10rem] xl:gap-[6rem] md:pl-[4rem] md:gap-3rem] sm:pl-[2rem] sm:gap-[2rem]  relative flex justify-center md:items-center items-end md:flex-row flex-col   ">
+            <div className=" enteremo md:w-[40rem] md:h-[40rem] w-[80vw] h-[80vw] transition-all duration-300   flex  items-center  ">
               <Image src="/data/logos/expressoai.png" layout="responsive" width={1000} height={1000} alt="expresso" />
             </div>
 
-            <div className=" w-[16rem] h-[100%] flex flex-col justify-around">
+            <div className=" md:w-[16rem] h-[100%] flex flex-col justify-around p-2 w-[60%]">
               <div className=" flex flex-col gap-2">
                 <div className=" font-bold">Don&#39;t let distances hold you back</div>
                 <div className=" opacity-80 leading-5">
@@ -100,7 +102,7 @@ export default function Home() {
 
             </div>
 
-            <div className=" absolute bottom-0 translate-y-[15rem]">
+            <div className=" absolute bottom-0 md:translate-y-[15rem] translate-y-[5rem]">
 
               <LetterPullup words={"Connect"} delay={0.05} />
 
@@ -122,13 +124,40 @@ export default function Home() {
     </div>
 
     <div className="z-10 flex w-[100%] max-w-[1440px]">
-      <Revealai text="Expresso is made to enhance your productivity " />
+      <Revealai text="Expresso is designed to enhance your productivity " />
+      </div>
+
+      <div className="z-10 flex w-[100%] max-w-[1440px]">
+      <How text="" />
+      </div>
+
+      <div className="z-10 flex w-[100%] max-w-[1440px] mb-[400px]">
+      <Revealfinal text="Unleashing Expresso Intelligence" />
       </div>
         
+       
 
 
         
+      <div className="w-[100%] flex justify-center absolute bottom-10  ">
+        
+        <Image src="/data/logos/logo.png" width={500} height={300} alt="expresso" className=" w-[320px] brightness-0 invert object-contain" />
+        
+</div>
 
+
+
+
+
+      <div className=" w-[100%] absolute bottom-0 h-[15px] bg-gradient-to-l from-[#FFC98A] to-[#DC4F00]">
+
+      </div>
+
+        
+      <div className=" absolute top-[50%] right-[-50vw] opacity-40">
+        <Logo width={1500} />
+
+      </div>
 
 
 
