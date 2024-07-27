@@ -70,6 +70,7 @@ class SelfUserView(generics.ListAPIView):
 class DeleteFriendView(generics.DestroyAPIView):
     schema_tags = ['Self Details']
     serializer_class = Friend
+    queryset = Friend.objects.all()
     
 
 class RetrieveUserByUsername(generics.RetrieveAPIView):

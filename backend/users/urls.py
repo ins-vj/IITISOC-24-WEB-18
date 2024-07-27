@@ -8,5 +8,5 @@ urlpatterns = [
     path('friend-requests/<uuid:pk>/update/', UpdateFriendRequest.as_view(), name='update-friend-request'),
     path('user-details/', SelfUserView.as_view()),
     path('user/<str:username>/', RetrieveUserByUsername.as_view(), name='retrieve-user-by-username'),
-    path('user/friend/<uuid:pk>/', DeleteFriendView.as_view(), name='delete-friend-request'),
+    path('user/friend/<int:pk>/', DeleteFriendView.as_view(), name='delete-friend-request'),
 ]

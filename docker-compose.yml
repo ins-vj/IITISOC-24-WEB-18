@@ -18,8 +18,20 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4444:4444"
+      - "10000-10100:10000-10100/udp"
+      - "10000-10100:10000-10100/tcp" # RTP ports
     env_file:
       - ./server/.env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "8080:8080"
+    depends_on:
+      - nextjs
+      - nodejs
 
 volumes:
   postgres_data:

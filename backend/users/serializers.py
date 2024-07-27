@@ -49,7 +49,7 @@ class FriendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Friend
-        fields = ['friend', 'created_at']
+        fields = ['friend', 'created_at', 'id']
         
 
 class SelfUserSerializer(serializers.ModelSerializer):
