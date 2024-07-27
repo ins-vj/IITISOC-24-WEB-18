@@ -1,25 +1,33 @@
-version: "3.8"
+version: "1.1"
 
 services:
-  nextjs:
+  frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
-      - nodejs
+      - mediasoup-server
     env_file:
       - ./frontend/.env
 
-  nodejs:
+  mediasoup-server:
     build:
       context: ./server
       dockerfile: Dockerfile
     ports:
       - "4444:4444"
+      - "10000-10100:10000-10100/udp"
+      - "10000-10100:10000-10100/tcp" # RTP ports
     env_file:
       - ./server/.env
 
-volumes:
-  postgres_data:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
