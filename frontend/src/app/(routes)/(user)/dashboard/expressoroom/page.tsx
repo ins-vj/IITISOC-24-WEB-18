@@ -18,6 +18,8 @@ import { fetchSelfDetails } from "@/helpers/api";
 import React from "react";
 import Createroom from "@/components/dashboard/room/createroom";
 export default function Dashboard() {
+
+
   // const [
   //   mousePosition,
   //   setMousePosition
@@ -32,30 +34,34 @@ export default function Dashboard() {
   //   };
   // }, []);
 
+
+
+
+
   const [user, setUser] = useState("Jai");
   const [username, setUsername] = useState("jaipannu08");
   const [mail, setMail] = useState("ce230004019@iiti.ac.in");
   const [selfDetails, setSelfDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    
     setTimeout(() => setLoading(false), 2500);
     async function loadSelfDetails() {
       try {
         const data = await fetchSelfDetails();
         setSelfDetails(data);
-        console.log("data", selfDetails);
+      console.log("data",selfDetails);
       } catch (error) {
         console.error("Failed to fetch self details:", error);
       }
     }
     loadSelfDetails();
+
   }, [selfDetails]);
   if (loading) {
     return (
       <>
-        {selfDetails.map((detail) => (
-          <Loader key={1} user={detail.username} />
-        ))}
+        {selfDetails.map((detail) =>(<Loader user={detail.username}/>))}
       </>
     );
   } else {
@@ -80,57 +86,65 @@ export default function Dashboard() {
               <div className=" [@media(min-width:1101px)]:hidden w-[100%] h-[100%]">
                 <Quickroom />
               </div>
-              <div className=" enter w-[100%]">
-                <Createroom />
+              <div className=" enter2 w-[100%]">
+              <Customroom />
               </div>
-              <div className=" w-[100%] flex flex-col gap-[10px] sm:flex-row">
-                <div className=" [@media(min-width:1101px)]:hidden w-[100%] h-[100%]">
-                  <Quickroom />
-                </div>
-                <div className=" enter2 w-[100%]">
-                  <Customroom />
-                </div>
-              </div>
-            </Sections>
+            </div>
 
-            <div className=" w-[100%] items-center min-w-[270px] justify-around   flex flex-col gap-[10px]">
-              <div className=" enter7 w-[100%]">
-                <Topbar></Topbar>
+
+
+
+          </Sections>
+
+          <div className=" w-[100%] items-center min-w-[270px] justify-around   flex flex-col gap-[10px]">
+          <div className=" enter7 w-[100%]">
+            <Topbar></Topbar>
+            </div>
+            <div className=" [@media(min-width:1101px)]:hidden w-[100%]">
+            <div className=" enter5 w-[100%]">
+              <Profile user={user} username={username} mail={mail} />
               </div>
-              <div className=" [@media(min-width:1101px)]:hidden w-[100%]">
-                <div className=" enter5 w-[100%]">
-                  {selfDetails.map((detail, key) => (
-                    <Profile key={key} user={detail.username} />
-                  ))}
-                </div>
-              </div>
-              <div className=" enter8 w-[100%]">
-                <ViewAI />
-              </div>
-              <div className=" [@media(max-width:1100px)]:hidden w-[100%] ">
-                <div className=" enter3 w-[100%]">
-                  <Quickroom />
-                </div>
+            </div>
+            <div className=" enter8 w-[100%]">
+            <ViewAI />
+            </div>
+            <div className=" [@media(max-width:1100px)]:hidden w-[100%] ">
+            <div className=" enter3 w-[100%]">
+              <Quickroom />
               </div>
             </div>
           </div>
-          <Sections>
-            <div className=" [@media(max-width:1100px)]:hidden w-[100%]">
-              <div className=" enter4 w-[100%]">
-                {selfDetails.map((detail, key) => (
-                  <Profile key={key} user={detail.username} />
-                ))}
-              </div>
-            </div>
-            <div className=" enter5 w-[100%]">
-              <Upcoming />
-            </div>
-            <div className=" enter6 w-[100%]">
-              <Tasks />
-            </div>
-          </Sections>
+
         </div>
+        <Sections>
+          <div className=" [@media(max-width:1100px)]:hidden w-[100%]">
+          <div className=" enter4 w-[100%]">
+            {selfDetails.map((detail) => (
+              <Profile user={detail.username}/>
+            ))}
+            </div>
+          </div>
+          <div className=" enter5 w-[100%]">
+          <Upcoming />
+          </div>
+          <div className=" enter6 w-[100%]">
+          <Tasks />
+
+          </div>
+
+        </Sections>
+
+
+
+
+
+      </div>
       </>
+
+
+
+
+
     );
   }
 }
