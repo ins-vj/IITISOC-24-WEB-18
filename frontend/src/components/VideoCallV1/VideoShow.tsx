@@ -8,12 +8,10 @@ import { IAgoraRTCRemoteUser } from "agora-rtc-react";
 
 export const VideoTile = ({
   onClickFullscreen,
-  socketUsers,
   user,
   usersEmotions,
 }: {
   onClickFullscreen: () => void;
-  socketUsers: any;
   user: any;
   usersEmotions: any[];
 }) => {
@@ -26,12 +24,6 @@ export const VideoTile = ({
         }}
       >
         <FullscreenIcon sx={{ color: "white" }} />
-      </div>
-      <div className="absolute left-0 bottom-0 text-[#DC9750] z-30">
-        {socketUsers?.map(
-          (socketuser: any) =>
-            user.uid == socketuser.client_id && socketuser.user__username
-        )}
       </div>
       <div className="absolute top-0 z-10 text-white">
         {usersEmotions[user.uid] && usersEmotions[user.uid]}
@@ -50,12 +42,10 @@ export const VideoTile = ({
 const VideoShow = ({
   users,
   makeFullscreen,
-  socketUsers,
   usersEmotions,
 }: {
   users: IAgoraRTCRemoteUser[];
   makeFullscreen: (e: ReactElement) => void;
-  socketUsers: any;
   usersEmotions: any[];
 }) => {
   const vConfig: VideoPlayerConfig = {
@@ -79,7 +69,6 @@ const VideoShow = ({
             <div key={user.uid} className={`relative md:w-[45vw] w-[90vw]`}>
               <VideoTile
                 user={user}
-                socketUsers={socketUsers}
                 onClickFullscreen={() => {
                   onClick(index);
                 }}
@@ -92,7 +81,6 @@ const VideoShow = ({
             <div key={user.uid} className={`relative md:w-1/4 w-[45vw]`}>
               <VideoTile
                 user={user}
-                socketUsers={socketUsers}
                 onClickFullscreen={() => {
                   onClick(index);
                 }}

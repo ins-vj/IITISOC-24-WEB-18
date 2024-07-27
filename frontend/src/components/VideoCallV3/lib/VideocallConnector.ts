@@ -149,7 +149,7 @@ export class VideoCallConnector {
     }
   };
 
-  startSending = async (type: string, video:boolean, audio: boolean) => {
+  startSending = async (type: string) => {
     try {
       console.log("transport: ", this.producerTransports.get(type));
       const stream: MediaStream = await this.getUserMedia((type = "video"));
@@ -157,8 +157,6 @@ export class VideoCallConnector {
       this.setLocalVideos(new Map(this.localVideos));
       const track = stream.getVideoTracks()[0];
       this.subscribe();
-      this.updateLocalVideo(video, audio)
-
       this.producer = await this.producerTransports
         .get(type)
         .produce({ track });
@@ -315,20 +313,6 @@ export class VideoCallConnector {
     //   return;
     // }
 
-    console.log({
-      id: data.data.id,
-      iceParameters: data.data.iceParameters,
-      iceCandidates: data.data.iceCandidates,
-      dtlsParameters: data.data.dtlsParameters,
-      iceServers: [
-        {
-          urls: "turn:192.158.29.39:3478?transport=udp",
-          credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
-          username: "28224511:1379330808",
-        },
-      ],
-    });
-
     this.producerTransports.set(
       data.data.producerType,
       this.device.createSendTransport({
@@ -338,23 +322,21 @@ export class VideoCallConnector {
         dtlsParameters: data.data.dtlsParameters,
         iceServers: [
           {
+            urls: ["stun:stun.l.google.com:19302"],
+          },
+          {
             urls: "turn:192.158.29.39:3478?transport=udp",
+            credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+            username: "28224511:1379330808",
+          },
+          {
+            urls: "turn:192.158.29.39:3478?transport=tcp",
             credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
             username: "28224511:1379330808",
           },
         ],
       })
     );
-
-    this.producerTransports.get(data.data.producerType).updateIceServers({
-      iceServers: [
-        {
-          urls: "turn:192.158.29.39:3478?transport=udp",
-          credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
-          username: "28224511:1379330808",
-        },
-      ],
-    });
 
     console.log(
       "PRODUCER2: ",
@@ -413,7 +395,7 @@ export class VideoCallConnector {
             break;
           case "failed":
             console.error("failed state");
-            // this.producerTransports.get(data.data.producerType).close();
+            this.producerTransports.get(data.data.producerType).close();
             break;
           default:
             console.log("default state:", state);
@@ -432,6 +414,16 @@ export class VideoCallConnector {
     processedData["iceServers"] = [
       {
         urls: ["stun:stun.l.google.com:19302"],
+      },
+      {
+        urls: "turn:192.158.29.39:3478?transport=udp",
+        credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+        username: "28224511:1379330808",
+      },
+      {
+        urls: "turn:192.158.29.39:3478?transport=tcp",
+        credential: "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+        username: "28224511:1379330808",
       },
     ];
 

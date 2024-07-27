@@ -8,13 +8,13 @@ COPY package*.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install
-RUN yarn add mediasoup
 
 # Copy the rest of the application code
 COPY . .
 
 # Expose the ports needed by mediasoup
-EXPOSE 4444 3016 10000-10100/udp
+EXPOSE 4444
+EXPOSE 3016 
 
 # Start the server
 CMD ["yarn", "devl"]

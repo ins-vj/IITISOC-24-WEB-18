@@ -5,9 +5,7 @@ import { getUserDetails, UserDetailsFC } from "@/helpers/api";
 import "@/components/VideoCallV1/VideoCall.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import SocketService from "@/helpers/websocketService";
 import { CircularProgress } from "@mui/material";
-import { divider } from "@nextui-org/react";
 
 const Detector = dynamic(
   () => import("@/components/EmotionDetection/Detector"),
@@ -37,7 +35,6 @@ const VideoCallLoader = ({
   const [proceed, setProceed] = useState(false);
   const [video, setVideo] = useState<boolean>(true);
   const [audio, setAudio] = useState<boolean>(true);
-  const [socketConnection, setSocketConnection] = useState<SocketService>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,12 +46,6 @@ const VideoCallLoader = ({
       setData((prev) => c1);
     };
     fetchData();
-    if (socketConnection === undefined) {
-      const socketConn = new SocketService(videocallId);
-      socketConn!.setUsers = (users: [any]) => {};
-      socketConn!.newSocket();
-      setSocketConnection((prev) => socketConn);
-    }
     setLoading(false);
   }, []);
 
@@ -75,7 +66,6 @@ const VideoCallLoader = ({
               className="join-button mt-8"
               onClick={() => {
                 setProceed(true);
-                console.log(socketConnection?.secret_key);
               }}
             >
               Join Now as {data?.username}
@@ -93,7 +83,6 @@ const VideoCallLoader = ({
           appId={APP_ID}
           video={video}
           audio={audio}
-          socketConnection={socketConnection!}
         />
       )}
     </div>
