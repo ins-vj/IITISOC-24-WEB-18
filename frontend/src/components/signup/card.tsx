@@ -72,16 +72,16 @@ export default function Card() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   return (
-    <div className="flex flex-col gap-[2.5rem] justify-around items-center relative z-10   backdrop-blur-md  rounded-[20px] border-[2px] border-customorange-400 p-14">
+    <div className="flex flex-col sm:gap-[2.5rem] gap-[1rem] absolute top-[6rem] justify-around items-center sm:relative sm:top-0 z-10   backdrop-blur-md  rounded-[20px] border-[2px] border-customorange-400 sm:p-14 p-5">
       <div className="flex gap-[20px]">
         <Logo width={60} />
         <Divider
           className="h-[60px] bg-customorange-400"
           orientation="vertical"
         />
-        <Link href="/googleauth">
+        
           <Image src="/data/logos/google.png" alt="G" width={60} height={60} />
-        </Link>
+        
       </div>
 
       <div className="w-[20rem] flex flex-col gap-[1.5rem] justify-center items-center">
@@ -171,7 +171,9 @@ export default function Card() {
       >
         Sign In
       </Button>
+      <div className=" w-[100%]">
       <GoogleAuthButton />
+      </div>
     </div>
   );
 }

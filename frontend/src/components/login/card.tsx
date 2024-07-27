@@ -30,7 +30,7 @@ export const GoogleAuthButton = () => {
   const qs = new URLSearchParams(options);
   return (
     <Link href={`${rootUrl}?${qs.toString()}`}>
-      <button className="bg-white text-black h-2rem pl-2 pr-4 flex items-center border-2 border-gray-200 rounded-xl hover:shadow-inner transition-shadow">
+      <button className=" w-[100%] text-[rgba(255,255,255,0.5)] text-[0.9rem] h-2rem pl-2 pr-5 flex gap-5 items-center justify-around border-2 border-[rgba(255,255,255,0.5)] rounded-xl hover:shadow-inner transition-shadow">
         <Image
           src={googleLogo.src}
           alt=""
@@ -38,7 +38,8 @@ export const GoogleAuthButton = () => {
           width={50}
           height={50}
         />
-        Login With google
+       <span className=" text-[1.4rem] -translate-y-1">&#124;</span>
+       Login With google
       </button>
     </Link>
   );
@@ -71,12 +72,18 @@ export default function Card() {
   }, [username]);
 
   return (
-    <div className="flex flex-col gap-[2.5rem] justify-around items-center relative z-10   backdrop-blur-md  rounded-[20px] border-[2px] border-customblue-600 p-14">
+    <div className="flex flex-col gap-[1.5rem] sm:gap-[2.5rem] w-[330px] sm:w-auto justify-around items-center relative z-10   backdrop-blur-md  rounded-[20px] border-[2px] border-customblue-600 p-8 sm:p-10 md:p-12 lg:p-14">
       <div className="flex gap-[20px]">
         <Logo width={60} />
+        <Divider
+          className="h-[60px] bg-customblue-600"
+          orientation="vertical"
+        />
+        
+          <Image src="/data/logos/google.png" alt="G" width={60} height={60} />
       </div>
 
-      <div className="w-[20rem] flex flex-col gap-[1.5rem] justify-center items-center">
+      <div className="w-[18rem] flex flex-col gap-[1.5rem] justify-center items-center">
         <Input
           isClearable
           type="text"
@@ -125,10 +132,13 @@ export default function Card() {
         variant="ghost"
         fullWidth={true}
         onClick={onSubmit}
+        size="lg"
       >
         Login
       </Button>
+      <div className="w-[100%]">
       <GoogleAuthButton />
+      </div>
     </div>
   );
 }
