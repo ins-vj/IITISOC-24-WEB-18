@@ -149,7 +149,7 @@ export class VideoCallConnector {
     }
   };
 
-  startSending = async (type: string, video:boolean, audio: boolean) => {
+  startSending = async (type: string, video: boolean, audio: boolean) => {
     try {
       console.log("transport: ", this.producerTransports.get(type));
       const stream: MediaStream = await this.getUserMedia((type = "video"));
@@ -157,7 +157,7 @@ export class VideoCallConnector {
       this.setLocalVideos(new Map(this.localVideos));
       const track = stream.getVideoTracks()[0];
       this.subscribe();
-      this.updateLocalVideo(video, audio)
+      this.updateLocalVideo(video, audio);
 
       this.producer = await this.producerTransports
         .get(type)
