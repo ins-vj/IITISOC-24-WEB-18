@@ -18,6 +18,12 @@ export default function joinroom() {
 
   const [link, setLink] = React.useState("");
 
+  
+
+  function openLink( id:string ) {
+    window.location.pathname = `/call/${id}`;
+  }
+
 
   function toggleVideo() {
     if (video) {
@@ -45,12 +51,12 @@ export default function joinroom() {
         color="default"
         value={link}
         onValueChange={setLink}
-        label="Code" />
+        label="x x x x x x x x - x x x x - x x x x - x x x x  -x x x x x x x x x x x x " />
 
 
       <div className=" flex flex-row w-[100%] justify-between">
 
-        <Button isDisabled={link === "" ? true : false} color="primary" size="lg" startContent={<AddReactionIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
+        <Button  onClick={()=>{openLink(link)}} isDisabled={link === "" ? true : false} color="primary" size="lg" startContent={<AddReactionIcon fontSize='small' />} radius="full" variant="flat" className="  text-customblue-500" >
           Join Room
         </Button>
 
