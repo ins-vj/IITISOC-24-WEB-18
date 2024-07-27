@@ -28,13 +28,7 @@ export default function topbar(){
                    
                     </Tooltip>
                 </Link>
-                <Link href='/dashboard/expressoinbox'>
-                    <Tooltip content="Messages" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' offset={28}>
-                       
-                            <ChatBubbleIcon fontSize='medium' color='warning' className=' text-[1.5rem] hover:text-[2.5rem] transition-all duration-300  '  style={{color: "white" }}/>
-                
-                    </Tooltip>
-                </Link>
+               
 
             <Link href='/dashboard/expressoroom'>
                     {/* <Tooltip content="Rooms" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' offset={28}> */}
@@ -43,13 +37,7 @@ export default function topbar(){
               </div>     
                     {/* </Tooltip> */}
                 </Link>
-                <Link href='/dashboard/features'>
-                   
-                <Tooltip content="Features" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' offset={28}>
-                            <InsightsIcon fontSize='medium' color='warning' className=' text-[1.5rem] hover:text-[2.5rem] transition-all duration-300  '  style={{color: "white" }}/>
-                            </Tooltip>
-                   
-                </Link>
+                
 
                 <Link href='/explore'>
                 <Tooltip content="Exit" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' offset={28}>

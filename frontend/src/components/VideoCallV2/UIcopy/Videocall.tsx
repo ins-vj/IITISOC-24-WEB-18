@@ -30,7 +30,34 @@ const VideocallComponent = () => {
             vcContext.videocallconnector.sendEmotion(predictedEmotion);
             console.log(predictedEmotion);
             document.getElementById("self-emotion-span").innerHTML =
-              predictedEmotion;
+              `
+              <div class="flex w-[100%] justify-around ">
+              <div class = " text-black emotion1 w-[100px] h-[100px]"> 
+              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+             
+               </div>
+               <div class = " text-black  emotion2 w-[100px] h-[100px]"> 
+              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+             
+               </div>
+               <div class = " text-black emotion3  w-[100px] h-[100px]"> 
+              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+             
+               </div>
+               <div class = " text-black emotion4  w-[100px] h-[100px]"> 
+              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+             
+               </div>
+               <div class = " text-black emotion5  w-[100px] h-[100px]"> 
+              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+             
+               </div>
+               <div class = " text-black emotion6  w-[100px] h-[100px]"> 
+              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+             
+               </div>
+               </div>
+               `;
             console.log(vcContext.videocallconnector);
           }
         }
@@ -41,25 +68,29 @@ const VideocallComponent = () => {
 
   return (
     <>
+    <div className="absolute left-[-10%] bottom-[-20%] opacity-5 ">
+        <Logo width="1000" />
+      </div>
       {!vcContext.startCall ?
-        <div className=" absolute  top-2 left-2" >
+        <div className=" absolute  top-2 left-2 z-10" >
           <Image
             src="/data/logos/logo.png"
             width={200}
             height={70}
             alt="Expresso"
           ></Image>
+          
 
         </div>
         : null}
-      <div className="flex justify-center flex-col items-center   ">
-        <div className="flex gap-4 flex-wrap ">
-          <div>
-            <div className="w-100 h-100">
-              {Array.from(vcContext.localVideos.entries()).map(
+        <div className="flex justify-center flex-col items-center z-10  ">
+          <div className="flex gap-4 flex-wrap w-[100%] h-[100%]  ">
+            <div className="w-[100%] h-[100%]">
+              <div className="w-[100%] h-[100%]">
+                {Array.from(vcContext.localVideos.entries()).map(
                 ([key, localUser]) => {
                   return (
-                    <div key={key}>
+                    <div key={key} className=" w-[100%] relative">
                       <video
                         ref={(videoElement) => {
                           if (videoElement) {
@@ -69,9 +100,10 @@ const VideocallComponent = () => {
                         }}
                         id={`user-${key}`}
                         autoPlay
+                        className="w-[100%] h-[100%]"
                       ></video>
-                      <span>Self Media Emotion: </span>
-                      <span id="self-emotion-span"></span>
+                      <span id="self-emotion-span" className=" w-[100%]   absolute bottom-0 left-0 ">
+                      </span>
                     </div>
                   );
                 }
@@ -93,6 +125,7 @@ const VideocallComponent = () => {
                           console.log(vcContext.remoteVideos);
                         }}
                         autoPlay
+                        
                       ></video>
                       <span>{remoteUser.userData.username}</span>
                     </div>
@@ -110,9 +143,9 @@ const VideocallComponent = () => {
       {!vcContext.startCall ?
 
 
-        <div className=" z-10 flex gap-10 items-center ">
+        <div className=" z-10 flex gap-10 items-center flex-col sm:flex-row ">
           <div className=" z-10">
-            {vcContext.video ? <div className=" flex justify-center items-center h-[325px] w-[100%] bg-[#0000003b] rounded-3xl overflow-hidden"><Webcam mirrored height={470} width={470} className=" rounded-lg" /></div> : <div className=" flex justify-center items-center h-[325px] w-[100%] bg-[rgba(24,24,27)] rounded-3xl overflow-hidden"><div className=" -translate-x-[30%] translate-y-[20%]  "><Logo width={400} /></div></div>}
+            {vcContext.video ? <div className=" flex justify-center items-center h-[325px] w-[400px] bg-[#0000003b] rounded-3xl overflow-hidden"><Webcam  mirrored height={400} width={400} className=" rounded-lg" /></div> : <div className=" flex justify-center items-center h-[325px]  w-[400px] bg-[rgba(24,24,27)] rounded-3xl overflow-hidden"><div className=" -translate-x-[30%] translate-y-[20%]  "><Logo width={400} /></div></div>}
           </div>
 
 
@@ -130,7 +163,7 @@ const VideocallComponent = () => {
               Join meeting
             </Button>
             </div>
-            <div className="text-[1rem] opacity-50">Getting Bored ?</div>
+            
 
           
 
@@ -141,14 +174,19 @@ const VideocallComponent = () => {
               }}
             >
               Exit Game 
-            </Button> <Game /> </div> : <Button variant="light" color="danger"
+            </Button> <Game /> </div> : 
+            <div className=" flex flex-col gap-5">
+            <div className="text-[1rem] opacity-50">Getting Bored ?</div>
+            <Button variant="light" color="danger"
               className="p-4 bg-[rgba(24,24,27)] light text-white rounded-3xl"
               onClick={(e) => {
                 setGame(true);
               }}
             >
               Play Memory Game 
-            </Button>}
+            </Button>
+            </div>
+            }
             
          
             
@@ -164,11 +202,9 @@ const VideocallComponent = () => {
         <Controlbar />
       </div>
 
-      <div className="absolute left-[-10%] bottom-[-20%] opacity-5 ">
-        <Logo width="1000" />
-      </div>
+      
       {vcContext.startCall ?
-        <div className=" absolute left-5 bottom-5  flex justify-center items-center">
+        <div className=" z-10 absolute left-5 bottom-5  flex justify-center items-center">
           <Button isIconOnly className="rounded-[50%] w-[4rem] h-[4rem] bg-[rgba(50,50,50,0.3)] flex justify-center items-center">
             <ChatIcon className=" text-[1.6rem] text-white" />
           </Button>

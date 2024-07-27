@@ -444,3 +444,164 @@ font-weight:bolder;
     
   }
 }
+
+.emotion1{
+  position: relative;
+  animation-name: emotion1;
+ animation-duration: 1s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes emotion1 {
+  0%{
+    scale: 0;
+    transform: translateY(0%) translateX(300px);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+50% {
+  scale: 0.5;
+    transform: translateY(-100%) translateX(150px);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+}
+
+100% {
+  transform: translateY(0%) translateX(0px);
+  scale: 1;
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+}
+
+.emotion2{
+  position: relative;
+  animation-name: emotion2;
+ animation-duration: 2.5s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes emotion2 {
+  0%{
+    transform: translateY(0%) translateX(200%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+50% {
+    transform: translateY(-100%) translateX(50%);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+}
+
+100% {
+  transform: translateY(0%) translateX(0%);
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+}
+
+.emotion3{
+  position: relative;
+  animation-name: emotion3;
+ animation-duration: 2.5s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes emotion3 {
+  0%{
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+50% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+}
+100% {
+  transform: translateY(0%);
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+}
+
+.emotion4{
+  position: relative;
+  animation-name: emotion4;
+ animation-duration: 2.5s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes emotion4 {
+  0%{
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+50% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+}
+100% {
+  transform: translateY(0%);
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+}
+
+.emotion5{
+  position: relative;
+  animation-name: emotion5;
+ animation-duration: 2.5s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes emotion5 {
+  0%{
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+50% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+}
+100% {
+  transform: translateY(0%);
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+}
+
+.emotion6{
+  position: relative;
+  animation-name: emotion6;
+ animation-duration: 2.5s;
+ animation-timing-function: ease-in-out;
+ animation-iteration-count: 1;
+ animation-fill-mode: forwards;
+
+}
+
+@keyframes emotion6 {
+  0%{
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+50% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+}
+100% {
+  transform: translateY(0%);
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.8,0,1,1);
+}
+}
