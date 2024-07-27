@@ -41,6 +41,8 @@ class FriendRequestUpdateSerializer(serializers.ModelSerializer):
             Friend.objects.create(user=instance.from_user, friend=instance.to_user)
             Friend.objects.create(user=instance.to_user, friend=instance.from_user)
 
+        instance.delete()
+
         return instance
     
 
