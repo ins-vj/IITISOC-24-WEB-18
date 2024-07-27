@@ -15,6 +15,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import StarIcon from '@mui/icons-material/Star';
 import DuoIcon from '@mui/icons-material/Duo';
 import VideoCallIcon from "@mui/icons-material/VideoCall";
+import { createMeeting } from "@/helpers/api";
 
 export default function Profile(props:any) {
    
@@ -50,7 +51,7 @@ export default function Profile(props:any) {
      
             <div className=" flex sm:gap-[5px]">
             
-            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={()=>{createMeeting([props.fromId],true)}} > 
             <VideoCallIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
             </Button>
             
@@ -58,7 +59,7 @@ export default function Profile(props:any) {
             <StarIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{ color: props.favourite ? "rgba(248,108,0)" : "rgba(254,254,254)" } }/>
             </Button>
 
-            <Button color="danger" variant="light" isIconOnly  size="lg" className=" border-none" onClick={sendRequest}> 
+            <Button color="danger" variant="light" isIconOnly  size="lg" className=" border-none" onClick={() => props.reject(props.index)} > 
             <ClearIcon fontSize='medium' className=' transition-all duration-300'  style={{color: "rgb(223,53,98)" }}/>
             </Button>
             </div>  

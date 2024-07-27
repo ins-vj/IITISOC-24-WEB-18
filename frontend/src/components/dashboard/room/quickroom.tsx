@@ -13,6 +13,10 @@ import Cards from "@/components/dashboard/room/cards";
 import { createMeeting, fetchFriendRequests } from "@/helpers/api"; // Combined imports for API calls
 import toast from "react-hot-toast";
 
+
+interface SelectedFriends {
+  selectedFriends: string[];
+}
 export default function QuickRoom() {
   const [video, setVideo] = useState(true);
   const [mic, setMic] = useState(false);

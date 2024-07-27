@@ -5,20 +5,18 @@ import Image from "next/image";
 import { blackops } from "@/app/fonts";
 
 import Profile from "@/components/dashboard/friends/reqprofile";
-import { fetchFriendRequests,updateFriendRequest } from "@/helpers/api";
+import { fetchFriendRequests,updateFriendRequest,deleteFriendRequest } from "@/helpers/api";
 import toast from "react-hot-toast";
 export default function joinroom(props: any) {
   const [requests, setRequests] = useState([null]);
   const accept =async (index:number) => {
    await  updateFriendRequest(requests[index].id,"accepted").then;
    toast.success("Friend Added");
-    setRequests([...requests, requests[index].currentStatus = "accepted"]);
-   
   }
-  const reject = (index:number) => {
-    updateFriendRequest(requests[index].id,"rejected");
+  const reject = async(index:number) => {
+ await deleteFriendRequest(requests[index].id);
     toast.success("Friend Request Rejected");
-    setRequests([...requests, requests[index].currentStatus = "rejected"]);
+
   }
   useEffect(() => {
      
