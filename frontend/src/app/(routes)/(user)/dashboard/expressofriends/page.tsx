@@ -18,10 +18,11 @@ import Particles from "@/components/landingpage/particles";
 import React from "react";
 import Main from "@/components/dashboard/friends/main";
 import ViewAI from "@/components/dashboard/friends/viewai";
+import { fetchSelfDetails } from "@/helpers/api";
 export default function Dashboard() {
 
 
-
+  const [selfDetails, setSelfDetails] = useState([]);
   const [user, setUser] = useState("Jai");
   const [username, setUsername] = useState("jaipannu08");
   const [mail, setMail] = useState("ce230004019@iiti.ac.in");
@@ -47,12 +48,23 @@ export default function Dashboard() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2500);
-  }, []);
+    async function loadSelfDetails() {
+      try {
+        const data = await fetchSelfDetails();
+        setSelfDetails(data);
+      console.log("data",selfDetails);
+      setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch self details:", error);
+      }
+    }
+    loadSelfDetails();
+
+  }, [selfDetails]);
   if (loading) {
     return (
       <>
-        <Loader user={user} />
+       {selfDetails.map((detail) =>(<Loader user={detail.username}/>))}
       </>
     );
   } else {
@@ -107,7 +119,10 @@ export default function Dashboard() {
         <Sections>
           <div className=" [@media(max-width:1100px)]:hidden w-[100%]">
             <div className=" enter4 w-[100%]">
-            <Profile user={user} username={username} mail={mail} photo={photo} />
+            {selfDetails.map((detail) => (
+              <Profile user={detail.username}/>
+            ))}
+          
             </div>
           </div>
           <div className=" enter5 w-[100%]">
