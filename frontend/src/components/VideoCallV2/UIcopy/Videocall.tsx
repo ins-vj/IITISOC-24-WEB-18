@@ -251,10 +251,10 @@ const VideocallComponent = () => {
                       if (videoElement) {
                         videoElement.srcObject = localUser;
                       }
-                      console.log(vcContext.remoteVideos);
                     }}
                     id={`user-${key}`}
                     autoPlay
+                    muted
                     className="w-[100%] h-[100%] object-cover"
                   ></video>
 
