@@ -80,7 +80,7 @@ export default function Dashboard() {
             <Joinroom />
             </div>
             <div className=" enter w-[100%]">
-            <Createroom />
+            <Createroom details={selfDetails[0].id} />
             </div>
             <div className=" w-[100%] flex flex-col gap-[10px] sm:flex-row">
               <div className=" [@media(min-width:1101px)]:hidden w-[100%] h-[100%]">

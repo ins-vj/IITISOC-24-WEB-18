@@ -128,7 +128,7 @@ export const sendFriendRequest = async (id: string) => {
   });
 }
 
-export const createMeeting = async (ids: [string], privateMeet: boolean) =>{
+export const createMeeting = async (ids: string[], privateMeet: boolean) =>{
 
   await apiCall("/meeting/meet-create", {
     method: "POST",
@@ -159,19 +159,7 @@ export const createCustomMeeting = async (ids: string[], privateMeet: boolean, t
 
 }
 
-export const createMeet = async ( privateMeet: boolean) =>{
-var ids:string;
-await apiCall("/user/user-details").then((data) => {ids = data.id});
-console.log(ids);
-  await apiCall("/meeting/meet-create", {
-    method: "POST",
-    body:{
-      invited_users: [ids,ids],
-      private: privateMeet
-    }
-    
-  }).then((data) => {window.location.href = `/call/${data.id}`});
-}
+
 
 export async function getMeetDetails(meetId: string) {
   return apiCall(`/meeting/meet-detail/${meetId}`);
