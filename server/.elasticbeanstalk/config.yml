@@ -1,0 +1,19 @@
+branch-defaults:
+  default:
+    environment: Server1-env
+environment-defaults:
+  Server1-env:
+    branch: null
+    repository: null
+global:
+  application_name: server1
+  default_ec2_keyname: stockholm
+  default_platform: Docker running on 64bit Amazon Linux 2023
+  default_region: eu-north-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: expresso
+  sc: null
+  workspace_type: Application

@@ -33,13 +33,15 @@ To become a member of expresso club, user can create a expresso account or can u
 
 React with typescipt and tailwind CSS
 
-python
+Python
 
 Django
 
 ML
 
 WebRTC
+
+WebSockets
 
 Deployed with AWS
 
@@ -51,7 +53,6 @@ Deployed with AWS
 
 > cd backend/
 
-> docker -t expresso-backend .
 > docker-compose up
 
 Use python 11.9
@@ -83,6 +84,14 @@ open another vs code terminal
 > npm i
 
 > npm run dev
+
+### SFU Server:
+
+open another vs code terminal
+
+> cd server/
+
+> docker-compose up
 
 and run localhost
 

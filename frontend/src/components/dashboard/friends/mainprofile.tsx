@@ -59,7 +59,7 @@ export default function Profile(props:any) {
             <StarIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{ color: props.favourite ? "rgba(248,108,0)" : "rgba(254,254,254)" } }/>
             </Button>
 
-            <Button color="danger" variant="light" isIconOnly  size="lg" className=" border-none" onClick={() => props.reject(props.index)} > 
+            <Button color="danger" variant="light" isIconOnly  size="lg" className=" border-none" onClick={() => props.reject(props.id)} > 
             <ClearIcon fontSize='medium' className=' transition-all duration-300'  style={{color: "rgb(223,53,98)" }}/>
             </Button>
             </div>  
