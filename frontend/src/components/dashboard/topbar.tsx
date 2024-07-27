@@ -10,6 +10,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import InsightsIcon from '@mui/icons-material/Insights';
 import { Tooltip } from "@nextui-org/react";
 import Link from 'next/link'
+import { logOut } from "@/helpers/auth";
 export default function topbar(){
 
 
@@ -39,11 +40,26 @@ export default function topbar(){
                 </Link>
                 
 
-                <Link href='/explore'>
-                <Tooltip content="Exit" color='foreground' placement='bottom' className=' bg-[rgb(30,30,30)]' offset={28}>
-                    <LogoutIcon fontSize='medium' color='warning' className=' text-[1.5rem] hover:text-[2.5rem] transition-all duration-300  '  style={{color: "white" }}/>
-                </Tooltip>
-                  </Link>
+                <button
+        onClick={() => {
+          logOut();
+        }}
+      >
+        <Tooltip
+          content="Exit"
+          color="foreground"
+          placement="bottom"
+          className=" bg-[rgb(30,30,30)]"
+          offset={28}
+        >
+          <LogoutIcon
+            fontSize="medium"
+            color="warning"
+            className=" text-[1.5rem] hover:text-[2.5rem] transition-all duration-300  "
+            style={{ color: "white" }}
+          />
+        </Tooltip>
+      </button>
 
 
 
