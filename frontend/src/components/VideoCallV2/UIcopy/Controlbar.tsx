@@ -6,7 +6,7 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import PresentToAllIcon from '@mui/icons-material/PresentToAll';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
-import SettingsIcon from '@mui/icons-material/Settings';
+
 import Link from 'next/link';
 import PhonePausedIcon from '@mui/icons-material/PhonePaused';
 import {Button} from "@nextui-org/react";
@@ -63,19 +63,7 @@ const Controlbar = () => {
        </Button >
          : null }
 
-      <Button isIconOnly
-        className="rounded-[50%] w-[4rem] h-[4rem] bg-[rgba(50,50,50,0.3)] flex justify-center items-center"
-        onClick={() => {
-          if (vcContext.screen) {
-            vcContext.videocallconnector.stopSendingScreen("screen");
-          } else {
-            vcContext.videocallconnector.startSendingScreen("screen");
-          }
-          vcContext.setScreen(!vcContext.screen);
-        }}
-      >
-        <SettingsIcon className=" text-[1.6rem] text-white" />
-      </Button>
+      
       
       
         {vcContext.startCall? 

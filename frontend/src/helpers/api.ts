@@ -128,7 +128,7 @@ export const sendFriendRequest = async (id: string) => {
   });
 }
 
-export const createMeeting = async (ids: [string], privateMeet: boolean) =>{
+export const createMeeting = async (ids: string[], privateMeet: boolean) =>{
 
   await apiCall("/meeting/meet-create", {
     method: "POST",
