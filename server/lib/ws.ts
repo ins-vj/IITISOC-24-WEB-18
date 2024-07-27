@@ -118,6 +118,9 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
         case "emotionUpdate":
           await onEmotionUpdate(event, websock);
           break;
+        case "userMessage":
+          await onUserMesssage(event, websock);
+          break;
 
         default:
           console.log(event);
@@ -135,6 +138,11 @@ const WebSocketConnection = async (websock: WebSocket.Server) => {
     const onEmotionUpdate = async (event: any, websock: WebSocket.Server) => {
       console.log(event);
       broadcast(websock, "emotionUpdate", event.data);
+    };
+
+    const onUserMesssage = async (event: any, websock: WebSocket.Server) => {
+      console.log(event);
+      broadcast(websock, "userMessage", event.data);
     };
 
     const onStopProducer = async (
