@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import FriendRequest, CustomUser
-from .serializers import FriendRequestSerializer, FriendRequestUpdateSerializer, SelfUserSerializer, FindUserSerializer
+from .serializers import FriendRequestSerializer, FriendRequestUpdateSerializer, SelfUserSerializer, FindUserSerializer, Friend
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -66,6 +66,10 @@ class SelfUserView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return CustomUser.objects.filter(id=user.id)
+    
+class DeleteFriendView(generics.DestroyAPIView):
+    schema_tags = ['Self Details']
+    serializer_class = Friend
     
 
 class RetrieveUserByUsername(generics.RetrieveAPIView):

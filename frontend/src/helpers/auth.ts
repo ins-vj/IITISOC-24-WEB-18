@@ -61,6 +61,11 @@ export const loginWithGoogle = async (code: string) => {
     isAuth: false,
   });
   console.log(tokens);
+  console.log({
+    provider: "google-oauth2",
+    code,
+    redirect_uri: `${NEXT_PUBLIC_FRONTEND_URL}/google`,
+  });
   setCookie("accessToken", tokens.token, { maxAge: 30 * 24 * 60 * 60 });
   return tokens;
 };
