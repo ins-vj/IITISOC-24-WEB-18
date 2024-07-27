@@ -1,6 +1,6 @@
 import * as Mediasoup from "mediasoup-client";
 import { Transport } from "mediasoup-client/lib/types";
-
+import { animateUserEmotion } from "../UIcopy/Videocall";
 const WebSocketBaseURL = process.env.NEXT_PUBLIC_SERVER_URL;
 const WSURL = (uuid: string, roomId: string) => {
   return `${WebSocketBaseURL}?uuid=${uuid}&roomId=${roomId}`;
@@ -118,7 +118,8 @@ export class VideoCallConnector {
           await this.onSubscribed(data);
           break;
         case "emotionUpdate":
-          console.log(data.data);
+     
+          animateUserEmotion(data.data.userId, data.data.emotion);
           break;
 
         default:

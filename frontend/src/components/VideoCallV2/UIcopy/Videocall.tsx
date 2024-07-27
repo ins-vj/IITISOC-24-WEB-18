@@ -10,6 +10,30 @@ import { Button } from "@nextui-org/react";
 import ChatIcon from '@mui/icons-material/Chat';
 import Game from "@/components/game/game"
 import SettingsIcon from '@mui/icons-material/Settings';
+
+export const animateUserEmotion = (userId,predictedEmotion) => {
+
+
+  const el1 = document.getElementById(`remote${userId}`);
+
+
+
+  if (el1 === null) {
+
+  }
+  else {
+    el1.innerHTML =
+      `
+<div class = " w-[75px] h-[75px]  animate-bounce"> 
+<Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
+ </div>
+ `
+
+  }
+
+
+}
+
 const VideocallComponent = () => {
   const vcContext = useContext(VideoCallContext);
   const [game, setGame] = React.useState(false);
@@ -20,8 +44,9 @@ const VideocallComponent = () => {
 
     setActiveId(key);
 
-
   }
+
+
 
 
   useEffect(() => {
@@ -42,32 +67,12 @@ const VideocallComponent = () => {
             console.log(predictedEmotion);
             document.getElementById("self-emotion-span").innerHTML =
               `
-              <div class="flex w-[100%] justify-around ">
-              <div class = " text-black emotion1 w-[100px] h-[100px]"> 
-              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
              
-               </div>
-               <div class = " text-black  emotion2 w-[100px] h-[100px]"> 
+              <div class = " w-[75px] h-[75px]  animate-bounce"> 
               <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
-             
                </div>
-               <div class = " text-black emotion3  w-[100px] h-[100px]"> 
-              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
-             
-               </div>
-               <div class = " text-black emotion4  w-[100px] h-[100px]"> 
-              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
-             
-               </div>
-               <div class = " text-black emotion5  w-[100px] h-[100px]"> 
-              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
-             
-               </div>
-               <div class = " text-black emotion6  w-[100px] h-[100px]"> 
-              <Image src="/data/emotions/${predictedEmotion}.png" width={1000} height={1000} alt="Expresso" />
-             
-               </div>
-               </div>
+               
+            
                `;
             console.log(vcContext.videocallconnector);
           }
@@ -76,6 +81,8 @@ const VideocallComponent = () => {
       return () => clearInterval(interval);
     }
   }, [vcContext.videocallconnector]);
+
+
 
   return (
     <>
@@ -241,7 +248,7 @@ const VideocallComponent = () => {
               return (
 
                 <div id={id} key={key} onClick={() => setActiveId(id)} className={containerClassName}>
-                 
+
 
                   <video
                     ref={(videoElement) => {
@@ -255,7 +262,8 @@ const VideocallComponent = () => {
                     className="w-[100%] h-[100%] object-cover"
                   ></video>
 
-                  <span id="self-emotion-span" className=" w-[100%]   absolute bottom-0 left-0 ">
+                  <span id="self-emotion-span" className="   absolute bottom-5 right-5 ">
+
                   </span>
                 </div>
 
@@ -267,15 +275,16 @@ const VideocallComponent = () => {
 
           {Array.from(vcContext.remoteVideos.entries()).map(
             ([key, remoteUser]) => {
-              const id = key.toString();
+              const id = remoteUser.userData.pk.toString();
+
               const containerClassName = id === activeId
                 ? "w-[67.5vw] h-[100%] relative rounded-3xl bg-[rgba(30,30,30,0.7)] overflow-y-hidden transition-all duration-300 parentdiv"
                 : "w-[460px] h-[265px] relative overflow-hidden rounded-3xl bg-[rgba(30,30,30,0.7)] transition-all duration-300 parentdiv";
 
 
               return (
-                <div id={key} key={key} onClick={() => setActiveId(id)} className={containerClassName}>
-                  
+                <div id={remoteUser.userData.pk} key={key} onClick={() => setActiveId(id)} className={containerClassName}>
+
                   <video
                     ref={(videoElement) => {
                       if (videoElement) {
@@ -287,15 +296,19 @@ const VideocallComponent = () => {
                     className="w-[100%] h-[100%] object-cover"
                   ></video>
                   <div className=" revealname absolute bottom-0 w-[100%] p-5 leading-3 opacity-60  ">@ {remoteUser.userData.username}</div>
-                  
+
+                  <span id={`remote${id}`} className="   absolute bottom-5 right-5 ">
+
+                  </span>
+
 
                 </div>
 
               );
             }
           )}
-          
-          
+
+
 
 
         </div>

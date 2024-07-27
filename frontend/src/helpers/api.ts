@@ -121,6 +121,11 @@ export const fetchRequestedUser = async (userName:string) => {
 export const fetchSelfDetails = async () => {
   return apiCall(`/user/user-details`);
 }
+export const deleteFriend= async (id: number) => {
+  return apiCall(`/user/user/friend/${id}`, {
+    method: "DELETE",
+  });
+}
 export const sendFriendRequest = async (id: string) => {  
   return apiCall(`/user/friend-requests`, {
     method: "POST",
