@@ -61,7 +61,8 @@ export const apiCall = async (
   }
 
   const res = await fetch(requestUrl, req);
-  return res.json();
+  if (method!="DELETE") {
+  return res.json();}
 };
 
 function getCSRFCookie(name: string) {
@@ -138,6 +139,38 @@ export const createMeeting = async (ids: [string], privateMeet: boolean) =>{
     
   }).then((data) => {window.location.href = `/call/${data.id}`});
 
+}
+export const deleteFriendRequest = async (id: string) => {
+  return apiCall(`/user/friend-requests/${id}`, {
+    method: "DELETE",
+  });
+}
+export const createCustomMeeting = async (ids: string[], privateMeet: boolean, time:string) =>{
+
+  await apiCall("/meeting/meet-create", {
+    method: "POST",
+    body:{
+      private: privateMeet,
+      invited_users: ids,
+      scheduled_at: time
+    }
+    
+  }).then((data) => {window.location.href = `/call/${data.id}`});
+
+}
+
+export const createMeet = async ( privateMeet: boolean) =>{
+var ids:string;
+await apiCall("/user/user-details").then((data) => {ids = data.id});
+console.log(ids);
+  await apiCall("/meeting/meet-create", {
+    method: "POST",
+    body:{
+      invited_users: [ids,ids],
+      private: privateMeet
+    }
+    
+  }).then((data) => {window.location.href = `/call/${data.id}`});
 }
 
 export async function getMeetDetails(meetId: string) {

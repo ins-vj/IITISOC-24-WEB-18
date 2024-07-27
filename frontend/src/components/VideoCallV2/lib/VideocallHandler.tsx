@@ -82,7 +82,7 @@ export const VideoCallProvider = (props: {
   useEffect(() => {
     if (startCall) {
       const start = async () => {
-        VCConnector.startSending("video");
+        VCConnector.startSending("video", video, audio);
       };
       start();
     }

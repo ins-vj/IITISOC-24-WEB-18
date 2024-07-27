@@ -16,6 +16,7 @@ import ViewAI from "@/components/dashboard/room/viewai";
 import Particles from "@/components/landingpage/particles";
 import { fetchSelfDetails } from "@/helpers/api";
 import React from "react";
+import Createroom from "@/components/dashboard/room/createroom";
 export default function Dashboard() {
 
 
@@ -77,6 +78,9 @@ export default function Dashboard() {
 
             <div className=" enter w-[100%]">
             <Joinroom />
+            </div>
+            <div className=" enter w-[100%]">
+            <Createroom />
             </div>
             <div className=" w-[100%] flex flex-col gap-[10px] sm:flex-row">
               <div className=" [@media(min-width:1101px)]:hidden w-[100%] h-[100%]">

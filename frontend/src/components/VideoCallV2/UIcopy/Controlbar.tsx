@@ -9,7 +9,6 @@ import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Link from 'next/link';
 import PhonePausedIcon from '@mui/icons-material/PhonePaused';
-
 import {Button} from "@nextui-org/react";
 
 const Controlbar = () => {
@@ -32,11 +31,16 @@ const Controlbar = () => {
       <Button isIconOnly
         className="rounded-[50%] w-[4rem] h-[4rem] bg-[rgba(50,50,50,0.3)] flex justify-center items-center"
         onClick={() => {
+          if (vcContext.startCall) {
           vcContext.videocallconnector.updateLocalVideo(
             !vcContext.video,
             vcContext.audio
           );
-          vcContext.setVideo(!vcContext.video);
+        }else{
+          
+        }
+        vcContext.video = !vcContext.video;
+          vcContext.setVideo(vcContext.video);
         }}
       >
         {vcContext.video ? <VideocamIcon className=" text-[1.6rem] text-white" /> : <VideocamOffIcon className=" text-[1.6rem] text-white" />}
