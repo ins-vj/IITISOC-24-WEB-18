@@ -14,14 +14,11 @@ import { createMeeting, fetchFriendRequests } from "@/helpers/api"; // Combined 
 import toast from "react-hot-toast";
 
 
-interface SelectedFriends {
-  selectedFriends: string[];
-}
 export default function QuickRoom() {
   const [video, setVideo] = useState(true);
   const [mic, setMic] = useState(false);
   const [isPrivate, setIsPrivate] = useState(true);
-  const [selectedFriends, setSelectedFriends] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
   const [friendsList, setFriendsList] = useState([]);
 
   // Fetch the friend requests when the component mounts
