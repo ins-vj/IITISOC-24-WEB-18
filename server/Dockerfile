@@ -15,8 +15,6 @@ COPY . .
 # Expose the ports needed by mediasoup
 EXPOSE 4444
 EXPOSE 3016 
-EXPOSE 10000-10100/udp
-EXPOSE 10000-10100/tcp
 
 # Start the server
 CMD ["yarn", "devl"]

@@ -8,3 +8,12 @@ services:
       - "10000-10100:10000-10100/tcp" # RTP ports
     env_file:
       - ./.env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - mediasoup-server
