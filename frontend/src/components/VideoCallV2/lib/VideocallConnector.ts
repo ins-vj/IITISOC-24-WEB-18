@@ -1,6 +1,7 @@
 import * as Mediasoup from "mediasoup-client";
 import { Transport } from "mediasoup-client/lib/types";
 import { animateUserEmotion } from "../UIcopy/Videocall";
+import { appendMessage, appendSelfMessage } from "../UIcopy/Chatbox";
 const WebSocketBaseURL = process.env.NEXT_PUBLIC_SERVER_URL;
 const WSURL = (uuid: string, roomId: string) => {
   return `${WebSocketBaseURL}?uuid=${uuid}&roomId=${roomId}`;
@@ -36,6 +37,9 @@ export class VideoCallConnector {
   subscribe = () => {
     send(this.socket, "getUsers", "");
     this.socket.addEventListener("message", async (event: MessageEvent) => {
+      if (!this.isJson(event.data)) {
+        return;
+      }
       const data = JSON.parse(event.data);
       console.log(data);
 
@@ -45,6 +49,13 @@ export class VideoCallConnector {
           break;
         case "userDisconnected":
           await this.onUserDisconnected(data);
+          break;
+        case "userMessage":
+          if (data.data.username == this.userData.username) {
+            appendSelfMessage(data.data.message, data.data.username);
+          } else {
+            appendMessage(data.data);
+          }
           break;
 
         default:
@@ -98,6 +109,9 @@ export class VideoCallConnector {
     };
 
     newSocket.onmessage = async (e: MessageEvent) => {
+      if (!this.isJson(e.data)) {
+        return;
+      }
       const data = JSON.parse(e.data);
       console.log(data);
 
@@ -118,7 +132,6 @@ export class VideoCallConnector {
           await this.onSubscribed(data);
           break;
         case "emotionUpdate":
-     
           animateUserEmotion(data.data.userId, data.data.emotion);
           break;
 
@@ -150,6 +163,14 @@ export class VideoCallConnector {
     }
   };
 
+  sendMessage = (message: string) => {
+    send(this.socket, "userMessage", {
+      userId: this.userData.id,
+      username: this.userData.username,
+      message: message,
+    });
+  };
+
   startSending = async (type: string, video: boolean, audio: boolean) => {
     try {
       console.log("transport: ", this.producerTransports.get(type));
@@ -172,6 +193,9 @@ export class VideoCallConnector {
     try {
       this.publish(this.device, this.socket, type);
       this.socket.addEventListener("message", async (e: MessageEvent) => {
+        if (!this.isJson(e.data)) {
+          return;
+        }
         const data = JSON.parse(e.data);
         console.log(data);
 
@@ -374,6 +398,9 @@ export class VideoCallConnector {
           })
         );
         this.socket.addEventListener("message", (event: MessageEvent) => {
+          if (!this.isJson(event.data)) {
+            return;
+          }
           let resp = JSON.parse(event.data);
           if (resp.type === "producerConnected") {
             callback();
@@ -395,6 +422,9 @@ export class VideoCallConnector {
         );
         this.socket.addEventListener("published", (event: MessageEvent) => {
           console.log("produced: ", event.data);
+          if (!this.isJson(event.data)) {
+            return;
+          }
           let resp = JSON.parse(event.data);
           if (this.isJson(event.data) && resp.type === "produced") {
             callback(resp.data.id);
@@ -456,6 +486,9 @@ export class VideoCallConnector {
 
       // subConnected
       this.socket.addEventListener("message", async (event: MessageEvent) => {
+        if (!this.isJson(event.data)) {
+          return;
+        }
         let resp = JSON.parse(event.data);
         if (resp.type === "subConnected") {
           console.log("consumer Transport connected and callback made");
