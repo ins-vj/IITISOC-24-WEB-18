@@ -44,7 +44,7 @@ const reject=async(id:number)=>{
             <div className="w-full bg-[rgba(25,25,25,0.9)] flex flex-col h-[75vh]   border-small px-[5px] py-[2px] rounded-bl-3xl  rounded-tl-3xl border-default-200 dark:border-default-100 dark overflow-y-auto">
 
 {friends? friends[0]?.friends?.map((friend: any,index) => (
-   <Profile key={friend.id} username={friend.friend.username}  user={friend.friend.username} photo={props.photo} id={friend.id} index={index} reject={reject}  />
+   <Profile key={friend.id} username={friend.friend.username}  user={friend.friend.username} photo={props.photo} inviteId={friend.friend.id} id={friend.id} index={index} reject={reject}  />
     )): <div className="text-white">No Friends Found</div>}
 
 

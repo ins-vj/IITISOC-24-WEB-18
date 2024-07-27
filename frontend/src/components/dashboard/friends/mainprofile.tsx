@@ -51,7 +51,7 @@ export default function Profile(props:any) {
      
             <div className=" flex sm:gap-[5px]">
             
-            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={()=>{createMeeting([props.fromId],true)}} > 
+            <Button color="warning" variant="ghost" isIconOnly size="lg" className=" border-none" onClick={()=>{createMeeting([props.inviteId],true)}} > 
             <VideoCallIcon fontSize='medium' color='warning' className=' transition-all duration-300'  style={{color: "white" }}/>
             </Button>
             
