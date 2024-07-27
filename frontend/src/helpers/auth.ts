@@ -82,7 +82,6 @@ export async function logOut() {
   if (data.ok) {
     deleteCookie("accessToken");
   }
-  window.location.pathname = "/login";
   return logoutData;
 }
 
