@@ -126,7 +126,7 @@ export default function Dashboard() {
             </div>
           </div>
           <div className=" enter5 w-[100%]">
-          <List user={user} username={username} mail={mail} photo={photo} />
+          <List user={user} username={username} mail={mail} photo={photo} selfDetails={selfDetails} />
           </div>
           {/* <div className=" enter6 w-[100%]">
           <Tasks />

@@ -18,16 +18,16 @@ import Image from 'next/image'
 import { blackops } from '@/app/fonts'
 import SearchIcon from '@mui/icons-material/Search';
 import Profile from "@/components/dashboard/friends/mainprofile";
-import { fetchFriendRequests,deleteFriendRequest } from "@/helpers/api";
+import { fetchFriendRequests,deleteFriendRequest,fetchSelfDetails,deleteFriend } from "@/helpers/api";
 import toast from "react-hot-toast";
 export default function joinroom(props: any) {
     const [friends, setFriends] = useState([null]);
  useEffect(() => {
-    fetchFriendRequests().then((data) => { setFriends(data); console.log("requests", data) });
+fetchSelfDetails().then((data) => { setFriends(data); console.log("requests999", friends) });
 
     }, [friends]);
-const reject=async(index:number)=>{
-    await deleteFriendRequest(friends[index].id);
+const reject=async(id:number)=>{
+    await deleteFriend(id);
    toast.success("Friend Removed Successfully");
 }
 
@@ -43,8 +43,8 @@ const reject=async(index:number)=>{
                 </div>
             <div className="w-full bg-[rgba(25,25,25,0.9)] flex flex-col h-[75vh]   border-small px-[5px] py-[2px] rounded-bl-3xl  rounded-tl-3xl border-default-200 dark:border-default-100 dark overflow-y-auto">
 
-{friends? friends.map((friend: any,index) => (
-    friend?.currentStatus === "accepted" && <Profile key={friend.id} username={friend.from_user.username}  user={friend.from_user.username} photo={props.photo} fromId={friend.from_user.id} index={index} reject={reject}  />
+{friends? friends[0]?.friends?.map((friend: any,index) => (
+   <Profile key={friend.id} username={friend.friend.username}  user={friend.friend.username} photo={props.photo} id={friend.id} index={index} reject={reject}  />
     )): <div className="text-white">No Friends Found</div>}
 
 
