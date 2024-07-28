@@ -17,14 +17,14 @@ export const appendSelfMessage = (message: string, username: string) => {
 
   const messageBubble = document.createElement("div");
   messageBubble.className =
-    "bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg";
+    "bg-customorange-600 text-white p-3 rounded-bl-lg rounded-tl-2xl rounded-br-2xl";
   const messageText = document.createElement("p");
   messageText.className = "text-sm";
   messageText.textContent = message;
   messageBubble.appendChild(messageText);
 
   const messageMeta = document.createElement("span");
-  messageMeta.className = "text-xs text-gray-500 leading-none";
+  messageMeta.className = "text-xs text-white leading-none";
   messageMeta.textContent = username;
 
   messageContent.appendChild(messageBubble);
@@ -79,7 +79,7 @@ export const appendMessage = (data) => {
   messageTextDiv.appendChild(messageText);
 
   const usernameSpan = document.createElement("span");
-  usernameSpan.className = "text-xs text-gray-500 leading-none";
+  usernameSpan.className = "text-xs text-white leading-none";
   usernameSpan.textContent = data.username;
 
   messageContentDiv.appendChild(messageTextDiv);
@@ -107,23 +107,23 @@ const Chatbox = () => {
   return (
     <div
       id="chat-box"
-      className="absolute invisible bottom-20 left-8 rounded-2xl flex flex-col items-center justify-center w-72 h-[50vh] bg-gray-100 text-gray-800 p-2"
+      className="absolute invisible bottom-20 left-0 rounded-3xl flex flex-col items-center justify-center w-[320px] sm:w-[500px] h-[50vh] bg-[rgba(20,20,20,0.3)] border-[2px] border-[rgba(248,100,0,1)] text-gray-800 p-2"
     >
-      <div className="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-lg overflow-hidden">
+      <div className="flex flex-col flex-grow w-full max-w-xl rounded-lg overflow-hidden">
         <div
           id="messages-list-div"
           className="flex flex-col flex-grow h-0 p-4 overflow-auto"
         ></div>
 
-        <div className="bg-gray-300 p-4">
+        <div className="  p-4">
           <input
             id="msg-input"
-            className="flex items-center h-10 w-full rounded px-3 text-sm"
+            className="flex items-center h-10 w-full rounded px-3 bg-[rgba(20,20,20,0.3)] text-white  text-sm"
             type="text"
             placeholder="Type your message…"
           />
           <button
-            className="bg-white rounded-lg p-4 py-2 mt-2 w-full"
+            className="bg-[rgba(20,20,20,0.3)] text-white  rounded-lg p-4 py-2 mt-2 w-full"
             onClick={sendMessage}
           >
             Send

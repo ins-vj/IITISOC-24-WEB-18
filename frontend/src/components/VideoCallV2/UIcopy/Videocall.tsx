@@ -238,8 +238,8 @@ const VideocallComponent = () => {
 
               const containerClassName =
                 id === activeId
-                  ? "w-[67.5vw] h-[100%] relative rounded-3xl bg-[rgba(30,30,30,0.7)] overflow-y-hidden transition-all duration-300"
-                  : "w-[460px] h-[265px] relative overflow-hidden rounded-3xl bg-[rgba(30,30,30,0.7)] transition-all duration-300";
+                  ? "sm:w-[67.5vw] w-[90vw] sm:h-[90%] h-[90%] relative rounded-3xl bg-[rgba(30,30,30,0.7)] overflow-y-hidden transition-all duration-300"
+                  : "sm:w-[460px] sm:h-[265px] w-[90vw] h-[45%] relative overflow-hidden rounded-3xl bg-[rgba(30,30,30,0.7)] transition-all duration-300";
 
               return (
                 <div
@@ -275,8 +275,8 @@ const VideocallComponent = () => {
 
               const containerClassName =
                 id === activeId
-                  ? "w-[67.5vw] h-[100%] relative rounded-3xl bg-[rgba(30,30,30,0.7)] overflow-y-hidden transition-all duration-300 parentdiv"
-                  : "w-[460px] h-[265px] relative overflow-hidden rounded-3xl bg-[rgba(30,30,30,0.7)] transition-all duration-300 parentdiv";
+                ? "sm:w-[67.5vw] w-[90vw] sm:h-[90%] h-[90%] relative rounded-3xl bg-[rgba(30,30,30,0.7)] overflow-y-hidden transition-all duration-300"
+                : "sm:w-[460px] sm:h-[265px] w-[90vw] h-[45%] relative overflow-hidden rounded-3xl bg-[rgba(30,30,30,0.7)] transition-all duration-300";
 
               return (
                 <div
