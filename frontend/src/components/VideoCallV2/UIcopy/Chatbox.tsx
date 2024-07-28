@@ -107,7 +107,7 @@ const Chatbox = () => {
   return (
     <div
       id="chat-box"
-      className="absolute invisible bottom-20 left-0 rounded-3xl flex flex-col items-center justify-center w-[320px] sm:w-[500px] h-[50vh] bg-[rgba(20,20,20,0.3)] border-[2px] border-[rgba(248,100,0,1)] text-gray-800 p-2"
+      className="absolute invisible bottom-[7.5rem]  left-0 rounded-3xl flex flex-col items-center justify-center w-[320px] sm:w-[500px] h-[70vh] bg-[rgba(20,20,20,0.1)] border-[2px] border-[#f8630085] text-gray-800 p-2"
     >
       <div className="flex flex-col flex-grow w-full max-w-xl rounded-lg overflow-hidden">
         <div
@@ -123,7 +123,7 @@ const Chatbox = () => {
             placeholder="Type your message…"
           />
           <button
-            className="bg-[rgba(20,20,20,0.3)] text-white  rounded-lg p-4 py-2 mt-2 w-full"
+            className="bg-[rgba(20,20,20,0.3)] text-white hover:bg-customorange-700 transition-all duration-300  rounded-lg p-4 py-2 mt-2 w-full"
             onClick={sendMessage}
           >
             Send
