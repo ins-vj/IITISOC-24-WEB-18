@@ -82,11 +82,11 @@ const VideocallComponent = () => {
       ) : null}
 
       {!vcContext.startCall ? (
-        <div className=" w-[100%] h-[100vh] flex justify-center items-center">
-          <div className=" z-10 flex gap-10 items-center flex-col sm:flex-row ">
+        <div className=" w-[100%] h-[100vh] flex justify-center items-center ">
+          <div className=" z-10 flex gap-10 items-center flex-col sm:flex-row sm:-translate-y-20">
             <div className=" z-10">
               {vcContext.video ? (
-                <div className=" flex justify-center items-center h-[325px] w-[460px] bg-[#0000003b] rounded-3xl overflow-hidden">
+                <div style={{display: game ? "none" : "flex"}} className=" flex justify-center items-center sm:h-[325px] sm:w-[460px] h-[225px] w-[330px] bg-[#0000003b] rounded-3xl  ">
                   <Webcam
                     mirrored
                     height={400}
@@ -103,12 +103,13 @@ const VideocallComponent = () => {
               )}
             </div>
 
-            <div className="  transition-all duration-300    flex gap-5 flex-col z-40 ">
-              <div className=" text-[2rem]"> Dive into Expresso World </div>
-              <div>
+            <div className="  transition-all duration-300 w-[100%]    flex gap-5 flex-col z-40 ">
+              <div className=" flex flex-row sm:flex-col justi1fy-between items-center w-[100%] gap-5">
+              <div className=" sm:text-[2rem] text-[1rem]"> Dive into Expresso World </div>
+              <div className="w-[100%]">
                 <Button
                   variant="ghost"
-                  className="p-4 bg-[rgba(24,24,27)] light text-white rounded-3xl"
+                  className="p-4 bg-[rgba(24,24,27)] w-[100%] light text-white rounded-3xl"
                   onClick={(e) => {
                     console.log("start");
                     vcContext.setStartCall(!vcContext.startCall);
@@ -117,6 +118,7 @@ const VideocallComponent = () => {
                 >
                   Join meeting
                 </Button>
+              </div>
               </div>
 
               {game ? (
@@ -135,8 +137,8 @@ const VideocallComponent = () => {
                   <Game />{" "}
                 </div>
               ) : (
-                <div className=" flex flex-col gap-5">
-                  <div className="text-[1rem] opacity-50">Getting Bored ?</div>
+                <div className=" flex flex-col gap-5 ">
+                  <div className="text-[1rem] opacity-50 sm:flex hidden">Getting Bored ?</div>
                   <Button
                     variant="light"
                     color="danger"
@@ -369,10 +371,10 @@ const VideocallComponent = () => {
 
       <div className="   flex items-center flex-col z-40 ">
         {vcContext.startCall ? (
-          <div className=" z-10 absolute left-5 bottom-5  flex justify-center items-center">
+          <div className=" z-10 absolute sm:left-5 left-4 bottom-5  flex justify-center items-center">
             <Button
               isIconOnly
-              className="rounded-[50%] w-[4rem] h-[4rem] bg-[rgba(50,50,50,0.3)] flex justify-center items-center z-10"
+              className="rounded-[50%] sm:w-[4rem] sm:h-[4rem] w-[3rem] h-[3rem]  bg-[rgba(50,50,50,0.3)] flex justify-center items-center z-10"
               onClick={() => {
                 document
                   .getElementById("chat-box")
@@ -387,10 +389,10 @@ const VideocallComponent = () => {
 
         <Controlbar />
 
-        <div className=" z-10 absolute right-5 bottom-5  flex justify-center items-center">
+        <div className=" z-10 absolute sm:right-5 right-4 bottom-5  flex justify-center items-center">
           <Button
             isIconOnly
-            className="rounded-[50%] w-[4rem] h-[4rem] bg-[rgba(50,50,50,0.3)] flex justify-center items-center"
+            className="rounded-[50%] sm:w-[4rem] sm:h-[4rem] w-[3rem] h-[3rem]  bg-[rgba(50,50,50,0.3)] flex justify-center items-center"
             onClick={() => {
               if (vcContext.screen) {
                 vcContext.videocallconnector.stopSendingScreen("screen");

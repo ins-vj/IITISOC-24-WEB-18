@@ -102,7 +102,9 @@ export default function Dashboard() {
             </div>
             <div className=" [@media(min-width:1101px)]:hidden w-[100%]">
             <div className=" enter5 w-[100%]">
-              <Profile user={user} username={username} mail={mail} photo={photo} />
+            {selfDetails.map((detail) => (
+              <Profile user={detail.username}/>
+            ))}
               </div>
             </div>
             <div className=" enter8 w-[100%]">
